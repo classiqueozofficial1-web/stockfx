@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Market Data — StockFx</title>
+    <meta name="description" content="Market data and API access at StockFx: real-time quotes, historical bars, and streaming market data for developers and teams." />
+    <meta name="about" content="StockFx provides programmatic access to market data, order placement, and account information via secure APIs and SDKs. We support real-time quotes, REST endpoints for historical data, and streaming with webhooks and websockets for higher throughput." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="/policies/market-data.html" />
+    <style>
+      body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.6;color:#0f172a;margin:0;padding:40px;background:linear-gradient(180deg,#fff7ed 0%,#eef2ff 100%)}
+      .wrap{max-width:900px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,255,255,0.96));padding:36px;border-radius:12px;box-shadow:0 6px 28px rgba(2,6,23,0.08)}
+      a{color:#f59e0b}
+      pre{background:#0f172a;color:#fff;padding:12px;border-radius:8px;overflow:auto}
+      .note{border-left:4px solid #f59e0b;padding:12px 16px;background:#fffef8;border-radius:8px}
+      .brand{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:12px}
+      .brand svg{width:48px;height:48px;flex-shrink:0}
+      .brand-text{display:flex;flex-direction:column;align-items:center}
+      .brand-main{font-weight:800;font-size:1.125rem;color:#0f172a;display:flex;align-items:baseline}
+      .brand-fx{margin-left:6px;background:linear-gradient(90deg,#f59e0b,#0ea5e9);background-clip:text;-webkit-background-clip:text;color:transparent}
+      .brand-sub{font-size:0.7rem;color:#c2410c;font-weight:700;letter-spacing:1px;margin-top:2px}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="brand" aria-label="StockFx Investment">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="goldGradMarket" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FCD34D" />
+              <stop offset="50%" stop-color="#F59E0B" />
+              <stop offset="100%" stop-color="#D97706" />
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="44" height="44" rx="10" fill="#0b1220" opacity="0.95" />
+          <rect x="4" y="4" width="40" height="40" rx="9" fill="url(#goldGradMarket)" opacity="0.06" />
+          <path d="M10 32 L10 28 L14 28 L14 24 L18 24 L18 20" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M20 32 L20 16 M20 16 L28 16 M20 23 L26 23" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          <path d="M30 32 L38 16 M30 16 L38 32" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+        <div class="brand-text">
+          <div class="brand-main"><span>Stock</span><span class="brand-fx">Fx</span></div>
+          <div class="brand-sub">INVESTMENT</div>
+        </div>
+      </div>
+
+      <h1>Market Data</h1>
+      <p class="text-muted" style="color:#64748b;margin-bottom:8px">Real-time quotes, historical bars, and streaming market feeds.</p>
+
+      <section class="note">
+        <h3 style="margin:0 0 8px 0;color:#0f172a">Overview</h3>
+        <p style="margin:0;color:#475569">Programmatic access to market data, orders, and account information — built for developers and teams. Features include real-time market data, order placement, webhooks & streaming, and SDKs for JavaScript, Python, and Go.</p>
+      </section>
+
+      <section style="margin-top:18px">
+        <h2>Quick API Example</h2>
+        <pre>curl -X GET "https://api.stockfx.example/v1/markets/AAPL" -H "Authorization: Bearer YOUR_API_KEY"</pre>
+      </section>
+
+      <section style="margin-top:18px">
+        <h2>Connectivity</h2>
+        <p>Use REST endpoints for snapshots and historical bars, WebSocket streams for high-frequency real‑time ticks, and webhooks for account events and fills. Contact <a href="mailto:api@stockfx.example" class="text-amber-500">api@stockfx.example</a> for access and onboarding.</p>
+      </section>
+
+      <footer style="margin-top:28px;color:#94a3b8;font-size:0.9rem">
+        <p>© 2026 StockFx Investment Inc. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

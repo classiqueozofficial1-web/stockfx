@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "signIn": "Iniciar Sesión",
+    "getStarted": "Comenzar"
+  },
+  "hero": {
+    "badge": "🎉 Operaciones sin comisión en tus primeros $10,000",
+    "title1": "Invierte Mejor.",
+    "title2": "Crece Más Rápido.",
+    "description": "La plataforma de próxima generación para acciones, criptomonedas y ETFs. Herramientas profesionales. Cero complejidad. Opera con confianza.",
+    "startButton": "Comienza a Invertir Gratis",
+    "signInButton": "Iniciar Sesión"
+  },
+  "features": {
+    "title": "¿Por Qué Elegir StockFx?",
+    "fast": {
+      "name": "Ultrarrápido",
+      "desc": "Ejecuta operaciones en milisegundos con latencia ultra baja."
+    },
+    "security": {
+      "name": "Seguridad de Nivel Bancario",
+      "desc": "Cifrado de 256 bits, autenticación de 2 factores, protección FDIC."
+    },
+    "mobile": {
+      "name": "Primero Móvil",
+      "desc": "Aplicación completa. Opera en cualquier lugar, en cualquier momento."
+    },
+    "global": {
+      "name": "Mercados Globales",
+      "desc": "Accede a acciones, criptomonedas, ETFs y opciones en todo el mundo."
+    }
+  },
+  "testimonials": {
+    "title": "Amado por Traders en Todo el Mundo",
+    "subtitle": "Únete a más de 2 millones de inversores que confían en StockFx"
+  },
+  "stats": {
+    "traders": "Traders Activos",
+    "assets": "Activos Operados",
+    "commission": "Sin Comisiones",
+    "uptime": "Tiempo Activo"
+  },
+  "pricing": {
+    "title": "Planes de Inversión Personalizados",
+    "subtitle": "Elige un nivel de inversión que coincida con el tamaño de tu cartera",
+    "starter": {
+      "name": "Iniciador",
+      "price": "$1,000 - $5,000",
+      "desc": "Rango de Inversión Inicial",
+      "duration": "1 Mes"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$5,000 - $25,000",
+      "desc": "Rango de Inversión de Crecimiento",
+      "duration": "2-3 Meses",
+      "popular": "Más Popular"
+    },
+    "enterprise": {
+      "name": "Empresarial",
+      "price": "$25,000+",
+      "desc": "Rango de Inversión Premium",
+      "duration": "4+ Meses"
+    },
+    "features": {
+      "commissionFree": "Operaciones sin comisión",
+      "basicCharting": "Herramientas básicas de gráficos",
+      "mobileAccess": "Acceso a aplicación móvil",
+      "watchlists": "2 listas de seguimiento",
+      "emailSupport": "Soporte por correo electrónico",
+      "advancedCharting": "Gráficos y análisis avanzados",
+      "level2": "Datos Level 2 en tiempo real",
+      "unlimitedWatchlists": "Listas de seguimiento ilimitadas",
+      "support24": "Soporte 24/7 prioritario",
+      "apiAccess": "Acceso API",
+      "advancedAlerts": "Alertas avanzadas",
+      "dedicatedManager": "Gestor de cartera dedicado",
+      "strategy": "Consultoría estratégica personalizada",
+      "whiteLabel": "Soluciones de etiqueta blanca",
+      "integrations": "Integraciones avanzadas",
+      "sla": "Garantías SLA",
+      "institutionalPricing": "Precios institucionales"
+    },
+    "button": "Comienza a Invertir"
+  },
+  "trust": {
+    "title": "Tu Confianza, Nuestra Prioridad",
+    "security": {
+      "name": "Seguridad de Nivel Militar",
+      "desc": "El cifrado de 256 bits protege todos tus datos en tránsito y en reposo."
+    },
+    "insured": {
+      "name": "Asegurado FDIC y SIPC",
+      "desc": "Tu efectivo ($250k) y valores ($500k) están completamente protegidos."
+    },
+    "compliant": {
+      "name": "Regulado y Conforme",
+      "desc": "Cumplimos con todos los requisitos de la SEC, FINRA y regulaciones."
+    }
+  },
+  "cta": {
+    "title": "¿Listo para Comenzar a Operar?",
+    "subtitle": "Únete a millones de inversores. Obtén $50 en acciones gratis hoy.",
+    "button": "Crear Cuenta Gratuita"
+  },
+  "footer": {
+    "description": "La plataforma de próxima generación para acciones, criptomonedas y ETFs. Herramientas profesionales. Cero complejidad.",
+    "platform": "Plataforma",
+    "company": "Empresa",
+    "legal": "Legal",
+    "social": "Síguenos",
+    "features": "Características",
+    "pricing": "Precios",
+    "security": "Seguridad",
+    "about": "Acerca de Nosotros",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "disclosures": "Divulgaciones",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "copyright": "© 2024 StockFx Investment Inc. Todos los derechos reservados. NMLS #123456"
+  },
+  "contact": {
+    "title": "¿Necesitas Ayuda?",
+    "message": "¿Tienes preguntas sobre operaciones? ¡Nuestros oficiales de cuenta están aquí para ayudarte a comenzar!",
+    "contact": "Contacta a Nuestro Equipo",
+    "later": "Tal Vez Más Tarde"
+  }
+}

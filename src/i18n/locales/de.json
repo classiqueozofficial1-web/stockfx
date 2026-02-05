@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "signIn": "Anmelden",
+    "getStarted": "Jetzt Starten"
+  },
+  "hero": {
+    "badge": "🎉 Provisionsfreier Handel auf Ihre ersten $10,000",
+    "title1": "Investieren Sie Smarter.",
+    "title2": "Wachsen Sie Schneller.",
+    "description": "Die Plattform der nächsten Generation für Aktien, Kryptowährungen und ETFs. Professionelle Tools. Null Komplexität. Handeln Sie mit Vertrauen.",
+    "startButton": "Kostenlos mit Investieren Beginnen",
+    "signInButton": "Anmelden"
+  },
+  "features": {
+    "title": "Warum StockFx Wählen?",
+    "fast": {
+      "name": "Blitzschnell",
+      "desc": "Führen Sie Trades in Millisekunden mit ultra-niedriger Latenz aus."
+    },
+    "security": {
+      "name": "Sicherheit auf Bankenniveau",
+      "desc": "256-Bit-Verschlüsselung, 2FA, FDIC-Versicherungsschutz."
+    },
+    "mobile": {
+      "name": "Mobil Zuerst",
+      "desc": "Vollständige App. Handeln Sie überall, jederzeit."
+    },
+    "global": {
+      "name": "Globale Märkte",
+      "desc": "Zugang zu Aktien, Kryptowährungen, ETFs und Optionen weltweit."
+    }
+  },
+  "testimonials": {
+    "title": "Geliebt von Händlern Weltweit",
+    "subtitle": "Treten Sie über 2 Millionen Investoren bei, die StockFx vertrauen"
+  },
+  "stats": {
+    "traders": "Aktive Händler",
+    "assets": "Gehandelte Vermögenswerte",
+    "commission": "Provisionsfrei",
+    "uptime": "Verfügbarkeit"
+  },
+  "pricing": {
+    "title": "Auf Sie Zugeschnittene Anlagepläne",
+    "subtitle": "Wählen Sie eine Anlagestufe, die zu Ihrer Portfoliogröße passt",
+    "starter": {
+      "name": "Starter",
+      "price": "$1,000 - $5,000",
+      "desc": "Anfängliche Anlagerange",
+      "duration": "1 Monat"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$5,000 - $25,000",
+      "desc": "Wachstums-Anlagerange",
+      "duration": "2-3 Monate",
+      "popular": "Am Beliebtesten"
+    },
+    "enterprise": {
+      "name": "Unternehmen",
+      "price": "$25,000+",
+      "desc": "Premium-Anlagerange",
+      "duration": "4+ Monate"
+    },
+    "features": {
+      "commissionFree": "Provisionsfreie Trades",
+      "basicCharting": "Grundlegende Charting-Tools",
+      "mobileAccess": "Mobile App Zugang",
+      "watchlists": "2 Beobachtungslisten",
+      "emailSupport": "E-Mail-Support",
+      "advancedCharting": "Fortgeschrittenes Charting & Analyse",
+      "level2": "Level 2 Echtzeitdaten",
+      "unlimitedWatchlists": "Unbegrenzte Beobachtungslisten",
+      "support24": "Prioritärer 24/7 Support",
+      "apiAccess": "API-Zugang",
+      "advancedAlerts": "Fortgeschrittene Warnungen",
+      "dedicatedManager": "Dedizierter Portfolio-Manager",
+      "strategy": "Benutzerdefinierte Strategieberatung",
+      "whiteLabel": "White-Label-Lösungen",
+      "integrations": "Fortgeschrittene Integrationen",
+      "sla": "SLA-Garantien",
+      "institutionalPricing": "Institutionelle Preisgestaltung"
+    },
+    "button": "Beginnen Sie zu Investieren"
+  },
+  "trust": {
+    "title": "Ihr Vertrauen, Unsere Priorität",
+    "security": {
+      "name": "Militärische Sicherheit",
+      "desc": "256-Bit-Verschlüsselung schützt alle Ihre Daten während der Übertragung und im Ruhezustand."
+    },
+    "insured": {
+      "name": "FDIC & SIPC Versichert",
+      "desc": "Ihr Bargeld ($250k) und Wertpapiere ($500k) sind vollständig geschützt."
+    },
+    "compliant": {
+      "name": "Reguliert und Konform",
+      "desc": "Wir erfüllen alle SEC-, FINRA- und Regulierungsanforderungen."
+    }
+  },
+  "cta": {
+    "title": "Bereit zum Handeln?",
+    "subtitle": "Treten Sie Millionen von Investoren bei. Erhalten Sie heute $50 in kostenlosen Aktien.",
+    "button": "Kostenloses Konto Erstellen"
+  },
+  "footer": {
+    "description": "Die Plattform der nächsten Generation für Aktien, Kryptowährungen und ETFs. Professionelle Tools. Null Komplexität.",
+    "platform": "Plattform",
+    "company": "Unternehmen",
+    "legal": "Rechtlich",
+    "social": "Folgen Sie Uns",
+    "features": "Merkmale",
+    "pricing": "Preisgestaltung",
+    "security": "Sicherheit",
+    "about": "Über Uns",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "disclosures": "Offenlegungen",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "copyright": "© 2024 StockFx Investment Inc. Alle Rechte vorbehalten. NMLS #123456"
+  },
+  "contact": {
+    "title": "Benötigen Sie Hilfe?",
+    "message": "Haben Sie Fragen zum Handel? Unsere Kontomanager sind hier, um Ihnen den Einstieg zu erleichtern!",
+    "contact": "Kontaktieren Sie Unser Team",
+    "later": "Vielleicht Später"
+  }
+}

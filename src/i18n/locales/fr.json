@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "signIn": "Se Connecter",
+    "getStarted": "Commencer"
+  },
+  "hero": {
+    "badge": "🎉 Trading sans frais sur vos premiers $10,000",
+    "title1": "Investissez Plus Intelligemment.",
+    "title2": "Grandissez Plus Vite.",
+    "description": "La plateforme de nouvelle génération pour les actions, crypto-monnaies et ETF. Outils professionnels. Zéro complexité. Tradez en confiance.",
+    "startButton": "Commencer à Investir Gratuitement",
+    "signInButton": "Se Connecter"
+  },
+  "features": {
+    "title": "Pourquoi Choisir StockFx?",
+    "fast": {
+      "name": "Ultra-Rapide",
+      "desc": "Exécutez les trades en millisecondes avec une latence ultra-faible."
+    },
+    "security": {
+      "name": "Sécurité de Niveau Bancaire",
+      "desc": "Chiffrement 256 bits, authentification 2FA, protection FDIC."
+    },
+    "mobile": {
+      "name": "Mobile D'Abord",
+      "desc": "Application complète. Tradez n'importe où, n'importe quand."
+    },
+    "global": {
+      "name": "Marchés Mondiaux",
+      "desc": "Accédez aux actions, crypto-monnaies, ETF et options dans le monde entier."
+    }
+  },
+  "testimonials": {
+    "title": "Aimé par les Traders du Monde Entier",
+    "subtitle": "Rejoignez plus de 2 millions d'investisseurs qui font confiance à StockFx"
+  },
+  "stats": {
+    "traders": "Traders Actifs",
+    "assets": "Actifs Tradés",
+    "commission": "Sans Frais",
+    "uptime": "Disponibilité"
+  },
+  "pricing": {
+    "title": "Plans d'Investissement Personnalisés",
+    "subtitle": "Choisissez un niveau d'investissement adapté à votre portefeuille",
+    "starter": {
+      "name": "Débutant",
+      "price": "$1,000 - $5,000",
+      "desc": "Gamme d'Investissement Initial",
+      "duration": "1 Mois"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$5,000 - $25,000",
+      "desc": "Gamme d'Investissement de Croissance",
+      "duration": "2-3 Mois",
+      "popular": "Plus Populaire"
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "price": "$25,000+",
+      "desc": "Gamme d'Investissement Premium",
+      "duration": "4+ Mois"
+    },
+    "features": {
+      "commissionFree": "Trades sans commission",
+      "basicCharting": "Outils graphiques basiques",
+      "mobileAccess": "Accès à l'application mobile",
+      "watchlists": "2 listes de surveillance",
+      "emailSupport": "Support par email",
+      "advancedCharting": "Graphiques et analyses avancés",
+      "level2": "Données Level 2 en temps réel",
+      "unlimitedWatchlists": "Listes de surveillance illimitées",
+      "support24": "Support 24/7 prioritaire",
+      "apiAccess": "Accès API",
+      "advancedAlerts": "Alertes avancées",
+      "dedicatedManager": "Gestionnaire de portefeuille dédié",
+      "strategy": "Conseil stratégique personnalisé",
+      "whiteLabel": "Solutions de marque blanche",
+      "integrations": "Intégrations avancées",
+      "sla": "Garanties SLA",
+      "institutionalPricing": "Tarification institutionnelle"
+    },
+    "button": "Commencer à Investir"
+  },
+  "trust": {
+    "title": "Votre Confiance, Notre Priorité",
+    "security": {
+      "name": "Sécurité Militaire",
+      "desc": "Le chiffrement 256 bits protège toutes vos données en transit et au repos."
+    },
+    "insured": {
+      "name": "Assuré FDIC et SIPC",
+      "desc": "Votre espèces ($250k) et titres ($500k) sont entièrement protégés."
+    },
+    "compliant": {
+      "name": "Réglementé et Conforme",
+      "desc": "Nous nous conformons à tous les exigences de la SEC, FINRA et réglementaires."
+    }
+  },
+  "cta": {
+    "title": "Prêt à Commencer à Trader?",
+    "subtitle": "Rejoignez des millions d'investisseurs. Obtenez $50 en actions gratuites aujourd'hui.",
+    "button": "Créer un Compte Gratuit"
+  },
+  "footer": {
+    "description": "La plateforme de nouvelle génération pour les actions, crypto-monnaies et ETF. Outils professionnels. Zéro complexité.",
+    "platform": "Plateforme",
+    "company": "Entreprise",
+    "legal": "Juridique",
+    "social": "Suivez-Nous",
+    "features": "Caractéristiques",
+    "pricing": "Tarification",
+    "security": "Sécurité",
+    "about": "À Propos de Nous",
+    "blog": "Blog",
+    "contact": "Contact",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "disclosures": "Divulgations",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "copyright": "© 2024 StockFx Investment Inc. Tous droits réservés. NMLS #123456"
+  },
+  "contact": {
+    "title": "Besoin d'Aide?",
+    "message": "Avez-vous des questions sur le trading? Nos agents de compte sont là pour vous aider à démarrer!",
+    "contact": "Contactez Notre Équipe",
+    "later": "Peut-être Plus Tard"
+  }
+}

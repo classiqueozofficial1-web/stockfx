@@ -1,0 +1,200 @@
+import { useState } from 'react';
+import { Button } from '../components/ui/Button';
+import { getUsers, updateUser, deleteUser as removeUser } from '../lib/userStore';
+
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  status: 'active' | 'blocked';
+  createdAt: string;
+  balance: number;
+  notifications: string[];
+  registrationStatus: 'pending' | 'confirmed';
+  verified?: boolean;
+}
+
+
+
+
+  const AdminDashboardPage = () => {
+    const [users, setUsers] = useState<User[]>(getUsers());
+    const [selected, setSelected] = useState<User | null>(null);
+    const [showBalanceModal, setShowBalanceModal] = useState<User | null>(null);
+    const [showNotifModal, setShowNotifModal] = useState<User | null>(null);
+    const [notifMsg, setNotifMsg] = useState('');
+    const [balanceInput, setBalanceInput] = useState('');
+  
+    const refresh = () => setUsers([...getUsers()]);
+    const handleBlock = (id: string) => {
+      const user = users.find(u => u.id === id);
+      if (user) {
+        updateUser(id, { status: user.status === 'active' ? 'blocked' : 'active' });
+      }
+      refresh();
+    };
+    const handleDelete = (id: string) => {
+      removeUser(id);
+      refresh();
+      if (selected?.id === id) setSelected(null);
+    };
+    const handleBalanceUpdate = (id: string, newBalance: number) => {
+      updateUser(id, { balance: newBalance });
+      refresh();
+      setShowBalanceModal(null);
+      setBalanceInput('');
+    };
+    const handleSendNotif = (id: string, msg: string) => {
+      const user = users.find((u: User) => u.id === id);
+      if (user) {
+        updateUser(id, { notifications: [...user.notifications, msg] });
+        refresh();
+      }
+      setShowNotifModal(null);
+      setNotifMsg('');
+    };
+    const handleConfirm = (id: string) => {
+      updateUser(id, { registrationStatus: 'confirmed' });
+      refresh();
+    };
+    const handleVerify = (id: string) => {
+      updateUser(id, { verified: true });
+      refresh();
+    };
+  
+    return (
+      <div className="min-h-screen bg-slate-50 p-8">
+      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+      <div className="overflow-x-auto bg-white rounded-xl shadow border border-slate-100">
+        <table className="min-w-full divide-y divide-slate-200">
+          <thead className="bg-slate-100">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Balance</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Registration</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Verified</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Created</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Notifications</th>
+              <th className="px-6 py-3" />
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-slate-100">
+            {users.map(user => (
+              <tr key={user.id} className={selected?.id === user.id ? 'bg-emerald-50' : ''}>
+                <td className="px-6 py-4 whitespace-nowrap font-medium">{user.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 py-1 rounded text-xs font-semibold ${user.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>{user.status}</span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">${user.balance.toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {user.registrationStatus === 'pending' ? (
+                    <Button size="sm" variant="secondary" onClick={() => handleConfirm(user.id)}>Confirm</Button>
+                  ) : (
+                    <span className="text-xs text-emerald-700">Confirmed</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {user.verified ? (
+                    <span className="text-xs text-emerald-700">Yes</span>
+                  ) : (
+                    <Button size="sm" variant="secondary" onClick={() => handleVerify(user.id)}>Verify</Button>
+                  )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.createdAt}</td>
+                <td className="px-6 py-4 whitespace-nowrap max-w-xs">
+                  <ul className="text-xs text-slate-500 space-y-1 max-h-16 overflow-y-auto">
+                    {user.notifications.slice(-2).map((n, i) => (
+                      <li key={i}>• {n}</li>
+                    ))}
+                  </ul>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap flex gap-2">
+                  <Button size="sm" variant="ghost" onClick={() => setSelected(user)}>View</Button>
+                  <Button size="sm" variant="secondary" onClick={() => { setShowBalanceModal(user); setBalanceInput(user.balance.toString()); }}>Balance</Button>
+                  <Button size="sm" variant="secondary" onClick={() => { setShowNotifModal(user); setNotifMsg(''); }}>Notify</Button>
+                  <Button size="sm" variant={user.status === 'active' ? 'danger' : 'secondary'} onClick={() => handleBlock(user.id)}>{user.status === 'active' ? 'Block' : 'Unblock'}</Button>
+                  <Button size="sm" variant="danger" onClick={() => handleDelete(user.id)}>Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {selected && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative">
+            <button className="absolute top-2 right-2 text-slate-400 hover:text-slate-700" onClick={() => setSelected(null)}>&times;</button>
+            <h2 className="text-xl font-bold mb-4">User Details</h2>
+            <div className="mb-2"><b>Name:</b> {selected.name}</div>
+            <div className="mb-2"><b>Email:</b> {selected.email}</div>
+            <div className="mb-2"><b>Status:</b> {selected.status}</div>
+            <div className="mb-2"><b>Balance:</b> ${selected.balance.toFixed(2)}</div>
+            <div className="mb-2"><b>Created:</b> {selected.createdAt}</div>
+            <div className="mb-2"><b>Notifications:</b>
+              <ul className="text-xs text-slate-500 space-y-1 max-h-16 overflow-y-auto">
+                {selected.notifications.map((n, i) => (
+                  <li key={i}>• {n}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex gap-2 mt-4 flex-wrap">
+              <Button size="sm" variant={selected.status === 'active' ? 'danger' : 'secondary'} onClick={() => { handleBlock(selected.id); setSelected(null); }}>{selected.status === 'active' ? 'Block' : 'Unblock'}</Button>
+              <Button size="sm" variant="secondary" onClick={() => { setShowBalanceModal(selected); setBalanceInput(selected.balance.toString()); }}>Update Balance</Button>
+              <Button size="sm" variant="secondary" onClick={() => { setShowNotifModal(selected); setNotifMsg(''); }}>Send Notification</Button>
+              <Button size="sm" variant="danger" onClick={() => { handleDelete(selected.id); setSelected(null); }}>Delete</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Balance Modal */}
+      {showBalanceModal && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm relative">
+            <button className="absolute top-2 right-2 text-slate-400 hover:text-slate-700" onClick={() => setShowBalanceModal(null)}>&times;</button>
+            <h2 className="text-xl font-bold mb-4">Update Balance</h2>
+            <div className="mb-4">User: <b>{showBalanceModal.name}</b></div>
+            <input
+              type="number"
+              className="border rounded px-3 py-2 w-full mb-4"
+              value={balanceInput}
+              onChange={e => setBalanceInput(e.target.value)}
+              min="0"
+              step="0.01"
+            />
+            <Button size="sm" className="w-full" onClick={() => handleBalanceUpdate(showBalanceModal.id, parseFloat(balanceInput))}>
+              Save
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Notification Modal */}
+      {showNotifModal && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-sm relative">
+            <button className="absolute top-2 right-2 text-slate-400 hover:text-slate-700" onClick={() => setShowNotifModal(null)}>&times;</button>
+            <h2 className="text-xl font-bold mb-4">Send Notification</h2>
+            <div className="mb-4">User: <b>{showNotifModal.name}</b></div>
+            <textarea
+              className="border rounded px-3 py-2 w-full mb-4"
+              rows={3}
+              value={notifMsg}
+              onChange={e => setNotifMsg(e.target.value)}
+              placeholder="Type your message..."
+            />
+            <Button size="sm" className="w-full" onClick={() => handleSendNotif(showNotifModal.id, notifMsg)} disabled={!notifMsg.trim()}>
+              Send
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AdminDashboardPage;
