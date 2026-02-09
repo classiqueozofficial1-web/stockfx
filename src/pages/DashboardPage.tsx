@@ -388,9 +388,9 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
       }
 
       {/* Main Content */}
-      <div className="flex-1 md:ml-64">
+      <div className="flex-1 md:ml-64 w-full">
         {/* Top Bar */}
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 px-3 sm:px-4 lg:px-8 h-16 flex items-center justify-between overflow-x-hidden">
             <div className="flex items-center md:hidden">
             <button
             onClick={() => setIsMobileMenuOpen(true)}
@@ -405,13 +405,13 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
             {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="hidden sm:block relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
                 type="text"
                 placeholder={t('dashboard.searchAssets')}
-                className="pl-9 pr-4 py-2 rounded-full border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64" />
+                className="pl-9 pr-4 py-2 rounded-full border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-40 md:w-64" />
 
             </div>
             <div className="relative">
@@ -426,7 +426,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
               
               {/* Notifications Dropdown */}
               {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg border border-slate-200 shadow-lg z-50 max-h-80 overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-lg border border-slate-200 shadow-lg z-50 max-h-80 overflow-y-auto">
                   <div className="p-4 border-b border-slate-200 font-semibold text-slate-900 flex justify-between items-center sticky top-0 bg-white">
                     <span>{t('dashboard.notifications')}</span>
                     <button 

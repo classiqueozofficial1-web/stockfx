@@ -165,17 +165,17 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-32 text-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 lg:py-32 text-center">
         <div className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium mb-6">
           <span className="flex h-2 w-2 rounded-full bg-amber-400 mr-2 animate-pulse" />
           {t('hero.badge')}
         </div>
-        <h1 className="text-6xl font-black text-white mb-6 leading-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-6 leading-tight">
           {t('hero.title1')}
           <br />
           <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">{t('hero.title2')}</span>
         </h1>
-        <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base lg:text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
           {t('hero.description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -203,9 +203,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Features Section with Visualization */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-white text-center mb-16">{t('features.title')}</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-12 sm:mb-16">{t('features.title')}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <FeatureCard 
             icon="⚡" 
             title={t('features.fast.name')} 
@@ -230,10 +230,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Testimonials */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-white text-center mb-4">{t('testimonials.title')}</h2>
-        <p className="text-center text-slate-300 mb-12">{t('testimonials.subtitle')}</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-4">{t('testimonials.title')}</h2>
+        <p className="text-center text-slate-300 mb-12 text-sm sm:text-base">{t('testimonials.subtitle')}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition">
               <div className="flex items-center gap-1 mb-4">
@@ -256,9 +256,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Stats with Visualizations */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-white text-center mb-16">Platform Statistics</h2>
-        <div className="grid md:grid-cols-4 gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-12 sm:mb-16">Platform Statistics</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           <StatCounter label={t('stats.traders')} value="2M+" icon="👥" trend="up" />
           <StatCounter label={t('stats.assets')} value="$500B+" icon="💰" trend="up" />
           <StatCounter label={t('stats.commission')} value="0%" icon="✨" />
