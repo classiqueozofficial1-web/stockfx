@@ -1,4 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
@@ -8,6 +9,7 @@ interface RegisterPageProps {
   onNavigate: (page: string) => void;
 }
 export function RegisterPage({ onNavigate }: RegisterPageProps) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
   // Form state
@@ -69,9 +71,9 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
         } finally {
           setIsVerifying(false);
         }
-      } else {
+        } else {
         setIsVerifying(false);
-        setVerifyError('The verification code is incorrect.');
+        setVerifyError(t('register.verifyError'));
       }
     }, 800);
   };
@@ -93,15 +95,15 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          Create your account
+          {t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          Already have an account?{' '}
+          {t('register.subtitle')}{' '}
           <button
             onClick={() => onNavigate('login')}
             className="font-medium text-emerald-600 hover:text-emerald-500">
 
-            Sign in
+            {t('register.haveAccount')}
           </button>
         </p>
       </div>
@@ -112,14 +114,14 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           {step === 'form' && (
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4">
-                <Input label="First Name" placeholder="John" required value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
-                <Input label="Last Name" placeholder="Doe" required value={lastName} onChange={(e)=>setLastName(e.target.value)} />
+                <Input label={t('register.firstNameLabel')} placeholder={t('register.firstNamePlaceholder')} required value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
+                <Input label={t('register.lastNameLabel')} placeholder={t('register.lastNamePlaceholder')} required value={lastName} onChange={(e)=>setLastName(e.target.value)} />
               </div>
 
               <Input
-                label="Email address"
+                label={t('register.emailLabel')}
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('register.emailPlaceholder')}
                 required
                 leftIcon={<Mail className="h-5 w-5" />}
                 value={email}
@@ -127,12 +129,12 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
 
 
               <Input
-                label="Password"
+                label={t('register.passwordLabel')}
                 type="password"
-                placeholder="Create a password"
+                placeholder={t('register.passwordPlaceholder')}
                 required
                 leftIcon={<Lock className="h-5 w-5" />}
-                helperText="Must be at least 8 characters"
+                helperText={t('register.passwordHelper')}
                 value={password}
                 onChange={(e)=>setPassword(e.target.value)} />
 
@@ -149,19 +151,19 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 </div>
                 <div className="ml-3 text-sm">
                   <label htmlFor="terms" className="font-medium text-slate-700">
-                    I agree to the{' '}
+                    {t('register.termsLabel')}{' '}
                     <a
                       href="#"
                       className="text-emerald-600 hover:text-emerald-500">
 
-                      Terms
+                      {t('register.terms')}
                     </a>{' '}
-                    and{' '}
+                    {t('register.and')}{' '}
                     <a
                       href="#"
                       className="text-emerald-600 hover:text-emerald-500">
 
-                      Privacy Policy
+                      {t('register.privacy')}
                     </a>
                   </label>
                 </div>
@@ -173,7 +175,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 size="lg"
                 isLoading={isLoading}>
 
-                Create Account
+                {t('register.createButton')}
               </Button>
             </form>
           )}
@@ -181,22 +183,22 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           {step === 'verify' && (
             <>
               <form className="space-y-6" onSubmit={handleVerify}>
-                <Input label="Verification code" placeholder="123456" required value={codeInput} onChange={(e)=>setCodeInput(e.target.value)} />
+                <Input label={t('register.verifyTitle')} placeholder={t('register.verifyPlaceholder')} required value={codeInput} onChange={(e)=>setCodeInput(e.target.value)} />
 
                 {verifyError && <p className="text-sm text-red-600">{verifyError}</p>}
 
                 {/* Debug: Show code for local dev */}
                 {sentCode && (
-                  <p className="text-xs text-emerald-600 text-center">DEV: Your code is <span className="font-mono font-bold">{sentCode}</span></p>
+                  <p className="text-xs text-emerald-600 text-center">{t('register.devCode')} <span className="font-mono font-bold">{sentCode}</span></p>
                 )}
 
                 <div className="flex items-center justify-between">
-                  <Button variant="ghost" onClick={()=>setStep('form')}>Change email</Button>
+                  <Button variant="ghost" onClick={()=>setStep('form')}>{t('register.changeEmail')}</Button>
                   <div className="flex items-center gap-3">
                     <button type="button" onClick={handleResend} disabled={resendCooldown > 0} className="text-sm text-slate-500 hover:text-slate-900">
-                      {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend code'}
+                      {resendCooldown > 0 ? `${t('register.resendCooldown').replace('{{seconds}}', String(resendCooldown))}` : t('register.resendCode')}
                     </button>
-                    <Button type="submit" size="lg" isLoading={isVerifying}>Verify</Button>
+                    <Button type="submit" size="lg" isLoading={isVerifying}>{t('register.verifyButton')}</Button>
                   </div>
                 </div>
               </form>
