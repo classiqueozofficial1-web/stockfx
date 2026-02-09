@@ -152,49 +152,53 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   return (
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('landing')}>
-          <Logo size="md" variant="light" showText={true} />
+      <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
+        <div className="flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={() => onNavigate('landing')}>
+          <Logo size="sm" variant="light" showText={false} />
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="hidden md:flex gap-2 items-center">
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('admin-login')} variant="ghost" size="sm">Admin</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
+        <div className="md:hidden flex gap-1 items-center">
+          <LanguageSwitcher />
+          <AnimatedButton onClick={() => onNavigate('login')} variant="primary" size="sm">{t('nav.signIn')}</AnimatedButton>
+        </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 lg:py-32 text-center">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium mb-6">
-          <span className="flex h-2 w-2 rounded-full bg-amber-400 mr-2 animate-pulse" />
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-12 lg:py-20 text-center">
+        <div className="inline-flex items-center px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm font-medium mb-4">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 mr-1 animate-pulse" />
           {t('hero.badge')}
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-6 leading-tight">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight">
           {t('hero.title1')}
           <br />
           <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">{t('hero.title2')}</span>
         </h1>
-        <p className="text-sm sm:text-base lg:text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
           {t('hero.description')}
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="lg">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
+          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">
             {t('hero.startButton')}
           </AnimatedButton>
-          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="lg">
+          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="md">
             {t('hero.signInButton')}
           </AnimatedButton>
         </div>
 
         {/* Background Carousel Indicators */}
-        <div className="flex gap-2 justify-center mt-12">
+        <div className="flex gap-1 justify-center mt-6 sm:mt-8">
           {backgroundGradients.map((_, index) => (
             <button
               key={index}
               onClick={() => setBackgroundIndex(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                backgroundIndex === index ? 'w-8 bg-amber-400' : 'w-2 bg-white/30 hover:bg-white/50'
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                backgroundIndex === index ? 'w-6 bg-amber-400' : 'w-1.5 bg-white/30 hover:bg-white/50'
               }`}
               aria-label={`Background ${index + 1}`}
             />
@@ -203,9 +207,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Features Section with Visualization */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-12 sm:mb-16">{t('features.title')}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">{t('features.title')}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <FeatureCard 
             icon="⚡" 
             title={t('features.fast.name')} 
@@ -230,10 +234,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Testimonials */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-4">{t('testimonials.title')}</h2>
-        <p className="text-center text-slate-300 mb-12 text-sm sm:text-base">{t('testimonials.subtitle')}</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-2">{t('testimonials.title')}</h2>
+        <p className="text-center text-slate-300 mb-8 text-xs sm:text-sm">{t('testimonials.subtitle')}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {testimonials.map((t, i) => (
             <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition">
               <div className="flex items-center gap-1 mb-4">
@@ -256,9 +260,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Stats with Visualizations */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-12 sm:mb-16">Platform Statistics</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">Platform Statistics</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           <StatCounter label={t('stats.traders')} value="2M+" icon="👥" trend="up" />
           <StatCounter label={t('stats.assets')} value="$500B+" icon="💰" trend="up" />
           <StatCounter label={t('stats.commission')} value="0%" icon="✨" />
@@ -324,22 +328,22 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
         {/* Content */}
-        <div className="relative max-w-7xl mx-auto px-6 text-center z-10 flex flex-col justify-center h-full">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-sm font-medium mb-8 justify-center">
-            <span className="flex h-2 w-2 rounded-full bg-amber-400 mr-2 animate-pulse" />
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-4 text-center z-10 flex flex-col justify-center h-full min-h-48 sm:min-h-64 md:min-h-96">
+          <div className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs sm:text-sm font-medium mb-3 sm:mb-4 justify-center">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 mr-1 animate-pulse" />
             Limited Time Offer
           </div>
-          <h2 className="text-7xl font-black text-white mb-8">
-            🎉 Zero-fee trading on your first $10,000
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4">
+            🎉 Zero-fee trading
           </h2>
-          <p className="text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
-            Join thousands of traders who are making smarter investment decisions every day. Start your journey with zero commission fees.
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-200 mb-4 sm:mb-6 max-w-3xl mx-auto">
+            Join thousands of traders making smarter decisions. Start your journey with zero commission fees.
           </p>
           <button
             onClick={() => onNavigate('register')}
-            className="px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-semibold hover:shadow-2xl transition text-xl w-fit mx-auto active:scale-95"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-semibold hover:shadow-xl transition text-sm sm:text-base w-fit mx-auto active:scale-95"
           >
-            Claim Your Offer Now
+            Claim Offer
           </button>
 
           {/* Image carousel indicators */}

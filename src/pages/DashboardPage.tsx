@@ -154,17 +154,17 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
       case 'portfolio':
         return (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
-              <h3 className="font-bold text-slate-900 mb-6 text-lg">{t('dashboard.yourHoldings')}</h3>
-              <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4">
+              <h3 className="font-bold text-slate-900 mb-3 text-sm sm:text-base">{t('dashboard.yourHoldings')}</h3>
+              <div className="space-y-2">
                 {[
                   { symbol: 'AAPL', name: 'Apple Inc.', shares: 25, value: '$4,562.50', change: '+2.1%' },
                   { symbol: 'TSLA', name: 'Tesla, Inc.', shares: 15, value: '$3,601.50', change: '-1.5%' },
                   { symbol: 'BTC', name: 'Bitcoin', shares: 0.5, value: '$17,100.00', change: '+4.2%' },
                   { symbol: 'ETH', name: 'Ethereum', shares: 5, value: '$8,900.00', change: '+3.8%' },
                 ].map((holding) => (
-                  <div key={holding.symbol} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                  <div key={holding.symbol} className="flex items-center justify-between p-2 sm:p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors text-xs sm:text-sm">
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center font-bold text-xs text-emerald-700 mr-3">
                         {holding.symbol}
@@ -183,13 +183,13 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
-                <h3 className="font-bold text-slate-900 mb-4">{t('dashboard.portfolioSummary')}</h3>
-                <div className="space-y-4">
+            <div className="space-y-3">
+              <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4">
+                <h3 className="font-bold text-slate-900 mb-2 sm:mb-3 text-sm sm:text-base">{t('dashboard.portfolioSummary')}</h3>
+                <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-                    <span className="text-slate-600">{t('dashboard.totalValue')}</span>
-                    <span className="font-bold text-slate-900">${balance.toFixed(2)}</span>
+                    <span className="text-slate-600 text-xs sm:text-sm">{t('dashboard.totalValue')}</span>
+                    <span className="font-bold text-slate-900 text-xs sm:text-sm">${balance.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-slate-100">
                     <span className="text-slate-600">{t('dashboard.unrealizedGains')}</span>
@@ -229,7 +229,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
           {/* Portfolio Visualizations */}
           <div className="mt-8 space-y-8">
             <PortfolioChart totalBalance={balance} />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               <AssetAllocationChart />
               <MarketTrendsChart title="Portfolio Growth (12M)" />
             </div>
@@ -507,11 +507,11 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         </header>
 
         {/* Dashboard Content */}
-        <main className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+        <main className="p-2 sm:p-3 lg:p-4 max-w-7xl mx-auto">
           {activeTab === 'overview' ? (
             <>
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
             <StatsCard
               title="Total Balance"
               value={`$${balance.toFixed(2)}`}
