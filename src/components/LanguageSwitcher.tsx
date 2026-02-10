@@ -10,11 +10,13 @@ export function LanguageSwitcher() {
 
   const currentLanguage = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language);
   
-  const filteredLanguages = SUPPORTED_LANGUAGES.filter(lang =>
-    lang.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lang.nativeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lang.code.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredLanguages = SUPPORTED_LANGUAGES.filter((lang) => {
+    const name = (lang.name || '').toLowerCase();
+    const native = (lang.nativeName || '').toLowerCase();
+    const code = (lang.code || '').toLowerCase();
+    const term = searchTerm.toLowerCase();
+    return name.includes(term) || native.includes(term) || code.includes(term);
+  });
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -40,7 +42,7 @@ export function LanguageSwitcher() {
       )}
       
       {isOpen && (
-        <div className="absolute mt-2 right-0 left-2 sm:left-auto sm:right-0 w-auto sm:w-72 md:w-80 max-w-[92vw] bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 max-h-96 flex flex-col">
+        <div className="absolute mt-2 right-0 w-56 sm:w-72 md:w-80 max-w-[92vw] bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 max-h-96 flex flex-col">
           {/* Search Header */}
           <div className="sticky top-0 p-3 border-b border-slate-700 bg-slate-800">
             <div className="relative">
