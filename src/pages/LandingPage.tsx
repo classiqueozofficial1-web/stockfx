@@ -718,11 +718,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               <h4 className="font-bold text-white mb-4">Legal</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
                 <li><a href="/policies/privacy.html" target="_blank" className="hover:text-amber-400">Privacy</a></li>
-                <li>
-                  <AnimatedButton onClick={() => onNavigate('admin-login')} variant="ghost" size="sm" className="px-0 hover:text-amber-400">
-                    Admin
-                  </AnimatedButton>
-                </li>
+                
                 <li><a href="/policies/terms.html" target="_blank" className="hover:text-amber-400">Terms</a></li>
                 <li><a href="/policies/disclosures.html" target="_blank" className="hover:text-amber-400">Disclosures</a></li>
               </ul>
