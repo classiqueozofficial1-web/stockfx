@@ -133,6 +133,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     },
   ];
 
+  const [activePartner, setActivePartner] = useState<number | null>(null);
+
+
   // Show contact modal every 2 minutes
   useEffect(() => {
     const timer = setInterval(() => {
@@ -606,46 +609,37 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <h2 className="text-4xl font-bold text-white text-center mb-4">Trusted by Industry Leaders</h2>
         <p className="text-center text-slate-300 mb-16">Powering the world's most innovative trading platforms</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-center">
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <TrendingUp className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Goldman Sachs</p>
-            <p className="text-slate-400 text-xs mt-1">Market Data Partner</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <BarChart3 className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Bloomberg</p>
-            <p className="text-slate-400 text-xs mt-1">News & Analytics</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <Briefcase className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Morgan Stanley</p>
-            <p className="text-slate-400 text-xs mt-1">Trading Infrastructure</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <Activity className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Nasdaq</p>
-            <p className="text-slate-400 text-xs mt-1">Exchange Integration</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <Wallet className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Coinbase</p>
-            <p className="text-slate-400 text-xs mt-1">Crypto Exchange</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <CreditCard className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Stripe</p>
-            <p className="text-slate-400 text-xs mt-1">Payment Gateway</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <Cloud className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">AWS</p>
-            <p className="text-slate-400 text-xs mt-1">Cloud Infrastructure</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 text-center hover:bg-white/10 transition">
-            <Phone className="h-12 w-12 text-amber-400 mx-auto mb-3" />
-            <p className="text-white font-semibold">Twilio</p>
-            <p className="text-slate-400 text-xs mt-1">Communication API</p>
-          </div>
+          {[
+            { name: 'Goldman Sachs', desc: 'Market Data Partner', Icon: TrendingUp },
+            { name: 'Bloomberg', desc: 'News & Analytics', Icon: BarChart3 },
+            { name: 'Morgan Stanley', desc: 'Trading Infrastructure', Icon: Briefcase },
+            { name: 'Nasdaq', desc: 'Exchange Integration', Icon: Activity },
+            { name: 'Coinbase', desc: 'Crypto Exchange', Icon: Wallet },
+            { name: 'Stripe', desc: 'Payment Gateway', Icon: CreditCard },
+            { name: 'AWS', desc: 'Cloud Infrastructure', Icon: Cloud },
+            { name: 'Twilio', desc: 'Communication API', Icon: Phone },
+          ].map((p, idx) => {
+            const Icon = p.Icon as any;
+            const active = activePartner === idx;
+            return (
+              <div
+                key={p.name}
+                onClick={() => setActivePartner(active ? null : idx)}
+                className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center transition-transform duration-300 cursor-pointer ${
+                  active ? 'transform -translate-y-3 scale-105 ring-2 ring-amber-400 bg-white/10 z-20' : 'hover:-translate-y-1 hover:shadow-xl'
+                }`}
+              >
+                <Icon className="h-12 w-12 text-amber-400 mx-auto mb-3" />
+                <p className="text-white font-semibold">{p.name}</p>
+                <p className="text-slate-400 text-xs mt-1">{p.desc}</p>
+                {active && (
+                  <div className="mt-4 text-sm text-slate-200 p-3 bg-black/20 rounded">
+                    Trusted partner since 2018 — delivering low-latency market data and enterprise-grade integrations with StockFx.
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
