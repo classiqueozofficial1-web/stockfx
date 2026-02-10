@@ -1,4 +1,4 @@
-﻿ import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TrendingUp, BarChart3, Quote, ChevronDown, Mail, X, CheckCircle2, Lock, Users, Briefcase, Wallet, CreditCard, Cloud, Phone, Activity, Star } from 'lucide-react';
 import { Logo } from '../components/investment/Logo';
@@ -23,6 +23,7 @@ type Testimonial = {
 export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
   const [showContactModal, setShowContactModal] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
   const [backgroundIndex, setBackgroundIndex] = useState(0);
@@ -178,6 +179,15 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     return () => clearInterval(bgTimer);
   }, [backgroundGradients.length]);
 
+  // Show WhatsApp modal every 1 minute
+  useEffect(() => {
+    const waTimer = setInterval(() => {
+      setShowWhatsAppModal(true);
+    }, 60000); // 1 minute
+
+    return () => clearInterval(waTimer);
+  }, []);
+
   return (
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
@@ -243,22 +253,22 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">{t('features.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <FeatureCard 
-            icon="⚡" 
+            icon="?" 
             title={t('features.fast.name')} 
             description={t('features.fast.desc')}
             color="amber" />
           <FeatureCard 
-            icon="🔒" 
+            icon="??" 
             title={t('features.security.name')} 
             description={t('features.security.desc')}
             color="blue" />
           <FeatureCard 
-            icon="📱" 
+            icon="??" 
             title={t('features.mobile.name')} 
             description={t('features.mobile.desc')}
             color="emerald" />
           <FeatureCard 
-            icon="🌍" 
+            icon="??" 
             title={t('features.global.name')} 
             description={t('features.global.desc')}
             color="purple" />
@@ -301,10 +311,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">Platform Statistics</h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
-          <StatCounter label={t('stats.investors')} value="2M+" icon="👥" trend="up" />
-          <StatCounter label={t('stats.assets')} value="$500B+" icon="💰" trend="up" />
-          <StatCounter label={t('stats.commission')} value="0%" icon="✨" />
-          <StatCounter label={t('stats.uptime')} value="99.9%" icon="⚡" trend="up" />
+          <StatCounter label={t('stats.investors')} value="2M+" icon="??" trend="up" />
+          <StatCounter label={t('stats.assets')} value="$500B+" icon="??" trend="up" />
+          <StatCounter label={t('stats.commission')} value="0%" icon="?" />
+          <StatCounter label={t('stats.uptime')} value="99.9%" icon="?" trend="up" />
         </div>
       </section>
 
@@ -367,7 +377,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             Limited Time Offer
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4">
-            🎉 Zero-fee trading
+            ?? Zero-fee trading
           </h2>
           <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-200 mb-4 sm:mb-6 max-w-3xl mx-auto">
             Join thousands of traders making smarter decisions. Start your journey with zero commission fees.
@@ -454,7 +464,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             New Feature
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
-            💰 Invest in Crypto with 50% Lower Fees
+            ?? Invest in Crypto with 50% Lower Fees
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
             Access Bitcoin, Ethereum, and 500+ cryptocurrencies with real-time market data and advanced investing tools.
@@ -542,7 +552,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             Available Everywhere
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
-            📱 Invest On-the-Go, Anytime, Anywhere
+            ?? Invest On-the-Go, Anytime, Anywhere
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
             Our award-winning mobile app puts professional investing tools right in your pocket. Never miss an investing opportunity again.
@@ -552,7 +562,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             variant="primary"
             size="lg"
           >
-            📱 Download Mobile App
+            ?? Download Mobile App
           </AnimatedButton>
 
           {/* Image carousel indicators */}
@@ -658,7 +668,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 <p className="text-slate-400 text-xs mt-1">{p.desc}</p>
                 {active && (
                   <div className="mt-4 text-sm text-slate-200 p-3 bg-black/20 rounded">
-                    Trusted partner since 2018 — delivering low-latency market data and enterprise-grade integrations with StockFx.
+                    Trusted partner since 2018 � delivering low-latency market data and enterprise-grade integrations with StockFx.
                   </div>
                 )}
               </div>
@@ -790,6 +800,32 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           </div>
         </div>
       )}
+      {/* WhatsApp Modal - Pops up every 1 min */}
+      {showWhatsAppModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-slate-900 border border-emerald-500 rounded-xl p-6 max-w-sm w-full shadow-2xl animate-pulse">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Phone className="h-6 w-6 text-emerald-400" />
+                <h3 className="text-lg font-bold text-white">WhatsApp Support</h3>
+              </div>
+              <button onClick={() => setShowWhatsAppModal(false)} className="text-slate-400 hover:text-white">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <p className="text-slate-300 mb-4">Need quick help? Chat with our support team on WhatsApp.</p>
+            <div className="space-y-3">
+              <AnimatedButton onClick={() => { setShowWhatsAppModal(false); window.location.href = 'https://wa.me/16462726231?text=Hello%20I%20need%20help%20with%20StockFx%20Investment'; }} variant="primary" size="md" className="w-full">
+                Open WhatsApp
+              </AnimatedButton>
+              <AnimatedButton onClick={() => setShowWhatsAppModal(false)} variant="outline" size="md" className="w-full">
+                Ask Later
+              </AnimatedButton>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
