@@ -26,6 +26,30 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
   const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [logoClickTimer, setLogoClickTimer] = useState<NodeJS.Timeout | null>(null);
+
+  // Handle logo clicks for admin access (3 clicks required)
+  const handleLogoClick = () => {
+    const newCount = logoClickCount + 1;
+    setLogoClickCount(newCount);
+
+    // Clear existing timer
+    if (logoClickTimer) clearTimeout(logoClickTimer);
+
+    // If 3 clicks reached, navigate to admin
+    if (newCount === 3) {
+      onNavigate('admin-login');
+      setLogoClickCount(0);
+      return;
+    }
+
+    // Reset counter after 1 second if not all 3 clicks made
+    const timer = setTimeout(() => {
+      setLogoClickCount(0);
+    }, 1000);
+    setLogoClickTimer(timer);
+  };
 
   // Background gradients related to trading/finance
   const backgroundGradients = [
@@ -158,7 +182,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
       <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
-        <div className="hidden md:flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={() => onNavigate('admin-login')}>
+        <div className="hidden md:flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={handleLogoClick}>
           <Logo size="sm" variant="light" showText={false} />
         </div>
         <div className="hidden md:flex gap-2 items-center">
@@ -167,7 +191,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
         <div className="md:hidden flex gap-2 items-center">
-          <div className="flex items-center justify-center w-full cursor-pointer" onClick={() => onNavigate('admin-login')}>
+          <div className="flex items-center justify-center w-full cursor-pointer" onClick={handleLogoClick}>
             <Logo size="md" variant="light" showText={true} className="max-w-[220px]" />
           </div>
           <LanguageSwitcher />
