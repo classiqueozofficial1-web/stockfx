@@ -41,7 +41,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'Sarah Chen',
       role: 'Day Trader',
       company: 'Independent',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=faces',
       quote: 'The platform is incredibly fast. My orders execute in milliseconds. Worth every penny.',
       rating: 5,
     },
@@ -49,7 +49,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'Michael Johnson',
       role: 'Portfolio Manager',
       company: 'Johnson Capital',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=faces',
       quote: 'Best trading platform I\'ve used. Charts, tools, and support are all top-notch.',
       rating: 5,
     },
@@ -57,7 +57,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'David Park',
       role: 'Tech Entrepreneur',
       company: 'StartupX',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1545996124-1f3b1f1b4b2d?w=200&h=200&fit=crop&crop=faces',
       quote: 'Security and speed matter for my business. StockFx API integration with fintech tools is seamless.',
       rating: 5,
     },
@@ -65,7 +65,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'Jessica Rodriguez',
       role: 'Wealth Advisor',
       company: 'Rodriguez & Associates',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&h=200&fit=crop&crop=faces',
       quote: 'Best platform for managing multi-client portfolios. The reporting tools save me hours daily.',
       rating: 5,
     },
@@ -73,7 +73,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'James Mitchell',
       role: 'Crypto Investor',
       company: 'Independent',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1531123414780-f52b6b5f3f5b?w=200&h=200&fit=crop&crop=faces',
       quote: 'Seamless crypto trading with the same professional tools as traditional stocks. Highly impressed!',
       rating: 5,
     },
@@ -81,11 +81,13 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       name: 'Emma Thompson',
       role: 'Financial Analyst',
       company: 'Global Insights',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1542892713-1b0f6cc6a1f5?w=200&h=200&fit=crop&crop=faces',
       quote: 'The analytics dashboard is phenomenal. Real-time insights that actually help me make better decisions.',
       rating: 5,
     },
   ];
+
+  const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -242,8 +244,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <p className="text-center text-slate-300 mb-8 text-xs sm:text-sm">{t('testimonials.subtitle')}</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {testimonials.map((t, i) => (
-            <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition">
-              <div className="flex items-center gap-1 mb-4">
+            <div
+              key={i}
+              onClick={() => setActiveTestimonial(activeTestimonial === i ? null : i)}
+              className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 transition-transform duration-300 cursor-pointer ${
+                activeTestimonial === i ? '-translate-y-3 scale-105 ring-2 ring-amber-400 z-20' : 'hover:-translate-y-1 hover:shadow-lg'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-3">
                 {[...Array(t.rating)].map((_, j) => (
                   <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
                 ))}
@@ -251,7 +259,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               <Quote className="h-6 w-6 text-amber-500/30 mb-3" />
               <p className="text-sm text-slate-300 mb-4 italic">"{t.quote}"</p>
               <div className="flex items-center">
-                <img src={t.image} alt={t.name} className="h-10 w-10 rounded-full object-cover border border-amber-500/30" />
+                <img src={t.image} alt={t.name} className={`h-12 w-12 rounded-full object-cover border border-amber-500/30 ${activeTestimonial === i ? 'ring-2 ring-amber-400' : ''}`} />
                 <div className="ml-3">
                   <p className="text-sm font-semibold text-white">{t.name}</p>
                   <p className="text-xs text-slate-400">{t.role}</p>
