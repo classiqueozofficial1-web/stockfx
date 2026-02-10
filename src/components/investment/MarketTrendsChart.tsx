@@ -47,7 +47,7 @@ export function MarketTrendsChart({
   const fillPath = `${pathD} L ${points[points.length - 1].x} ${height - padding} L ${padding} ${height - padding} Z`;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 dashboard-card">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-bold text-slate-900">{title}</h3>

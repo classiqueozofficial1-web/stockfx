@@ -166,3 +166,22 @@
     background-attachment: scroll !important;
   }
 }
+
+/* Dashboard-specific small-screen tweaks */
+@media (max-width: 640px) {
+  .dashboard-card {
+    padding: 0.6rem !important;
+  }
+  .dashboard-card h3,
+  .dashboard-card h4 {
+    font-size: 0.95rem !important;
+  }
+  .dashboard-card p,
+  .dashboard-card .text-sm {
+    font-size: 0.85rem !important;
+  }
+  /* Reduce large gaps in dashboard grids */
+  .dashboard-tight-grid > * {
+    margin-bottom: 0.5rem !important;
+  }
+}

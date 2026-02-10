@@ -40,7 +40,7 @@ export function GainLossHeatmap({
   const totalSize = sectors.reduce((sum, s) => sum + s.size, 0);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 dashboard-card">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-slate-900">{title}</h3>
         <span className="text-xs text-slate-500">Sector Performance</span>

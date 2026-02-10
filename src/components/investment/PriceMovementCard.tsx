@@ -26,7 +26,7 @@ export function PriceMovementCard({
   const pricePosition = ((currentPrice - low) / priceRange) * 100;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition-shadow duration-300 dashboard-card">
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>

@@ -155,7 +155,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         return (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4">
+            <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4 dashboard-card">
               <h3 className="font-bold text-slate-900 mb-3 text-sm sm:text-base">{t('dashboard.yourHoldings')}</h3>
               <div className="space-y-2">
                 {[
@@ -184,7 +184,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
             </div>
 
             <div className="space-y-3">
-              <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4">
+              <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 sm:p-4 dashboard-card">
                 <h3 className="font-bold text-slate-900 mb-2 sm:mb-3 text-sm sm:text-base">{t('dashboard.portfolioSummary')}</h3>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center pb-3 border-b border-slate-100">
@@ -206,7 +206,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-6 text-white shadow-lg">
+              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-6 text-white shadow-lg dashboard-card">
                 <h4 className="font-bold mb-3">{t('dashboard.performance')}</h4>
                 <div className="grid grid-cols-3 gap-3">
                   <div>

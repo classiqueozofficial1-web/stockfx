@@ -3,7 +3,7 @@ export function PortfolioChart({ totalBalance = 0 }: { totalBalance?: number }) 
   const [timeRange, setTimeRange] = useState('1M');
   const ranges = ['1D', '1W', '1M', '3M', '1Y', 'ALL'];
   return (
-    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 dashboard-card">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
         <div>
           <h3 className="text-lg font-bold text-slate-900">

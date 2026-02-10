@@ -30,7 +30,7 @@ export function TopPerformersTable({
   const displayData = data.slice(0, limit);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+    <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 dashboard-card overflow-x-auto">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-slate-900">{title}</h3>
         <TrendingUp className="h-5 w-5 text-emerald-600" />
