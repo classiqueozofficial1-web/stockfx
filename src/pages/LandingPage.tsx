@@ -153,17 +153,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
       <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
-        <div className="flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={() => onNavigate('landing')}>
+        <div className="flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={() => onNavigate('admin-login')}>
           <Logo size="sm" variant="light" showText={false} />
         </div>
         <div className="hidden md:flex gap-2 items-center">
           <LanguageSwitcher />
-          <AnimatedButton onClick={() => onNavigate('admin-login')} variant="ghost" size="sm">Admin</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
         <div className="md:hidden flex gap-2 items-center">
-          <div className="flex items-center cursor-pointer" onClick={() => onNavigate('landing')}>
+          <div className="flex items-center cursor-pointer" onClick={() => onNavigate('admin-login')}>
             <Logo size="md" variant="light" showText={true} />
           </div>
           <LanguageSwitcher />
