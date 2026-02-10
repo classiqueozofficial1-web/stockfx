@@ -142,3 +142,27 @@
 .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
 .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
 .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Mobile-specific tweaks */
+@media (max-width: 640px) {
+  /* Reduce very large headings when Tailwind responsive classes miss a case */
+  .hero-title {
+    font-size: 1.75rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem !important;
+  }
+
+  /* Make primary hero CTAs full width on small screens */
+  .hero-cta {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* Prevent background-fixed artifacts on older mobile browsers when Tailwind `bg-fixed` is present */
+  .bg-fixed {
+    background-attachment: scroll !important;
+  }
+}

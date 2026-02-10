@@ -174,19 +174,19 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 mr-1 animate-pulse" />
           {t('hero.badge')}
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight">
+        <h1 className="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight">
           {t('hero.title1')}
           <br />
           <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">{t('hero.title2')}</span>
         </h1>
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
+        <p className="hero-desc text-xs sm:text-sm md:text-base lg:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
           {t('hero.description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">
+          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md" className="hero-cta">
             {t('hero.startButton')}
           </AnimatedButton>
-          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="md">
+          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="md" className="hero-cta">
             {t('hero.signInButton')}
           </AnimatedButton>
         </div>
@@ -271,7 +271,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Why Choose StockFx - Image Carousel Section */}
-      <section className="relative py-48 overflow-hidden">
+      <section className="relative py-24 sm:py-48 overflow-hidden">
         {/* Background image carousel */}
         <div
           className="absolute inset-0 transition-all duration-1000 ease-in-out"
@@ -279,7 +279,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: backgroundIndex % 5 === 0 ? 1 : 0,
           }}
         />
@@ -289,7 +288,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1611974789855-9c2a0a7fbda3?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: backgroundIndex % 5 === 1 ? 1 : 0,
           }}
         />
@@ -299,7 +297,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: backgroundIndex % 5 === 2 ? 1 : 0,
           }}
         />
@@ -309,7 +306,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1579532900298-0d2b25ba2b71?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: backgroundIndex % 5 === 3 ? 1 : 0,
           }}
         />
@@ -319,7 +315,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1626190174326-8eab0e94e9d0?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: backgroundIndex % 5 === 4 ? 1 : 0,
           }}
         />
@@ -363,7 +358,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Crypto Trading - Image Carousel Section 2 */}
-      <section className="relative py-48 overflow-hidden">
+      <section className="relative py-24 sm:py-48 overflow-hidden">
         {/* Background image carousel */}
         <div
           className="absolute inset-0 transition-all duration-1000 ease-in-out"
@@ -371,7 +366,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1518546305927-30bccb39ff38?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 5) % 5 === 0 ? 1 : 0,
           }}
         />
@@ -381,7 +375,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1516522973542-b23dd067fdd1?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 5) % 5 === 1 ? 1 : 0,
           }}
         />
@@ -391,7 +384,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1621761191007-11cf3b393641?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 5) % 5 === 2 ? 1 : 0,
           }}
         />
@@ -401,7 +393,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 5) % 5 === 3 ? 1 : 0,
           }}
         />
@@ -411,7 +402,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1563206772-641972bea9fa?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 5) % 5 === 4 ? 1 : 0,
           }}
         />
@@ -425,10 +415,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <span className="flex h-2 w-2 rounded-full bg-blue-400 mr-2 animate-pulse" />
             New Feature
           </div>
-          <h2 className="text-7xl font-black text-white mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
             💰 Trade Crypto with 50% Lower Fees
           </h2>
-          <p className="text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
             Access Bitcoin, Ethereum, and 500+ cryptocurrencies with real-time market data and advanced trading tools.
           </p>
           <AnimatedButton
@@ -456,7 +446,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Mobile Trading - Image Carousel Section 3 */}
-      <section className="relative py-48 overflow-hidden">
+      <section className="relative py-24 sm:py-48 overflow-hidden">
         {/* Background image carousel */}
         <div
           className="absolute inset-0 transition-all duration-1000 ease-in-out"
@@ -464,7 +454,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 10) % 5 === 0 ? 1 : 0,
           }}
         />
@@ -474,7 +463,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 10) % 5 === 1 ? 1 : 0,
           }}
         />
@@ -484,7 +472,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 10) % 5 === 2 ? 1 : 0,
           }}
         />
@@ -494,7 +481,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 10) % 5 === 3 ? 1 : 0,
           }}
         />
@@ -504,7 +490,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             backgroundImage: `url('https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1200&h=600&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
             opacity: (backgroundIndex + 10) % 5 === 4 ? 1 : 0,
           }}
         />
@@ -518,10 +503,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <span className="flex h-2 w-2 rounded-full bg-green-400 mr-2 animate-pulse" />
             Available Everywhere
           </div>
-          <h2 className="text-7xl font-black text-white mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
             📱 Trade On-the-Go, Anytime, Anywhere
           </h2>
-          <p className="text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
             Our award-winning mobile app puts professional trading tools right in your pocket. Never miss a trading opportunity again.
           </p>
           <AnimatedButton
