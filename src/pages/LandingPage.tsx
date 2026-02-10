@@ -800,29 +800,20 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           </div>
         </div>
       )}
-      {/* WhatsApp Modal - Pops up every 1 min */}
+      {/* Floating WhatsApp icon - appears after 1 minute */}
       {showWhatsAppModal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-slate-900 border border-emerald-500 rounded-xl p-6 max-w-sm w-full shadow-2xl animate-pulse">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Phone className="h-6 w-6 text-emerald-400" />
-                <h3 className="text-lg font-bold text-white">WhatsApp Support</h3>
-              </div>
-              <button onClick={() => setShowWhatsAppModal(false)} className="text-slate-400 hover:text-white">
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <p className="text-slate-300 mb-4">Need quick help? Chat with our support team on WhatsApp.</p>
-            <div className="space-y-3">
-              <AnimatedButton onClick={() => { setShowWhatsAppModal(false); window.location.href = 'https://wa.me/16462726231?text=Hello%20I%20need%20help%20with%20StockFx%20Investment'; }} variant="primary" size="md" className="w-full">
-                Open WhatsApp
-              </AnimatedButton>
-              <AnimatedButton onClick={() => setShowWhatsAppModal(false)} variant="outline" size="md" className="w-full">
-                Ask Later
-              </AnimatedButton>
-            </div>
-          </div>
+        <div className="fixed bottom-6 right-6 z-60 flex flex-col items-end gap-2">
+          <button
+            onClick={() => window.open('https://wa.me/16462726231?text=Hello%20I%20need%20help%20with%20StockFx%20Investment', '_blank')}
+            aria-label="Open WhatsApp"
+            title="Chat on WhatsApp"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center animate-pulse"
+          >
+            <Phone className="h-6 w-6" />
+          </button>
+          <button onClick={() => setShowWhatsAppModal(false)} className="text-xs text-slate-300 hover:text-white">
+            Dismiss
+          </button>
         </div>
       )}
     </div>
