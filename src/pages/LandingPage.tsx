@@ -166,7 +166,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <Logo size="md" variant="light" showText={true} className="max-w-[220px]" />
           </div>
           <LanguageSwitcher />
-          <AnimatedButton onClick={() => onNavigate('login')} variant="primary" size="sm">{t('nav.signIn')}</AnimatedButton>
+          <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
+          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="sm">Get Started</AnimatedButton>
         </div>
       </nav>
 

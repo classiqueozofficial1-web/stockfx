@@ -27,7 +27,9 @@ export function LanguageSwitcher() {
     <div className="relative">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-white hover:text-amber-400 transition text-sm">
+        aria-expanded={isOpen}
+        aria-label="Change language"
+        className="flex items-center gap-2 px-2 py-1 bg-slate-800/60 border border-slate-700 rounded-md text-white hover:bg-slate-700 transition text-sm">
         <Globe className="h-4 w-4" />
         <span className="hidden sm:inline">{currentLanguage?.flag}</span>
         <span className="hidden md:inline text-xs">{currentLanguage?.code.toUpperCase()}</span>
@@ -38,7 +40,7 @@ export function LanguageSwitcher() {
       )}
       
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 max-h-96 flex flex-col">
+        <div className="absolute mt-2 right-0 left-2 sm:left-auto sm:right-0 w-auto sm:w-72 md:w-80 max-w-[92vw] bg-slate-800 border border-slate-700 rounded-lg shadow-2xl z-50 max-h-96 flex flex-col">
           {/* Search Header */}
           <div className="sticky top-0 p-3 border-b border-slate-700 bg-slate-800">
             <div className="relative">
