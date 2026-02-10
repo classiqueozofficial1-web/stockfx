@@ -780,7 +780,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
             <p className="text-slate-300 mb-6">{t('contact.message')}</p>
             <div className="space-y-3">
-              <AnimatedButton onClick={() => { setShowContactModal(false); window.location.href = 'mailto:support@stockfx.com'; }} variant="primary" size="md" className="w-full">
+              <AnimatedButton onClick={() => { setShowContactModal(false); window.location.href = 'mailto:officialstockfxinvestment@gmail.com'; }} variant="primary" size="md" className="w-full">
                 {t('contact.contact')}
               </AnimatedButton>
               <AnimatedButton onClick={() => setShowContactModal(false)} variant="outline" size="md" className="w-full">
