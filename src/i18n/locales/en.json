@@ -7,7 +7,7 @@
     "badge": "🎉 Zero-fee trading on your first $10,000",
     "title1": "Invest Smarter.",
     "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Trade with confidence.",
+    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
     "startButton": "Start Investing Free",
     "signInButton": "Sign In"
   },
@@ -15,7 +15,7 @@
     "title": "Why Choose StockFx?",
     "fast": {
       "name": "Lightning Fast",
-      "desc": "Execute trades in milliseconds with ultra-low latency."
+      "desc": "Execute investments in milliseconds with ultra-low latency."
     },
     "security": {
       "name": "Bank-Grade Security",
@@ -23,7 +23,7 @@
     },
     "mobile": {
       "name": "Mobile First",
-      "desc": "Full-featured app. Trade anywhere, anytime."
+      "desc": "Full-featured app. Invest anywhere, anytime."
     },
     "global": {
       "name": "Global Markets",
@@ -31,12 +31,12 @@
     }
   },
   "testimonials": {
-    "title": "Loved by Traders Worldwide",
+    "title": "Loved by Investors Worldwide",
     "subtitle": "Join over 2 million investors who trust StockFx"
   },
   "stats": {
-    "traders": "Active Traders",
-    "assets": "Assets Traded",
+    "investors": "Active Investors",
+    "assets": "Assets Invested",
     "commission": "Commission Fees",
     "uptime": "Uptime"
   },
@@ -63,7 +63,7 @@
       "duration": "4+ Months"
     },
     "features": {
-      "commissionFree": "Commission-free trades",
+      "commissionFree": "Commission-free investments",
       "basicCharting": "Basic charting tools",
       "mobileAccess": "Mobile app access",
       "watchlists": "2 watchlists",
@@ -99,7 +99,7 @@
     }
   },
   "cta": {
-    "title": "Ready to Start Trading?",
+    "title": "Ready to Start Investing?",
     "subtitle": "Join millions of investors. Get $50 in free stock today.",
     "button": "Create Free Account"
   },
@@ -215,7 +215,7 @@
       "totalBalance": "Total Balance",
       "totalProfit": "Total Profit",
       "monthlyIncome": "Monthly Income",
-      "activeTrades": "Active Trades",
+      "activeInvestments": "Active Investments",
       "marketWatchlist": "Market Watchlist",
       "viewAll": "View All",
       "quickTransfer": "Quick Transfer",

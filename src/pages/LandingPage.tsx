@@ -39,7 +39,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const testimonials: Testimonial[] = [
     {
       name: 'Sarah Chen',
-      role: 'Day Trader',
+      role: 'Day Investor',
       company: 'Independent',
       image: 'https://i.pravatar.cc/200?img=11',
       quote: 'The platform is incredibly fast. My orders execute in milliseconds. Worth every penny.',
@@ -103,8 +103,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       answer: 'Yes. Cash is FDIC insured up to $250k, securities protected by SIPC up to $500k. We use 256-bit encryption, 2FA, and cold storage for 95% of assets.',
     },
     {
-      question: 'Can I trade on mobile?',
-      answer: 'Absolutely! Our full-featured mobile app gives you complete trading, charting, and account management on iOS and Android.',
+      question: 'Can I invest on mobile?',
+      answer: 'Absolutely! Our full-featured mobile app gives you complete investing, charting, and account management on iOS and Android.',
     },
   ];
 
@@ -114,7 +114,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       price: '$1,000 - $5,000',
       description: 'Initial Investment Range',
       duration: '1 Month',
-      features: ['Commission-free trades', 'Basic charting tools', 'Mobile app access', '2 watchlists', 'Email support'],
+      features: ['Commission-free investments', 'Basic charting tools', 'Mobile app access', '2 watchlists', 'Email support'],
     },
     {
       name: 'Pro',
@@ -277,7 +277,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">Platform Statistics</h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
-          <StatCounter label={t('stats.traders')} value="2M+" icon="👥" trend="up" />
+          <StatCounter label={t('stats.investors')} value="2M+" icon="👥" trend="up" />
           <StatCounter label={t('stats.assets')} value="$500B+" icon="💰" trend="up" />
           <StatCounter label={t('stats.commission')} value="0%" icon="✨" />
           <StatCounter label={t('stats.uptime')} value="99.9%" icon="⚡" trend="up" />
@@ -430,10 +430,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             New Feature
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
-            💰 Trade Crypto with 50% Lower Fees
+            💰 Invest in Crypto with 50% Lower Fees
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
-            Access Bitcoin, Ethereum, and 500+ cryptocurrencies with real-time market data and advanced trading tools.
+            Access Bitcoin, Ethereum, and 500+ cryptocurrencies with real-time market data and advanced investing tools.
           </p>
           <AnimatedButton
             onClick={() => onNavigate('register')}
@@ -518,10 +518,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             Available Everywhere
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8">
-            📱 Trade On-the-Go, Anytime, Anywhere
+            📱 Invest On-the-Go, Anytime, Anywhere
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-12 max-w-3xl mx-auto">
-            Our award-winning mobile app puts professional trading tools right in your pocket. Never miss a trading opportunity again.
+            Our award-winning mobile app puts professional investing tools right in your pocket. Never miss an investing opportunity again.
           </p>
           <AnimatedButton
             onClick={() => onNavigate('register')}
