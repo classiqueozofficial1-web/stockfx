@@ -1,238 +1,131 @@
 {
   "nav": {
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "Вхід",
+    "getStarted": "Почати"
   },
   "hero": {
-    "badge": "🎉 Zero-fee trading on your first $10,000",
-    "title1": "Invest Smarter.",
-    "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
-    "startButton": "Start Investing Free",
-    "signInButton": "Sign In"
+    "badge": "🎉 Без комісій для перших $10,000",
+    "title1": "Інвестуйте розумніше.",
+    "title2": "Зростайте швидше.",
+    "description": "Платформа нового покоління для акцій, крипто та ETF. Професійні інструменти. Нульова складність. Інвестуйте з впевненістю.",
+    "startButton": "Почніть інвестувати безплатно",
+    "signInButton": "Вхід"
   },
   "features": {
-    "title": "Why Choose StockFx?",
+    "title": "Чому вибрати StockFx?",
     "fast": {
-      "name": "Lightning Fast",
-      "desc": "Execute investments in milliseconds with ultra-low latency."
+      "name": "Блискавично швидко",
+      "desc": "Виконуйте інвестиції в мілісекундах з ультранизькою затримкою."
     },
     "security": {
-      "name": "Bank-Grade Security",
-      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
+      "name": "Безпека банківського рівня",
+      "desc": "256-битне шифрування, 2FA, захист страхування FDIC."
     },
     "mobile": {
-      "name": "Mobile First",
-      "desc": "Full-featured app. Invest anywhere, anytime."
+      "name": "Мобільні додатки",
+      "desc": "Повнофункціональний додаток. Інвестуйте будь-де, будь-коли."
     },
     "global": {
-      "name": "Global Markets",
-      "desc": "Access stocks, crypto, ETFs, and options worldwide."
+      "name": "Глобальні ринки",
+      "desc": "Доступ до акцій, крипто, ETF та опціонів у всьому світі."
     }
   },
   "testimonials": {
-    "title": "Loved by Investors Worldwide",
-    "subtitle": "Join over 2 million investors who trust StockFx"
+    "title": "Улюблено інвесторами по всьому світу",
+    "subtitle": "Приєднайтеся до понад 2 мільйонів інвесторів, які довіряють StockFx"
   },
   "stats": {
-    "investors": "Active Investors",
-    "assets": "Assets Invested",
-    "commission": "Commission Fees",
-    "uptime": "Uptime"
+    "investors": "Активні інвестори",
+    "assets": "Вкладені активи",
+    "commission": "Комісійні збори",
+    "uptime": "Час роботи"
   },
   "pricing": {
-    "title": "Investment Plans Tailored for You",
-    "subtitle": "Choose an investment tier that matches your portfolio size",
+    "title": "Інвестиційні плани для вас",
+    "subtitle": "Виберіть рівень інвестицій, який відповідає вашому портфелю",
     "starter": {
-      "name": "Starter",
+      "name": "Початківець",
       "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+      "desc": "Діапазон початкових інвестицій",
+      "duration": "1 місяць"
     },
     "pro": {
       "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "Growth Investment Range",
-      "duration": "2-3 Months",
-      "popular": "Most Popular"
+      "desc": "Стандартний діапазон інвестицій",
+      "duration": "3 місяці"
     },
     "enterprise": {
-      "name": "Enterprise",
+      "name": "Підприємство",
       "price": "$25,000+",
-      "desc": "Premium Investment Range",
-      "duration": "4+ Months"
-    },
-    "features": {
-      "commissionFree": "Commission-free investments",
-      "basicCharting": "Basic charting tools",
-      "mobileAccess": "Mobile app access",
-      "watchlists": "2 watchlists",
-      "emailSupport": "Email support",
-      "advancedCharting": "Advanced charting & analysis",
-      "level2": "Real-time Level 2 data",
-      "unlimitedWatchlists": "Unlimited watchlists",
-      "support24": "Priority 24/7 support",
-      "apiAccess": "API access",
-      "advancedAlerts": "Advanced alerts",
-      "dedicatedManager": "Dedicated portfolio manager",
-      "strategy": "Custom strategy consulting",
-      "whiteLabel": "White-label solutions",
-      "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
-    },
-    "button": "Start Investing"
-  },
-  "trust": {
-    "title": "Your Trust, Our Priority",
-    "security": {
-      "name": "Military-Grade Security",
-      "desc": "256-bit encryption protects all your data in transit and at rest."
-    },
-    "insured": {
-      "name": "FDIC & SIPC Insured",
-      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
-    },
-    "compliant": {
-      "name": "Regulated & Compliant",
-      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
+      "desc": "Преміум діапазон інвестицій",
+      "duration": "6 місяців"
     }
   },
+  "trust": {
+    "title": "Чому довіряти нам?",
+    "items": [
+      {
+        "num": "1",
+        "title": "Регульовано SEC",
+        "desc": "Повністю ліцензовано та контролюється Комісією з цінних паперів США."
+      },
+      {
+        "num": "2",
+        "title": "Страхування FDIC",
+        "desc": "Ваші кошти захищені до $250,000 страхуванням FDIC."
+      },
+      {
+        "num": "3",
+        "title": "Наскрізне шифрування",
+        "desc": "Всі дані зашифровані військовим стандартом для максимального захисту."
+      }
+    ]
+  },
   "cta": {
-    "title": "Ready to Start Investing?",
-    "subtitle": "Join millions of investors. Get $50 in free stock today.",
-    "button": "Create Free Account"
+    "title": "Готові змінити своє фінансове майбутнє?",
+    "description": "Приєднайтеся до тисяч інвесторів, які вже почали. Без комісій, тільки результати.",
+    "button": "Відкрити рахунок зараз"
   },
   "footer": {
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
-    "platform": "Platform",
-    "company": "Company",
-    "legal": "Legal",
-    "social": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "security": "Security",
-    "about": "About Us",
-    "blog": "Blog",
-    "contact": "Contact",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "disclosures": "Disclosures",
-    "twitter": "Twitter",
-    "linkedin": "LinkedIn",
-    "youtube": "YouTube",
-    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
+    "links": "Посилання",
+    "company": "Компанія",
+    "legal": "Правова",
+    "social": "Соціальні",
+    "copyright": "© 2025 StockFx. Всі права захищені."
   },
   "contact": {
-    "title": "Need Help?",
-    "message": "Have questions about trading? Our account officers are here to help you get started!",
-    "contact": "Contact Our Team",
-    "later": "Maybe Later"
+    "title": "Зв'яжіться з нами",
+    "subtitle": "Ми готові вам допомогти",
+    "name": "Ім'я",
+    "email": "Електронна пошта",
+    "message": "Повідомлення",
+    "submit": "Відправити",
+    "phone": "Телефон",
+    "address": "Адреса"
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Or create a new account",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "signInButton": "Sign in",
-    "noAccount": "create a new account",
-    "backToHome": "Back to Home",
-    "serverChecking": "Checking server...",
-    "serverUp": "Server is up — try signing in again.",
-    "thirdParty": "Or continue with",
-    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
+    "title": "Вхід",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "submit": "Вхід",
+    "signup": "Реєстрація",
+    "forgotPassword": "Забули пароль?"
   },
   "register": {
-    "title": "Create your account",
-    "subtitle": "Already have an account?",
-    "haveAccount": "Sign in",
-    "firstNameLabel": "First Name",
-    "firstNamePlaceholder": "John",
-    "lastNameLabel": "Last Name",
-    "lastNamePlaceholder": "Doe",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
-    "passwordHelper": "Must be at least 8 characters",
-    "termsLabel": "I agree to the",
-    "terms": "Terms",
-    "and": "and",
-    "privacy": "Privacy Policy",
-    "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "title": "Реєстрація",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердіть пароль",
+    "submit": "Реєстрація",
+    "termsAgreement": "Я погоджуюся з умовами та положеннями"
   },
   "dashboard": {
-    "loading": "Loading dashboard...",
-    "notAuthenticated": "Please log in to view your dashboard.",
-    "goToLogin": "Go to Login",
-    "signOut": "Sign Out",
-    "yourHoldings": "Your Holdings",
-    "portfolioSummary": "Portfolio Summary",
-    "totalValue": "Total Value",
-    "unrealizedGains": "Unrealized Gains",
-    "return": "Return %",
-    "allocation": "Allocation",
-    "assets": "Assets",
-    "performance": "Performance",
-    "welcome": "Welcome, {{name}}!",
-    "accountCreated": "Account created successfully",
-    "emailAddress": "Email Address",
-    "accountStatus": "Account Status",
-    "active": "Active",
-    "currentBalance": "Current Balance",
-    "overviewTab": "Overview",
-    "portfolioTab": "Portfolio",
-    "settingsTab": "Settings",
-    "accountSettings": "Account Settings",
-    "manageAccount": "Manage your account and preferences",
-    "profileInformation": "Profile Information",
-    "fullName": "Full Name",
-    "security": "Security",
-    "newPassword": "New Password (optional)",
-    "leaveBlank": "Leave blank to keep current password",
-    "preferences": "Preferences",
-    "emailNotifications": "Email notifications",
-    "priceAlerts": "Price alerts",
-    "marketingEmails": "Marketing emails",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "noChanges": "No changes to save",
-    "settingsUpdated": "Settings updated successfully!",
-    "failedToSave": "Failed to save settings",
-    "searchAssets": "Search assets...",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications yet",
-    "totalBalance": "Total Balance",
-    "totalProfit": "Total Profit",
-    "monthlyIncome": "Monthly Income",
-    "activeInvestments": "Active Investments",
-    "marketWatchlist": "Market Watchlist",
-    "viewAll": "View All",
-    "quickTransfer": "Quick Transfer",
-    "transferMessage": "Move funds instantly between accounts.",
-    "send": "Send",
-    "addMoney": "Add Money",
-    "recentActivity": "Recent Activity",
-    "viewAllHistory": "View All History",
-    "assetAllocation": "Asset Allocation",
-    "totalAssets": "Total Assets",
-    "stocks": "Stocks",
-    "crypto": "Crypto",
-    "etfs": "ETFs",
-    "cash": "Cash",
-    "shares": "shares",
-    "yesterday": "Yesterday",
-    "investPro": "InvestPro",
-    "topHoldings": "Your Top Holdings"
+    "title": "Приборна панель",
+    "welcome": "Ласкаво просимо",
+    "portfolio": "Портфель",
+    "balance": "Баланс",
+    "investments": "Інвестиції",
+    "returns": "Повернення"
   }
 }

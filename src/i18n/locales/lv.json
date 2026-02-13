@@ -1,238 +1,131 @@
 {
   "nav": {
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "Pierakstīties",
+    "getStarted": "Sākt"
   },
   "hero": {
-    "badge": "🎉 Zero-fee trading on your first $10,000",
-    "title1": "Invest Smarter.",
-    "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
-    "startButton": "Start Investing Free",
-    "signInButton": "Sign In"
+    "badge": "🎉 Bez komisijas par pirmo $10,000",
+    "title1": "Investējiet gudri.",
+    "title2": "Augiet ātrāk.",
+    "description": "Jaunas paaudzes platforma akcijām, kriptovalūtām un ETF. Profesionāli rīki. Nulles sarežģītība. Investējiet ar pārliecību.",
+    "startButton": "Sākt bezmaksas ieguldīšanu",
+    "signInButton": "Pierakstīties"
   },
   "features": {
-    "title": "Why Choose StockFx?",
+    "title": "Kāpēc izvēlēties StockFx?",
     "fast": {
-      "name": "Lightning Fast",
-      "desc": "Execute investments in milliseconds with ultra-low latency."
+      "name": "Pērkons ātri",
+      "desc": "Izpildiet ieguldījumus milisekundēs ar ultra mazu latenci."
     },
     "security": {
-      "name": "Bank-Grade Security",
-      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
+      "name": "Bankas līmeņa drošība",
+      "desc": "256 bitu šifrēšana, 2FA, FDIC apdrošināšanas aizsardzība."
     },
     "mobile": {
-      "name": "Mobile First",
-      "desc": "Full-featured app. Invest anywhere, anytime."
+      "name": "Mobilā pirmā",
+      "desc": "Pilnībā funkcionāla lietotne. Ieguldiet jebkur, jebkad."
     },
     "global": {
-      "name": "Global Markets",
-      "desc": "Access stocks, crypto, ETFs, and options worldwide."
+      "name": "Globālie tirgus",
+      "desc": "Piekļūstiet akcijām, kriptovalūtām, ETF un opcijām visā pasaulē."
     }
   },
   "testimonials": {
-    "title": "Loved by Investors Worldwide",
-    "subtitle": "Join over 2 million investors who trust StockFx"
+    "title": "Ieguldītāju mīļots visā pasaulē",
+    "subtitle": "Pievienojieties vairāk nekā 2 miljoniem ieguldītāju, kas uzticas StockFx"
   },
   "stats": {
-    "investors": "Active Investors",
-    "assets": "Assets Invested",
-    "commission": "Commission Fees",
-    "uptime": "Uptime"
+    "investors": "Aktīvie ieguldītāji",
+    "assets": "Ieguldītie aktīvi",
+    "commission": "Komisijas maksa",
+    "uptime": "Darbības laiks"
   },
   "pricing": {
-    "title": "Investment Plans Tailored for You",
-    "subtitle": "Choose an investment tier that matches your portfolio size",
+    "title": "Jums paredzēti ieguldījumu plāni",
+    "subtitle": "Izvēlieties ieguldījumu līmeni, kas atbilst jūsu portfelim",
     "starter": {
-      "name": "Starter",
+      "name": "Iesācējs",
       "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+      "desc": "Sākotnējo ieguldījumu diapazons",
+      "duration": "1 mēnesis"
     },
     "pro": {
       "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "Growth Investment Range",
-      "duration": "2-3 Months",
-      "popular": "Most Popular"
+      "desc": "Standarta ieguldījumu diapazons",
+      "duration": "3 mēneši"
     },
     "enterprise": {
-      "name": "Enterprise",
+      "name": "Uzņēmums",
       "price": "$25,000+",
-      "desc": "Premium Investment Range",
-      "duration": "4+ Months"
-    },
-    "features": {
-      "commissionFree": "Commission-free investments",
-      "basicCharting": "Basic charting tools",
-      "mobileAccess": "Mobile app access",
-      "watchlists": "2 watchlists",
-      "emailSupport": "Email support",
-      "advancedCharting": "Advanced charting & analysis",
-      "level2": "Real-time Level 2 data",
-      "unlimitedWatchlists": "Unlimited watchlists",
-      "support24": "Priority 24/7 support",
-      "apiAccess": "API access",
-      "advancedAlerts": "Advanced alerts",
-      "dedicatedManager": "Dedicated portfolio manager",
-      "strategy": "Custom strategy consulting",
-      "whiteLabel": "White-label solutions",
-      "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
-    },
-    "button": "Start Investing"
-  },
-  "trust": {
-    "title": "Your Trust, Our Priority",
-    "security": {
-      "name": "Military-Grade Security",
-      "desc": "256-bit encryption protects all your data in transit and at rest."
-    },
-    "insured": {
-      "name": "FDIC & SIPC Insured",
-      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
-    },
-    "compliant": {
-      "name": "Regulated & Compliant",
-      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
+      "desc": "Premium ieguldījumu diapazons",
+      "duration": "6 mēneši"
     }
   },
+  "trust": {
+    "title": "Kāpēc mums uzticēties?",
+    "items": [
+      {
+        "num": "1",
+        "title": "SEC regulēts",
+        "desc": "Pilnībā licencēts un kontrolēts ASV Vērtspapīru un biržu komisijas."
+      },
+      {
+        "num": "2",
+        "title": "FDIC apdrošināšana",
+        "desc": "Jūsu līdzekļi ir aizsargāti līdz $250,000 FDIC apdrošināšanai."
+      },
+      {
+        "num": "3",
+        "title": "Beigu gals šifrēts",
+        "desc": "Visi dati ir šifrēti ar militāro standartu maksimālai aizsardzībai."
+      }
+    ]
+  },
   "cta": {
-    "title": "Ready to Start Investing?",
-    "subtitle": "Join millions of investors. Get $50 in free stock today.",
-    "button": "Create Free Account"
+    "title": "Vai esat gatavs mainīt savu finanšu nākotni?",
+    "description": "Pievienojieties tūkstošiem ieguldītāju, kas jau ir sākuši. Bez komisijas, tikai rezultāti.",
+    "button": "Atveriet kontu tūlīt"
   },
   "footer": {
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
-    "platform": "Platform",
-    "company": "Company",
-    "legal": "Legal",
-    "social": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "security": "Security",
-    "about": "About Us",
-    "blog": "Blog",
-    "contact": "Contact",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "disclosures": "Disclosures",
-    "twitter": "Twitter",
-    "linkedin": "LinkedIn",
-    "youtube": "YouTube",
-    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
+    "links": "Saites",
+    "company": "Uzņēmums",
+    "legal": "Juridisks",
+    "social": "Sociāls",
+    "copyright": "© 2025 StockFx. Visas tiesības paturētas."
   },
   "contact": {
-    "title": "Need Help?",
-    "message": "Have questions about trading? Our account officers are here to help you get started!",
-    "contact": "Contact Our Team",
-    "later": "Maybe Later"
+    "title": "Sazinies ar mums",
+    "subtitle": "Mēs esam šeit, lai jums palīdzētu",
+    "name": "Vārds",
+    "email": "E-pasts",
+    "message": "Ziņojums",
+    "submit": "Sūtīt",
+    "phone": "Tālrunis",
+    "address": "Adrese"
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Or create a new account",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "signInButton": "Sign in",
-    "noAccount": "create a new account",
-    "backToHome": "Back to Home",
-    "serverChecking": "Checking server...",
-    "serverUp": "Server is up — try signing in again.",
-    "thirdParty": "Or continue with",
-    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
+    "title": "Pierakstīties",
+    "email": "E-pasts",
+    "password": "Parole",
+    "submit": "Pierakstīties",
+    "signup": "Reģistrācija",
+    "forgotPassword": "Aizmirsāt paroli?"
   },
   "register": {
-    "title": "Create your account",
-    "subtitle": "Already have an account?",
-    "haveAccount": "Sign in",
-    "firstNameLabel": "First Name",
-    "firstNamePlaceholder": "John",
-    "lastNameLabel": "Last Name",
-    "lastNamePlaceholder": "Doe",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
-    "passwordHelper": "Must be at least 8 characters",
-    "termsLabel": "I agree to the",
-    "terms": "Terms",
-    "and": "and",
-    "privacy": "Privacy Policy",
-    "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "title": "Reģistrācija",
+    "email": "E-pasts",
+    "password": "Parole",
+    "confirmPassword": "Apstipriniet paroli",
+    "submit": "Reģistrācija",
+    "termsAgreement": "Piekrītu noteikumiem un nosacījumiem"
   },
   "dashboard": {
-    "loading": "Loading dashboard...",
-    "notAuthenticated": "Please log in to view your dashboard.",
-    "goToLogin": "Go to Login",
-    "signOut": "Sign Out",
-    "yourHoldings": "Your Holdings",
-    "portfolioSummary": "Portfolio Summary",
-    "totalValue": "Total Value",
-    "unrealizedGains": "Unrealized Gains",
-    "return": "Return %",
-    "allocation": "Allocation",
-    "assets": "Assets",
-    "performance": "Performance",
-    "welcome": "Welcome, {{name}}!",
-    "accountCreated": "Account created successfully",
-    "emailAddress": "Email Address",
-    "accountStatus": "Account Status",
-    "active": "Active",
-    "currentBalance": "Current Balance",
-    "overviewTab": "Overview",
-    "portfolioTab": "Portfolio",
-    "settingsTab": "Settings",
-    "accountSettings": "Account Settings",
-    "manageAccount": "Manage your account and preferences",
-    "profileInformation": "Profile Information",
-    "fullName": "Full Name",
-    "security": "Security",
-    "newPassword": "New Password (optional)",
-    "leaveBlank": "Leave blank to keep current password",
-    "preferences": "Preferences",
-    "emailNotifications": "Email notifications",
-    "priceAlerts": "Price alerts",
-    "marketingEmails": "Marketing emails",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "noChanges": "No changes to save",
-    "settingsUpdated": "Settings updated successfully!",
-    "failedToSave": "Failed to save settings",
-    "searchAssets": "Search assets...",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications yet",
-    "totalBalance": "Total Balance",
-    "totalProfit": "Total Profit",
-    "monthlyIncome": "Monthly Income",
-    "activeInvestments": "Active Investments",
-    "marketWatchlist": "Market Watchlist",
-    "viewAll": "View All",
-    "quickTransfer": "Quick Transfer",
-    "transferMessage": "Move funds instantly between accounts.",
-    "send": "Send",
-    "addMoney": "Add Money",
-    "recentActivity": "Recent Activity",
-    "viewAllHistory": "View All History",
-    "assetAllocation": "Asset Allocation",
-    "totalAssets": "Total Assets",
-    "stocks": "Stocks",
-    "crypto": "Crypto",
-    "etfs": "ETFs",
-    "cash": "Cash",
-    "shares": "shares",
-    "yesterday": "Yesterday",
-    "investPro": "InvestPro",
-    "topHoldings": "Your Top Holdings"
+    "title": "Kontroles panelis",
+    "welcome": "Laipni lūdzam",
+    "portfolio": "Portfelis",
+    "balance": "Atlikums",
+    "investments": "Ieguldījumi",
+    "returns": "Atgriešanās"
   }
 }
