@@ -1,4 +1,4 @@
- import { useState, useEffect } from 'react';
+  import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TrendingUp, BarChart3, Quote, ChevronDown, Mail, X, CheckCircle2, Lock, Users, Briefcase, Wallet, CreditCard, Cloud, Phone, Activity, Star } from 'lucide-react';
 import { Logo } from '../components/investment/Logo';
@@ -61,14 +61,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     'from-slate-900 via-rose-900 to-slate-900',
   ];
 
-  const testimonials: Testimonial[] = [
+  const testimonials: Testimonial[] = [  
     {
-      name: 'Sarah Chen',
+      name: 'Dominic Lee',
       role: 'Day Investor',
       company: 'Independent',
       image: 'https://i.pravatar.cc/200?img=11',
       quote: 'The platform is incredibly fast. My orders execute in milliseconds. Worth every penny.',
-      rating: 5,
+      rating:  5,
     },
     {
       name: 'Michael Johnson',
