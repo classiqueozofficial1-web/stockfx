@@ -16,9 +16,10 @@ const allTranslations: Record<string, any> = {};
 
 for (const [path, module] of Object.entries(localeModules)) {
   // Extract language code from path: './locales/en.json' -> 'en'
-  const match = path.match(/\/locales\/([a-z-]+)\.json$/);
+  // or './locales/pt-br.json' -> 'pt-br'
+  const match = path.match(/\/locales\/(.+)\.json$/i);
   if (match && match[1]) {
-    const langCode = match[1];
+    const langCode = match[1].toLowerCase();
     allTranslations[langCode] = module.default;
   }
 }
@@ -28,11 +29,28 @@ for (const [path, module] of Object.entries(localeModules)) {
 // ============================================================
 const resources: Record<string, any> = {};
 
+// Get the English translation for fallback
+const enTranslation = allTranslations['en'];
+
 SUPPORTED_LANGUAGES.forEach(lang => {
-  // Use loaded translation or fallback to English
-  const translation = allTranslations[lang.code] || allTranslations['en'];
+  // Use loaded translation, but ensure we have the language code
+  let translation = allTranslations[lang.code];
+  
+  // Try alternate lookup if not found
+  if (!translation) {
+    // For hyphenated codes, try the base language first
+    const baseLang = lang.code.split('-')[0];
+    translation = allTranslations[baseLang];
+  }
+  
+  // Ultimate fallback to English
+  if (!translation) {
+    translation = enTranslation;
+  }
+  
   resources[lang.code] = { translation };
 });
+
 
 // Get saved language from localStorage or detect browser language
 const getSavedLanguage = () => {
