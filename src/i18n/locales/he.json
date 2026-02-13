@@ -1,238 +1,131 @@
 {
   "nav": {
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "התחברות",
+    "getStarted": "התחלה"
   },
   "hero": {
-    "badge": "🎉 Zero-fee trading on your first $10,000",
-    "title1": "Invest Smarter.",
-    "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
-    "startButton": "Start Investing Free",
-    "signInButton": "Sign In"
+    "badge": "🎉 ללא עמלה על ה-$10,000 הראשונים",
+    "title1": "השקיעו בצורה חכמה יותר.",
+    "title2": "גדלו מהר יותר.",
+    "description": "פלטפורמה לדור הבא למניות, קריפטו ו-ETF. כלים מקצועיים. אפס מורכבות. השקע בביטחון.",
+    "startButton": "התחל להשקיע בחינם",
+    "signInButton": "התחברות"
   },
   "features": {
-    "title": "Why Choose StockFx?",
+    "title": "למה לבחור ב-StockFx?",
     "fast": {
-      "name": "Lightning Fast",
-      "desc": "Execute investments in milliseconds with ultra-low latency."
+      "name": "מהיר כברק",
+      "desc": "בצע השקעות בשנייה עם זיקה מינימלית."
     },
     "security": {
-      "name": "Bank-Grade Security",
-      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
+      "name": "אבטחה בדרגת בנק",
+      "desc": "הצפנה 256-bit, 2FA, הגנת ביטוח FDIC."
     },
     "mobile": {
-      "name": "Mobile First",
-      "desc": "Full-featured app. Invest anywhere, anytime."
+      "name": "ניייד ראשון",
+      "desc": "אפליקציה עם תכונות מלאות. השקע בכל מקום בכל זמן."
     },
     "global": {
-      "name": "Global Markets",
-      "desc": "Access stocks, crypto, ETFs, and options worldwide."
+      "name": "שווקים גלובליים",
+      "desc": "גישה למניות, קריפטו, ETF אופציות בכל העולם."
     }
   },
   "testimonials": {
-    "title": "Loved by Investors Worldwide",
-    "subtitle": "Join over 2 million investors who trust StockFx"
+    "title": "אהוב על ידי משקיעים בכל עולם",
+    "subtitle": "הצטרף לעוד 2 מיליון משקיעים אשר סומכים על StockFx"
   },
   "stats": {
-    "investors": "Active Investors",
-    "assets": "Assets Invested",
-    "commission": "Commission Fees",
-    "uptime": "Uptime"
+    "investors": "משקיעים פעילים",
+    "assets": "נכסים מושקעים",
+    "commission": "דמי עמלה",
+    "uptime": "זמן פעולה"
   },
   "pricing": {
-    "title": "Investment Plans Tailored for You",
-    "subtitle": "Choose an investment tier that matches your portfolio size",
+    "title": "תוכניות השקעה המותאמות לך",
+    "subtitle": "בחר רמת השקעה שתואמת את התיק שלך",
     "starter": {
-      "name": "Starter",
+      "name": "מתחיל",
       "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+      "desc": "טווח השקעה ראשוני",
+      "duration": "חודש אחד"
     },
     "pro": {
       "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "Growth Investment Range",
-      "duration": "2-3 Months",
-      "popular": "Most Popular"
+      "desc": "טווח השקעה סטנדרטי",
+      "duration": "3 חודשים"
     },
     "enterprise": {
-      "name": "Enterprise",
+      "name": "ארגון",
       "price": "$25,000+",
-      "desc": "Premium Investment Range",
-      "duration": "4+ Months"
-    },
-    "features": {
-      "commissionFree": "Commission-free investments",
-      "basicCharting": "Basic charting tools",
-      "mobileAccess": "Mobile app access",
-      "watchlists": "2 watchlists",
-      "emailSupport": "Email support",
-      "advancedCharting": "Advanced charting & analysis",
-      "level2": "Real-time Level 2 data",
-      "unlimitedWatchlists": "Unlimited watchlists",
-      "support24": "Priority 24/7 support",
-      "apiAccess": "API access",
-      "advancedAlerts": "Advanced alerts",
-      "dedicatedManager": "Dedicated portfolio manager",
-      "strategy": "Custom strategy consulting",
-      "whiteLabel": "White-label solutions",
-      "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
-    },
-    "button": "Start Investing"
-  },
-  "trust": {
-    "title": "Your Trust, Our Priority",
-    "security": {
-      "name": "Military-Grade Security",
-      "desc": "256-bit encryption protects all your data in transit and at rest."
-    },
-    "insured": {
-      "name": "FDIC & SIPC Insured",
-      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
-    },
-    "compliant": {
-      "name": "Regulated & Compliant",
-      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
+      "desc": "טווח השקעה פרימיום",
+      "duration": "6 חודשים"
     }
   },
+  "trust": {
+    "title": "למה לסמוך עלינו?",
+    "items": [
+      {
+        "num": "1",
+        "title": "מוסדר על ידי SEC",
+        "desc": "ברישוי מלא ומפוקח על ידי ועדת הניירות והבורסות האמריקאית."
+      },
+      {
+        "num": "2",
+        "title": "ביטוח FDIC",
+        "desc": "הכספים שלך מוגנים עד $250,000 באמצעות ביטוח FDIC."
+      },
+      {
+        "num": "3",
+        "title": "הצפנה מקצה לקצה",
+        "desc": "כל הנתונים מוצפנים בתקן צבאי להגנה מקסימלית."
+      }
+    ]
+  },
   "cta": {
-    "title": "Ready to Start Investing?",
-    "subtitle": "Join millions of investors. Get $50 in free stock today.",
-    "button": "Create Free Account"
+    "title": "מוכנים לשנות את עתידכם הפיננסי?",
+    "description": "הצטרף לאלפי משקיעים שכבר התחילו. ללא עמלות רק תוצאות.",
+    "button": "פתח חשבון עכשיו"
   },
   "footer": {
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
-    "platform": "Platform",
-    "company": "Company",
-    "legal": "Legal",
-    "social": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "security": "Security",
-    "about": "About Us",
-    "blog": "Blog",
-    "contact": "Contact",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "disclosures": "Disclosures",
-    "twitter": "Twitter",
-    "linkedin": "LinkedIn",
-    "youtube": "YouTube",
-    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
+    "links": "קישורים",
+    "company": "חברה",
+    "legal": "משפטי",
+    "social": "חברתי",
+    "copyright": "© 2025 StockFx. כל הזכויות שמורות."
   },
   "contact": {
-    "title": "Need Help?",
-    "message": "Have questions about trading? Our account officers are here to help you get started!",
-    "contact": "Contact Our Team",
-    "later": "Maybe Later"
+    "title": "צור קשר איתנו",
+    "subtitle": "אנחנו כאן כדי לעזור לك",
+    "name": "שם",
+    "email": "דוא״ל",
+    "message": "הודעה",
+    "submit": "שלח",
+    "phone": "טלפון",
+    "address": "כתובת"
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Or create a new account",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "signInButton": "Sign in",
-    "noAccount": "create a new account",
-    "backToHome": "Back to Home",
-    "serverChecking": "Checking server...",
-    "serverUp": "Server is up — try signing in again.",
-    "thirdParty": "Or continue with",
-    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
+    "title": "התחברות",
+    "email": "דוא״ל",
+    "password": "סיסמה",
+    "submit": "התחברות",
+    "signup": "הרשם",
+    "forgotPassword": "שכחת סיסמה?"
   },
   "register": {
-    "title": "Create your account",
-    "subtitle": "Already have an account?",
-    "haveAccount": "Sign in",
-    "firstNameLabel": "First Name",
-    "firstNamePlaceholder": "John",
-    "lastNameLabel": "Last Name",
-    "lastNamePlaceholder": "Doe",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
-    "passwordHelper": "Must be at least 8 characters",
-    "termsLabel": "I agree to the",
-    "terms": "Terms",
-    "and": "and",
-    "privacy": "Privacy Policy",
-    "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "title": "הרשם",
+    "email": "דוא״ל",
+    "password": "סיסמה",
+    "confirmPassword": "אשר סיסמה",
+    "submit": "הרשם",
+    "termsAgreement": "אני מסכים לתנאים וההוראות"
   },
   "dashboard": {
-    "loading": "Loading dashboard...",
-    "notAuthenticated": "Please log in to view your dashboard.",
-    "goToLogin": "Go to Login",
-    "signOut": "Sign Out",
-    "yourHoldings": "Your Holdings",
-    "portfolioSummary": "Portfolio Summary",
-    "totalValue": "Total Value",
-    "unrealizedGains": "Unrealized Gains",
-    "return": "Return %",
-    "allocation": "Allocation",
-    "assets": "Assets",
-    "performance": "Performance",
-    "welcome": "Welcome, {{name}}!",
-    "accountCreated": "Account created successfully",
-    "emailAddress": "Email Address",
-    "accountStatus": "Account Status",
-    "active": "Active",
-    "currentBalance": "Current Balance",
-    "overviewTab": "Overview",
-    "portfolioTab": "Portfolio",
-    "settingsTab": "Settings",
-    "accountSettings": "Account Settings",
-    "manageAccount": "Manage your account and preferences",
-    "profileInformation": "Profile Information",
-    "fullName": "Full Name",
-    "security": "Security",
-    "newPassword": "New Password (optional)",
-    "leaveBlank": "Leave blank to keep current password",
-    "preferences": "Preferences",
-    "emailNotifications": "Email notifications",
-    "priceAlerts": "Price alerts",
-    "marketingEmails": "Marketing emails",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "noChanges": "No changes to save",
-    "settingsUpdated": "Settings updated successfully!",
-    "failedToSave": "Failed to save settings",
-    "searchAssets": "Search assets...",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications yet",
-    "totalBalance": "Total Balance",
-    "totalProfit": "Total Profit",
-    "monthlyIncome": "Monthly Income",
-    "activeInvestments": "Active Investments",
-    "marketWatchlist": "Market Watchlist",
-    "viewAll": "View All",
-    "quickTransfer": "Quick Transfer",
-    "transferMessage": "Move funds instantly between accounts.",
-    "send": "Send",
-    "addMoney": "Add Money",
-    "recentActivity": "Recent Activity",
-    "viewAllHistory": "View All History",
-    "assetAllocation": "Asset Allocation",
-    "totalAssets": "Total Assets",
-    "stocks": "Stocks",
-    "crypto": "Crypto",
-    "etfs": "ETFs",
-    "cash": "Cash",
-    "shares": "shares",
-    "yesterday": "Yesterday",
-    "investPro": "InvestPro",
-    "topHoldings": "Your Top Holdings"
+    "title": "לוח מחוונים",
+    "welcome": "ברוכים הבאים",
+    "portfolio": "תיק נייר ערך",
+    "balance": "יתרה",
+    "investments": "השקעות",
+    "returns": "התשואות"
   }
 }

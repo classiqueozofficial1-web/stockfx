@@ -1,238 +1,131 @@
 {
   "nav": {
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "Đăng nhập",
+    "getStarted": "Bắt đầu"
   },
   "hero": {
-    "badge": "🎉 Zero-fee trading on your first $10,000",
-    "title1": "Invest Smarter.",
-    "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
-    "startButton": "Start Investing Free",
-    "signInButton": "Sign In"
+    "badge": "🎉 Không có phí cho $10,000 đầu tiên",
+    "title1": "Đầu tư thông minh hơn.",
+    "title2": "Phát triển nhanh hơn.",
+    "description": "Nền tảng thế hệ tiếp theo cho cổ phiếu, tiền điện tử và ETF. Công cụ chuyên nghiệp. Không phức tạp. Đầu tư với tự tin.",
+    "startButton": "Bắt đầu đầu tư miễn phí",
+    "signInButton": "Đăng nhập"
   },
   "features": {
-    "title": "Why Choose StockFx?",
+    "title": "Tại sao chọn StockFx?",
     "fast": {
-      "name": "Lightning Fast",
-      "desc": "Execute investments in milliseconds with ultra-low latency."
+      "name": "Nhanh như tia sét",
+      "desc": "Thực hiện đầu tư trong vài mili giây với độ trễ siêu thấp."
     },
     "security": {
-      "name": "Bank-Grade Security",
-      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
+      "name": "Bảo mật cấp độ ngân hàng",
+      "desc": "Mã hóa 256-bit, 2FA, bảo vệ bảo hiểm FDIC."
     },
     "mobile": {
-      "name": "Mobile First",
-      "desc": "Full-featured app. Invest anywhere, anytime."
+      "name": "Di động trước tiên",
+      "desc": "Ứng dụng đầy đủ tính năng. Đầu tư ở bất cứ đâu, bất cứ lúc nào."
     },
     "global": {
-      "name": "Global Markets",
-      "desc": "Access stocks, crypto, ETFs, and options worldwide."
+      "name": "Thị trường toàn cầu",
+      "desc": "Truy cập cổ phiếu, tiền điện tử, ETF và quyền chọn trên toàn thế giới."
     }
   },
   "testimonials": {
-    "title": "Loved by Investors Worldwide",
-    "subtitle": "Join over 2 million investors who trust StockFx"
+    "title": "Yêu thích của các nhà đầu tư trên toàn thế giới",
+    "subtitle": "Tham gia hơn 2 triệu nhà đầu tư tin tưởng StockFx"
   },
   "stats": {
-    "investors": "Active Investors",
-    "assets": "Assets Invested",
-    "commission": "Commission Fees",
-    "uptime": "Uptime"
+    "investors": "Nhà đầu tư tích cực",
+    "assets": "Tài sản đầu tư",
+    "commission": "Phí hoa hồng",
+    "uptime": "Thời gian hoạt động"
   },
   "pricing": {
-    "title": "Investment Plans Tailored for You",
-    "subtitle": "Choose an investment tier that matches your portfolio size",
+    "title": "Kế hoạch đầu tư được điều chỉnh cho bạn",
+    "subtitle": "Chọn mức đầu tư phù hợp với danh mục đầu tư của bạn",
     "starter": {
-      "name": "Starter",
+      "name": "Người mới bắt đầu",
       "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+      "desc": "Phạm vi đầu tư ban đầu",
+      "duration": "1 tháng"
     },
     "pro": {
       "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "Growth Investment Range",
-      "duration": "2-3 Months",
-      "popular": "Most Popular"
+      "desc": "Phạm vi đầu tư tiêu chuẩn",
+      "duration": "3 tháng"
     },
     "enterprise": {
-      "name": "Enterprise",
+      "name": "Doanh nghiệp",
       "price": "$25,000+",
-      "desc": "Premium Investment Range",
-      "duration": "4+ Months"
-    },
-    "features": {
-      "commissionFree": "Commission-free investments",
-      "basicCharting": "Basic charting tools",
-      "mobileAccess": "Mobile app access",
-      "watchlists": "2 watchlists",
-      "emailSupport": "Email support",
-      "advancedCharting": "Advanced charting & analysis",
-      "level2": "Real-time Level 2 data",
-      "unlimitedWatchlists": "Unlimited watchlists",
-      "support24": "Priority 24/7 support",
-      "apiAccess": "API access",
-      "advancedAlerts": "Advanced alerts",
-      "dedicatedManager": "Dedicated portfolio manager",
-      "strategy": "Custom strategy consulting",
-      "whiteLabel": "White-label solutions",
-      "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
-    },
-    "button": "Start Investing"
-  },
-  "trust": {
-    "title": "Your Trust, Our Priority",
-    "security": {
-      "name": "Military-Grade Security",
-      "desc": "256-bit encryption protects all your data in transit and at rest."
-    },
-    "insured": {
-      "name": "FDIC & SIPC Insured",
-      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
-    },
-    "compliant": {
-      "name": "Regulated & Compliant",
-      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
+      "desc": "Phạm vi đầu tư cao cấp",
+      "duration": "6 tháng"
     }
   },
+  "trust": {
+    "title": "Tại sao lại tin tưởng chúng tôi?",
+    "items": [
+      {
+        "num": "1",
+        "title": "Được SEC quản lý",
+        "desc": "Được cấp phép và giám sát hoàn toàn bởi Ủy ban Chứng khoán và Giao dịch Hoa Kỳ."
+      },
+      {
+        "num": "2",
+        "title": "Bảo hiểm FDIC",
+        "desc": "Tiền của bạn được bảo vệ đến $250,000 bằng bảo hiểm FDIC."
+      },
+      {
+        "num": "3",
+        "title": "Mã hóa từ đầu đến cuối",
+        "desc": "Tất cả dữ liệu được mã hóa theo tiêu chuẩn quân sự để bảo vệ tối đa."
+      }
+    ]
+  },
   "cta": {
-    "title": "Ready to Start Investing?",
-    "subtitle": "Join millions of investors. Get $50 in free stock today.",
-    "button": "Create Free Account"
+    "title": "Bạn đã sẵn sàng thay đổi tương lai tài chính của mình chưa?",
+    "description": "Tham gia hàng ngàn nhà đầu tư đã bắt đầu. Không có phí, chỉ có kết quả.",
+    "button": "Mở tài khoản ngay"
   },
   "footer": {
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
-    "platform": "Platform",
-    "company": "Company",
-    "legal": "Legal",
-    "social": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "security": "Security",
-    "about": "About Us",
-    "blog": "Blog",
-    "contact": "Contact",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "disclosures": "Disclosures",
-    "twitter": "Twitter",
-    "linkedin": "LinkedIn",
-    "youtube": "YouTube",
-    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
+    "links": "Liên kết",
+    "company": "Công ty",
+    "legal": "Pháp lý",
+    "social": "Xã hội",
+    "copyright": "© 2025 StockFx. Bảo lưu mọi quyền."
   },
   "contact": {
-    "title": "Need Help?",
-    "message": "Have questions about trading? Our account officers are here to help you get started!",
-    "contact": "Contact Our Team",
-    "later": "Maybe Later"
+    "title": "Liên hệ với chúng tôi",
+    "subtitle": "Chúng tôi ở đây để giúp bạn",
+    "name": "Tên",
+    "email": "E-mail",
+    "message": "Tin nhắn",
+    "submit": "Gửi",
+    "phone": "Điện thoại",
+    "address": "Địa chỉ"
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Or create a new account",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "signInButton": "Sign in",
-    "noAccount": "create a new account",
-    "backToHome": "Back to Home",
-    "serverChecking": "Checking server...",
-    "serverUp": "Server is up — try signing in again.",
-    "thirdParty": "Or continue with",
-    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
+    "title": "Đăng nhập",
+    "email": "E-mail",
+    "password": "Mật khẩu",
+    "submit": "Đăng nhập",
+    "signup": "Đăng ký",
+    "forgotPassword": "Quên mật khẩu?"
   },
   "register": {
-    "title": "Create your account",
-    "subtitle": "Already have an account?",
-    "haveAccount": "Sign in",
-    "firstNameLabel": "First Name",
-    "firstNamePlaceholder": "John",
-    "lastNameLabel": "Last Name",
-    "lastNamePlaceholder": "Doe",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
-    "passwordHelper": "Must be at least 8 characters",
-    "termsLabel": "I agree to the",
-    "terms": "Terms",
-    "and": "and",
-    "privacy": "Privacy Policy",
-    "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "title": "Đăng ký",
+    "email": "E-mail",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "submit": "Đăng ký",
+    "termsAgreement": "Tôi đồng ý với các điều khoản và điều kiện"
   },
   "dashboard": {
-    "loading": "Loading dashboard...",
-    "notAuthenticated": "Please log in to view your dashboard.",
-    "goToLogin": "Go to Login",
-    "signOut": "Sign Out",
-    "yourHoldings": "Your Holdings",
-    "portfolioSummary": "Portfolio Summary",
-    "totalValue": "Total Value",
-    "unrealizedGains": "Unrealized Gains",
-    "return": "Return %",
-    "allocation": "Allocation",
-    "assets": "Assets",
-    "performance": "Performance",
-    "welcome": "Welcome, {{name}}!",
-    "accountCreated": "Account created successfully",
-    "emailAddress": "Email Address",
-    "accountStatus": "Account Status",
-    "active": "Active",
-    "currentBalance": "Current Balance",
-    "overviewTab": "Overview",
-    "portfolioTab": "Portfolio",
-    "settingsTab": "Settings",
-    "accountSettings": "Account Settings",
-    "manageAccount": "Manage your account and preferences",
-    "profileInformation": "Profile Information",
-    "fullName": "Full Name",
-    "security": "Security",
-    "newPassword": "New Password (optional)",
-    "leaveBlank": "Leave blank to keep current password",
-    "preferences": "Preferences",
-    "emailNotifications": "Email notifications",
-    "priceAlerts": "Price alerts",
-    "marketingEmails": "Marketing emails",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "noChanges": "No changes to save",
-    "settingsUpdated": "Settings updated successfully!",
-    "failedToSave": "Failed to save settings",
-    "searchAssets": "Search assets...",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications yet",
-    "totalBalance": "Total Balance",
-    "totalProfit": "Total Profit",
-    "monthlyIncome": "Monthly Income",
-    "activeInvestments": "Active Investments",
-    "marketWatchlist": "Market Watchlist",
-    "viewAll": "View All",
-    "quickTransfer": "Quick Transfer",
-    "transferMessage": "Move funds instantly between accounts.",
-    "send": "Send",
-    "addMoney": "Add Money",
-    "recentActivity": "Recent Activity",
-    "viewAllHistory": "View All History",
-    "assetAllocation": "Asset Allocation",
-    "totalAssets": "Total Assets",
-    "stocks": "Stocks",
-    "crypto": "Crypto",
-    "etfs": "ETFs",
-    "cash": "Cash",
-    "shares": "shares",
-    "yesterday": "Yesterday",
-    "investPro": "InvestPro",
-    "topHoldings": "Your Top Holdings"
+    "title": "Bảng điều khiển",
+    "welcome": "Chào mừng",
+    "portfolio": "Danh mục đầu tư",
+    "balance": "Số dư",
+    "investments": "Đầu tư",
+    "returns": "Lợi tức"
   }
 }

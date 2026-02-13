@@ -1,238 +1,131 @@
 {
   "nav": {
-    "signIn": "Sign In",
-    "getStarted": "Get Started"
+    "signIn": "เข้าสู่ระบบ",
+    "getStarted": "เริ่มต้น"
   },
   "hero": {
-    "badge": "🎉 Zero-fee trading on your first $10,000",
-    "title1": "Invest Smarter.",
-    "title2": "Grow Faster.",
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
-    "startButton": "Start Investing Free",
-    "signInButton": "Sign In"
+    "badge": "🎉 ไม่มีค่าธรรมเนียมสำหรับ $10,000 แรก",
+    "title1": "ลงทุนอย่างชาญฉลาด",
+    "title2": "เติบโตเร็วขึ้น",
+    "description": "แพลตฟอร์มรุ่นใหม่สำหรับหุ้น คริปโต และ ETF เครื่องมือมืออาชีพ ความซับซ้อนเป็นศูนย์ ลงทุนด้วยความมั่นใจ",
+    "startButton": "เริ่มลงทุนฟรี",
+    "signInButton": "เข้าสู่ระบบ"
   },
   "features": {
-    "title": "Why Choose StockFx?",
+    "title": "ทำไมต้องเลือก StockFx?",
     "fast": {
-      "name": "Lightning Fast",
-      "desc": "Execute investments in milliseconds with ultra-low latency."
+      "name": "ฟ้าแลบเร็ว",
+      "desc": "ดำเนินการลงทุนในหลายมิลลิวินาทีด้วยเลเทนซีต่ำมาก"
     },
     "security": {
-      "name": "Bank-Grade Security",
-      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
+      "name": "ความปลอดภัยระดับธนาคาร",
+      "desc": "การเข้ารหัส 256 บิต 2FA การป้องกันประกันภัย FDIC"
     },
     "mobile": {
-      "name": "Mobile First",
-      "desc": "Full-featured app. Invest anywhere, anytime."
+      "name": "มือถือก่อนอื่น",
+      "desc": "แอปพลิเคชันที่มีฟีเจอร์ครบครัน ลงทุนได้ทุกที่ทุกเวลา"
     },
     "global": {
-      "name": "Global Markets",
-      "desc": "Access stocks, crypto, ETFs, and options worldwide."
+      "name": "ตลาดโลก",
+      "desc": "เข้าถึงหุ้น คริปโต ETF และตัวเลือกทั่วโลก"
     }
   },
   "testimonials": {
-    "title": "Loved by Investors Worldwide",
-    "subtitle": "Join over 2 million investors who trust StockFx"
+    "title": "รักการลงทุนของนักลงทุนทั่วโลก",
+    "subtitle": "เข้าร่วมนักลงทุนกว่า 2 ล้านคนที่วางใจ StockFx"
   },
   "stats": {
-    "investors": "Active Investors",
-    "assets": "Assets Invested",
-    "commission": "Commission Fees",
-    "uptime": "Uptime"
+    "investors": "นักลงทุนที่ใช้งาน",
+    "assets": "สินทรัพย์ที่ลงทุน",
+    "commission": "ค่าธรรมเนียมค่าคอมมิชชั่น",
+    "uptime": "เวลาทำงาน"
   },
   "pricing": {
-    "title": "Investment Plans Tailored for You",
-    "subtitle": "Choose an investment tier that matches your portfolio size",
+    "title": "แผนการลงทุนสำหรับคุณ",
+    "subtitle": "เลือกระดับการลงทุนที่เหมาะกับพอร์ตโฟลิโอของคุณ",
     "starter": {
-      "name": "Starter",
+      "name": "ผู้เริ่มต้น",
       "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+      "desc": "ช่วงการลงทุนครั้งแรก",
+      "duration": "1 เดือน"
     },
     "pro": {
       "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "Growth Investment Range",
-      "duration": "2-3 Months",
-      "popular": "Most Popular"
+      "desc": "ช่วงการลงทุนมาตรฐาน",
+      "duration": "3 เดือน"
     },
     "enterprise": {
-      "name": "Enterprise",
+      "name": "องค์กร",
       "price": "$25,000+",
-      "desc": "Premium Investment Range",
-      "duration": "4+ Months"
-    },
-    "features": {
-      "commissionFree": "Commission-free investments",
-      "basicCharting": "Basic charting tools",
-      "mobileAccess": "Mobile app access",
-      "watchlists": "2 watchlists",
-      "emailSupport": "Email support",
-      "advancedCharting": "Advanced charting & analysis",
-      "level2": "Real-time Level 2 data",
-      "unlimitedWatchlists": "Unlimited watchlists",
-      "support24": "Priority 24/7 support",
-      "apiAccess": "API access",
-      "advancedAlerts": "Advanced alerts",
-      "dedicatedManager": "Dedicated portfolio manager",
-      "strategy": "Custom strategy consulting",
-      "whiteLabel": "White-label solutions",
-      "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
-    },
-    "button": "Start Investing"
-  },
-  "trust": {
-    "title": "Your Trust, Our Priority",
-    "security": {
-      "name": "Military-Grade Security",
-      "desc": "256-bit encryption protects all your data in transit and at rest."
-    },
-    "insured": {
-      "name": "FDIC & SIPC Insured",
-      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
-    },
-    "compliant": {
-      "name": "Regulated & Compliant",
-      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
+      "desc": "ช่วงการลงทุนพรีเมียม",
+      "duration": "6 เดือน"
     }
   },
+  "trust": {
+    "title": "ทำไมถึงเชื่อใจเรา?",
+    "items": [
+      {
+        "num": "1",
+        "title": "ควบคุมโดย SEC",
+        "desc": "ได้รับใบอนุญาตและควบคุมโดยสำนักงานคณะกรรมการกำหนดราคาหลักทรัพย์และตลาดหลักทรัพย์สหรัฐอเมริกา"
+      },
+      {
+        "num": "2",
+        "title": "การประกันภัย FDIC",
+        "desc": "เงินของคุณได้รับการป้องกันถึง $250,000 ด้วยการประกันภัย FDIC"
+      },
+      {
+        "num": "3",
+        "title": "เข้ารหัสแบบ end-to-end",
+        "desc": "ข้อมูลทั้งหมดเข้ารหัสด้วยมาตรฐานทางทหารเพื่อการป้องกันสูงสุด"
+      }
+    ]
+  },
   "cta": {
-    "title": "Ready to Start Investing?",
-    "subtitle": "Join millions of investors. Get $50 in free stock today.",
-    "button": "Create Free Account"
+    "title": "พร้อมที่จะเปลี่ยนอนาคตทางการเงินของคุณหรือไม่",
+    "description": "เข้าร่วมนักลงทุนหลายพันคนที่เริ่มต้นแล้ว ไม่มีค่าธรรมเนียมเพียงผลลัพธ์",
+    "button": "เปิดบัญชีตอนนี้"
   },
   "footer": {
-    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
-    "platform": "Platform",
-    "company": "Company",
-    "legal": "Legal",
-    "social": "Follow Us",
-    "features": "Features",
-    "pricing": "Pricing",
-    "security": "Security",
-    "about": "About Us",
-    "blog": "Blog",
-    "contact": "Contact",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "disclosures": "Disclosures",
-    "twitter": "Twitter",
-    "linkedin": "LinkedIn",
-    "youtube": "YouTube",
-    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
+    "links": "ลิงก์",
+    "company": "บริษัท",
+    "legal": "กฎหมาย",
+    "social": "โซเชียล",
+    "copyright": "© 2025 StockFx สงวนลิขสิทธิ์"
   },
   "contact": {
-    "title": "Need Help?",
-    "message": "Have questions about trading? Our account officers are here to help you get started!",
-    "contact": "Contact Our Team",
-    "later": "Maybe Later"
+    "title": "ติดต่อเรา",
+    "subtitle": "เราอยู่ที่นี่เพื่อช่วยคุณ",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "message": "ข้อความ",
+    "submit": "ส่ง",
+    "phone": "โทรศัพท์",
+    "address": "ที่อยู่"
   },
   "login": {
-    "title": "Welcome back",
-    "subtitle": "Or create a new account",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "••••••••",
-    "signInButton": "Sign in",
-    "noAccount": "create a new account",
-    "backToHome": "Back to Home",
-    "serverChecking": "Checking server...",
-    "serverUp": "Server is up — try signing in again.",
-    "thirdParty": "Or continue with",
-    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
+    "title": "เข้าสู่ระบบ",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "submit": "เข้าสู่ระบบ",
+    "signup": "ลงทะเบียน",
+    "forgotPassword": "ลืมรหัสผ่าน?"
   },
   "register": {
-    "title": "Create your account",
-    "subtitle": "Already have an account?",
-    "haveAccount": "Sign in",
-    "firstNameLabel": "First Name",
-    "firstNamePlaceholder": "John",
-    "lastNameLabel": "Last Name",
-    "lastNamePlaceholder": "Doe",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Create a password",
-    "passwordHelper": "Must be at least 8 characters",
-    "termsLabel": "I agree to the",
-    "terms": "Terms",
-    "and": "and",
-    "privacy": "Privacy Policy",
-    "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "title": "ลงทะเบียน",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "confirmPassword": "ยืนยันรหัสผ่าน",
+    "submit": "ลงทะเบียน",
+    "termsAgreement": "ฉันยอมรับเงื่อนไขและข้อตกลง"
   },
   "dashboard": {
-    "loading": "Loading dashboard...",
-    "notAuthenticated": "Please log in to view your dashboard.",
-    "goToLogin": "Go to Login",
-    "signOut": "Sign Out",
-    "yourHoldings": "Your Holdings",
-    "portfolioSummary": "Portfolio Summary",
-    "totalValue": "Total Value",
-    "unrealizedGains": "Unrealized Gains",
-    "return": "Return %",
-    "allocation": "Allocation",
-    "assets": "Assets",
-    "performance": "Performance",
-    "welcome": "Welcome, {{name}}!",
-    "accountCreated": "Account created successfully",
-    "emailAddress": "Email Address",
-    "accountStatus": "Account Status",
-    "active": "Active",
-    "currentBalance": "Current Balance",
-    "overviewTab": "Overview",
-    "portfolioTab": "Portfolio",
-    "settingsTab": "Settings",
-    "accountSettings": "Account Settings",
-    "manageAccount": "Manage your account and preferences",
-    "profileInformation": "Profile Information",
-    "fullName": "Full Name",
-    "security": "Security",
-    "newPassword": "New Password (optional)",
-    "leaveBlank": "Leave blank to keep current password",
-    "preferences": "Preferences",
-    "emailNotifications": "Email notifications",
-    "priceAlerts": "Price alerts",
-    "marketingEmails": "Marketing emails",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "noChanges": "No changes to save",
-    "settingsUpdated": "Settings updated successfully!",
-    "failedToSave": "Failed to save settings",
-    "searchAssets": "Search assets...",
-    "notifications": "Notifications",
-    "noNotifications": "No notifications yet",
-    "totalBalance": "Total Balance",
-    "totalProfit": "Total Profit",
-    "monthlyIncome": "Monthly Income",
-    "activeInvestments": "Active Investments",
-    "marketWatchlist": "Market Watchlist",
-    "viewAll": "View All",
-    "quickTransfer": "Quick Transfer",
-    "transferMessage": "Move funds instantly between accounts.",
-    "send": "Send",
-    "addMoney": "Add Money",
-    "recentActivity": "Recent Activity",
-    "viewAllHistory": "View All History",
-    "assetAllocation": "Asset Allocation",
-    "totalAssets": "Total Assets",
-    "stocks": "Stocks",
-    "crypto": "Crypto",
-    "etfs": "ETFs",
-    "cash": "Cash",
-    "shares": "shares",
-    "yesterday": "Yesterday",
-    "investPro": "InvestPro",
-    "topHoldings": "Your Top Holdings"
+    "title": "แผงควบคุม",
+    "welcome": "ยินดีต้อนรับ",
+    "portfolio": "พอร์ตโฟลิโอ",
+    "balance": "ยอดคงเหลือ",
+    "investments": "การลงทุน",
+    "returns": "ผลตอบแทน"
   }
 }
