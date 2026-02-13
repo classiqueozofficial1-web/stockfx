@@ -1,174 +1,238 @@
 {
   "nav": {
-    "signIn": "サインイン",
-    "getStarted": "はじめる"
+    "signIn": "ログイン",
+    "getStarted": "始まる"
   },
   "hero": {
-    "badge": "🎉 最初の$10,000の取引手数料無料",
-    "title1": "より賢く投資。",
-    "title2": "より速く成長。",
-    "description": "株式、仮想通貨、ETFの次世代プラットフォーム。プロフェッショナルツール。ゼロの複雑性。自信を持って取引してください。",
-    "startButton": "無料で投資を開始",
-    "signInButton": "サインイン"
+    "badge": "🎉 Zero-fee trading on your first $10,000",
+    "title1": "より賢く投資してください。",
+    "title2": "より速く成長します。",
+    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity. Invest with confidence.",
+    "startButton": "Start Investing Free",
+    "signInButton": "ログイン"
   },
   "features": {
-    "title": "なぜStockFxを選ぶのか？",
+    "title": "Why Choose StockFx?",
     "fast": {
-      "name": "超高速",
-      "desc": "超低レイテンシーでミリ秒単位で取引を実行します。"
+      "name": "Lightning Fast",
+      "desc": "Execute investments in milliseconds with ultra-low latency."
     },
     "security": {
-      "name": "銀行レベルのセキュリティ",
-      "desc": "256ビット暗号化、2FA、FDIC保険保護。"
+      "name": "Bank-Grade Security",
+      "desc": "256-bit encryption, 2FA, FDIC insurance protection."
     },
     "mobile": {
-      "name": "モバイルファースト",
-      "desc": "フル機能のアプリ。いつでもどこでも取引できます。"
+      "name": "Mobile First",
+      "desc": "Full-featured app. Invest anywhere, anytime."
     },
     "global": {
-      "name": "グローバル市場",
-      "desc": "世界中の株式、仮想通貨、ETF、オプションにアクセスできます。"
+      "name": "Global Markets",
+      "desc": "Access stocks, crypto, ETFs, and options worldwide."
     }
   },
   "testimonials": {
-    "title": "世界中のトレーダーに愛されています",
-    "subtitle": "200万人以上のStockFxを信頼する投資家に参加してください"
+    "title": "Loved by Investors Worldwide",
+    "subtitle": "Join over 2 million investors who trust StockFx"
   },
   "stats": {
-    "traders": "アクティブなトレーダー",
-    "assets": "取引資産",
-    "commission": "手数料",
-    "uptime": "稼働時間"
+    "investors": "Active Investors",
+    "assets": "Assets Invested",
+    "commission": "Commission Fees",
+    "uptime": "Uptime"
   },
   "pricing": {
-    "title": "あなたのための投資プラン",
-    "subtitle": "ポートフォリオのサイズに合わせた投資レベルを選択してください",
+    "title": "Investment Plans Tailored for You",
+    "subtitle": "Choose an investment tier that matches your portfolio size",
     "starter": {
-      "name": "スターター",
+      "name": "Starter",
       "price": "$1,000 - $5,000",
-      "desc": "初期投資範囲",
-      "duration": "1か月"
+      "desc": "Initial Investment Range",
+      "duration": "1 Month"
     },
     "pro": {
-      "name": "プロ",
+      "name": "Pro",
       "price": "$5,000 - $25,000",
-      "desc": "成長投資範囲",
-      "duration": "2-3ヶ月",
-      "popular": "最も人気"
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
     "enterprise": {
-      "name": "エンタープライズ",
+      "name": "Enterprise",
       "price": "$25,000+",
-      "desc": "プレミアム投資範囲",
-      "duration": "4ヶ月以上"
+      "desc": "Premium Investment Range",
+      "duration": "4+ Months"
     },
     "features": {
-      "commissionFree": "手数料無料取引",
-      "basicCharting": "基本的なチャートツール",
-      "mobileAccess": "モバイルアプリアクセス",
-      "watchlists": "2つのウォッチリスト",
-      "emailSupport": "メールサポート",
-      "advancedCharting": "高度なチャートと分析",
-      "level2": "リアルタイムレベル2データ",
-      "unlimitedWatchlists": "無制限ウォッチリスト",
-      "support24": "優先24/7サポート",
-      "apiAccess": "APIアクセス",
-      "advancedAlerts": "高度なアラート",
-      "dedicatedManager": "専任ポートフォリオマネージャー",
-      "strategy": "カスタム戦略コンサルティング",
-      "whiteLabel": "ホワイトレーベルソリューション",
-      "integrations": "高度な統合",
-      "sla": "SLA保証",
-      "institutionalPricing": "機関投資家向け価格設定"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "sla": "SLA guarantees",
+      "institutionalPricing": "Institutional pricing"
     },
-    "button": "投資を開始"
+    "button": "Start Investing"
   },
   "trust": {
-    "title": "あなたの信頼が私たちの優先事項",
+    "title": "Your Trust, Our Priority",
     "security": {
-      "name": "軍事グレードのセキュリティ",
-      "desc": "256ビット暗号化がすべてのデータを転送中および保存中に保護します。"
+      "name": "Military-Grade Security",
+      "desc": "256-bit encryption protects all your data in transit and at rest."
     },
     "insured": {
-      "name": "FDICとSIPCで保険付き",
-      "desc": "あなたの現金($250k)と有価証券($500k)は完全に保護されています。"
+      "name": "FDIC & SIPC Insured",
+      "desc": "Your cash ($250k) and securities ($500k) are fully protected."
     },
     "compliant": {
-      "name": "規制対象で準拠",
-      "desc": "SEC、FINRA、およびすべての規制要件に準拠しています。"
+      "name": "Regulated & Compliant",
+      "desc": "We comply with all SEC, FINRA, and regulatory requirements."
     }
   },
   "cta": {
-    "title": "取引を開始できる準備はできていますか？",
-    "subtitle": "数百万の投資家に参加してください。今日$50の無料株を取得してください。",
-    "button": "無料アカウント作成"
+    "title": "Ready to Start Investing?",
+    "subtitle": "Join millions of investors. Get $50 in free stock today.",
+    "button": "Create Free Account"
   },
   "footer": {
-    "description": "株式、仮想通貨、ETFの次世代プラットフォーム。プロフェッショナルツール。ゼロの複雑性。",
-    "platform": "プラットフォーム",
-    "company": "会社",
-    "legal": "法的",
-    "social": "フォローしてください",
-    "features": "機能",
-    "pricing": "価格設定",
-    "security": "セキュリティ",
-    "about": "について",
-    "blog": "ブログ",
-    "contact": "お問い合わせ",
-    "privacy": "プライバシー",
-    "terms": "利用規約",
-    "disclosures": "開示",
-    "twitter": "ツイッター",
-    "linkedin": "リンクドイン",
-    "youtube": "ユーチューブ",
-    "copyright": "© 2024 StockFx Investment Inc. 著作権所有。NMLS #123456"
+    "description": "The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.",
+    "platform": "Platform",
+    "company": "Company",
+    "legal": "Legal",
+    "social": "Follow Us",
+    "features": "Features",
+    "pricing": "Pricing",
+    "security": "Security",
+    "about": "About Us",
+    "blog": "Blog",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclosures": "Disclosures",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "copyright": "© 2024 StockFx Investment Inc. All rights reserved. NMLS #123456"
   },
   "contact": {
-    "title": "サポートが必要ですか？",
-    "message": "取引について質問がありますか？当社のアカウント担当者がお手伝いします！",
-    "contact": "当社のチームに連絡してください",
-    "later": "後でもいいです"
+    "title": "Need Help?",
+    "message": "Have questions about trading? Our account officers are here to help you get started!",
+    "contact": "Contact Our Team",
+    "later": "Maybe Later"
   },
   "login": {
-    "title": "おかえりなさい",
-    "subtitle": "または新しいアカウントを作成",
-    "emailLabel": "メールアドレス",
-    "emailPlaceholder": "あなた@例.com",
-    "passwordLabel": "パスワード",
+    "title": "Welcome back",
+    "subtitle": "Or create a new account",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
-    "signInButton": "サインイン",
-    "noAccount": "新しいアカウントを作成",
-    "backToHome": "ホームに戻る",
-    "serverChecking": "サーバーを確認中...",
-    "serverUp": "サーバーは稼働しています。もう一度サインインしてみてください。",
-    "thirdParty": "または続行",
-    "thirdPartyDisabled": "サードパーティのサインインは現在無効です。"
+    "signInButton": "Sign in",
+    "noAccount": "create a new account",
+    "backToHome": "Back to Home",
+    "serverChecking": "Checking server...",
+    "serverUp": "Server is up — try signing in again.",
+    "thirdParty": "Or continue with",
+    "thirdPartyDisabled": "Third‑party sign-in is currently disabled."
   },
   "register": {
-    "title": "アカウントを作成",
-    "subtitle": "すでにアカウントをお持ちですか？",
-    "haveAccount": "サインイン",
-    "firstNameLabel": "名",
-    "firstNamePlaceholder": "太郎",
-    "lastNameLabel": "姓",
-    "lastNamePlaceholder": "山田",
-    "emailLabel": "メールアドレス",
-    "emailPlaceholder": "あなた@例.com",
-    "passwordLabel": "パスワード",
-    "passwordPlaceholder": "パスワードを作成",
-    "passwordHelper": "8文字以上である必要があります",
-    "termsLabel": "利用規約に同意します",
-    "terms": "利用規約",
-    "and": "と",
-    "privacy": "プライバシーポリシー",
-    "createButton": "アカウント作成",
-    "verifyTitle": "検証コード",
+    "title": "Create your account",
+    "subtitle": "Already have an account?",
+    "haveAccount": "Sign in",
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "John",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Doe",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Create a password",
+    "passwordHelper": "Must be at least 8 characters",
+    "termsLabel": "I agree to the",
+    "terms": "Terms",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "createButton": "Create Account",
+    "verifyTitle": "Verification code",
     "verifyPlaceholder": "123456",
-    "verifyError": "検証コードが正しくありません。",
-    "devCode": "DEV: あなたのコーディング",
-    "changeEmail": "メールを変更",
-    "resendCode": "コードを再送信",
-    "resendCooldown": "再送信 ({{seconds}}s)",
-    "verifyButton": "検証"
+    "verifyError": "The verification code is incorrect.",
+    "devCode": "DEV: Your code is",
+    "changeEmail": "Change email",
+    "resendCode": "Resend code",
+    "resendCooldown": "Resend ({{seconds}}s)",
+    "verifyButton": "Verify"
+  },
+  "dashboard": {
+    "loading": "Loading dashboard...",
+    "notAuthenticated": "Please log in to view your dashboard.",
+    "goToLogin": "Go to Login",
+    "signOut": "Sign Out",
+    "yourHoldings": "Your Holdings",
+    "portfolioSummary": "Portfolio Summary",
+    "totalValue": "Total Value",
+    "unrealizedGains": "Unrealized Gains",
+    "return": "Return %",
+    "allocation": "Allocation",
+    "assets": "Assets",
+    "performance": "Performance",
+    "welcome": "Welcome, {{name}}!",
+    "accountCreated": "Account created successfully",
+    "emailAddress": "Email Address",
+    "accountStatus": "Account Status",
+    "active": "Active",
+    "currentBalance": "Current Balance",
+    "overviewTab": "Overview",
+    "portfolioTab": "Portfolio",
+    "settingsTab": "Settings",
+    "accountSettings": "Account Settings",
+    "manageAccount": "Manage your account and preferences",
+    "profileInformation": "Profile Information",
+    "fullName": "Full Name",
+    "security": "Security",
+    "newPassword": "New Password (optional)",
+    "leaveBlank": "Leave blank to keep current password",
+    "preferences": "Preferences",
+    "emailNotifications": "Email notifications",
+    "priceAlerts": "Price alerts",
+    "marketingEmails": "Marketing emails",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "noChanges": "No changes to save",
+    "settingsUpdated": "Settings updated successfully!",
+    "failedToSave": "Failed to save settings",
+    "searchAssets": "Search assets...",
+    "notifications": "Notifications",
+    "noNotifications": "No notifications yet",
+    "totalBalance": "Total Balance",
+    "totalProfit": "Total Profit",
+    "monthlyIncome": "Monthly Income",
+    "activeInvestments": "Active Investments",
+    "marketWatchlist": "Market Watchlist",
+    "viewAll": "View All",
+    "quickTransfer": "Quick Transfer",
+    "transferMessage": "Move funds instantly between accounts.",
+    "send": "Send",
+    "addMoney": "Add Money",
+    "recentActivity": "Recent Activity",
+    "viewAllHistory": "View All History",
+    "assetAllocation": "Asset Allocation",
+    "totalAssets": "Total Assets",
+    "stocks": "Stocks",
+    "crypto": "Crypto",
+    "etfs": "ETFs",
+    "cash": "Cash",
+    "shares": "shares",
+    "yesterday": "Yesterday",
+    "investPro": "InvestPro",
+    "topHoldings": "Your Top Holdings"
   }
 }
