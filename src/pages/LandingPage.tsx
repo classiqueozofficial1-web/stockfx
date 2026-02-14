@@ -14,11 +14,24 @@ import {
   ChartCandlestick,
   Target,
   Smartphone,
+  Quote,
+  Mail,
+  X,
+  Phone,
+  Activity,
+  Wallet,
+  CreditCard,
+  Cloud,
+  ChevronDown,
 } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Hero } from '../components/Hero';
 import { Footer } from '../components/Footer';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { Logo } from '../components/ui/Logo';
+import { AnimatedButton } from '../components/ui/AnimatedButton';
+import { FeatureCard } from '../components/ui/FeatureCard';
+import { StatCounter } from '../components/ui/StatCounter';
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
@@ -26,8 +39,16 @@ interface LandingPageProps {
 
 export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
+  
+  // State variables
   const [activeFeature, setActiveFeature] = useState(0);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
+  const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activePartner, setActivePartner] = useState<number | null>(null);
 
   const features = [
     {
@@ -151,314 +172,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     },
   ];
 
-  return (
-    <div className="bg-white">
-      {/* Fixed Header */}
-      <Header />
-
-      {/* Main Content with padding for fixed header */}
-      <main className="pt-16">
-        {/* Hero Section */}
-        <Hero />
-
-        {/* Features Section */}
-        <section className="py-20 md:py-32 relative overflow-hidden">
-          <div className="absolute top-10 right-0 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl -z-10"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-100/20 rounded-full blur-3xl -z-10"></div>
-
-          <div className="container mx-auto px-4">
-            {/* Section Header */}
-            <div className="text-center mb-16 animate-slideInUp">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="block text-dark-950">Powerful Features For</span>
-                <span className="block bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
-                  Every Trader
-                </span>
-              </h2>
-              <p className="text-lg text-dark-600 max-w-2xl mx-auto">
-                Everything you need to trade smarter, faster, and more profitably.
-              </p>
-            </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="group p-8 rounded-2xl border border-dark-100 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-                  onMouseEnter={() => setActiveFeature(index)}
-                >
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${
-                    feature.color === 'primary'
-                      ? 'bg-primary-100 group-hover:bg-primary-600 text-primary-600 group-hover:text-white'
-                      : 'bg-accent-100 group-hover:bg-accent-600 text-accent-600 group-hover:text-white'
-                  }`}>
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-dark-950 mb-3">{feature.title}</h3>
-                  <p className="text-dark-600 group-hover:text-dark-700 transition-colors">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Statistics Section */}
-        <section className="py-20 md:py-32 bg-gradient-to-r from-primary-900 to-accent-900 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-            }}></div>
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16 animate-slideInUp">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Trusted by Millions Worldwide
-              </h2>
-              <p className="text-lg text-primary-100">
-                Join traders who are changing their financial futures
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/20 hover:bg-white/10 transition-all duration-300"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-200 to-accent-200 bg-clip-text text-transparent mb-3">
-                    {stat.value}
-                  </div>
-                  <p className="text-primary-100 font-medium">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-20 md:py-32 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl -z-10"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-100/20 rounded-full blur-3xl -z-10"></div>
-
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16 animate-slideInUp">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="block text-dark-950">What Our Traders Say</span>
-              </h2>
-              <p className="text-lg text-dark-600 max-w-2xl mx-auto">
-                Real reviews from real traders who trust StockFx
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="p-8 rounded-2xl bg-white border border-dark-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group cursor-pointer"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                    <div>
-                      <h4 className="font-bold text-dark-950">{testimonial.name}</h4>
-                      <p className="text-sm text-dark-600">{testimonial.role}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-dark-700 italic">{testimonial.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing Section */}
-        <section className="py-20 md:py-32 bg-dark-50 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 70%)',
-            }}></div>
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16 animate-slideInUp">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="block text-dark-950">Simple, Transparent Pricing</span>
-              </h2>
-              <p className="text-lg text-dark-600 max-w-2xl mx-auto">
-                Choose the plan that fits your trading style
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {pricingPlans.map((plan, index) => (
-                <div
-                  key={index}
-                  className={`relative rounded-3xl border-2 transition-all duration-300 ${
-                    plan.popular
-                      ? 'border-primary-600 bg-white shadow-2xl scale-105 md:scale-100 md:z-10'
-                      : 'border-dark-100 bg-white hover:shadow-lg'
-                  }`}
-                >
-                  {plan.popular && (
-                    <div className="absolute -top-5 left-0 right-0 flex justify-center">
-                      <span className="bg-gradient-to-r from-primary-600 to-accent-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold text-dark-950 mb-2">{plan.name}</h3>
-                    <p className="text-dark-600 text-sm mb-6">{plan.description}</p>
-
-                    <div className="mb-8">
-                      <div className="text-4xl font-bold text-dark-950">{plan.price}</div>
-                      {plan.price !== 'Custom' && (
-                        <p className="text-dark-600 text-sm">per month</p>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => onNavigate('register')}
-                      className={`w-full h-12 rounded-xl font-semibold transition-all duration-200 mb-8 ${
-                        plan.popular
-                          ? 'bg-gradient-to-r from-primary-600 to-accent-600 text-white shadow-lg hover:shadow-xl hover:scale-105'
-                          : 'border-2 border-primary-600 text-primary-600 hover:bg-primary-50'
-                      }`}
-                    >
-                      {plan.cta}
-                    </button>
-
-                    <div className="space-y-4">
-                      {plan.features.map((feature, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <CheckCircle2 size={20} className="text-primary-600 flex-shrink-0 mt-0.5" />
-                          <span className="text-dark-700 text-sm">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 md:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-600 opacity-10 blur-3xl"></div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center animate-slideInUp">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="block text-dark-950">Ready to Start Trading?</span>
-              </h2>
-              <p className="text-lg text-dark-600 mb-8">
-                Join thousands of successful traders. Open your account in minutes.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => onNavigate('register')}
-                  className="h-12 px-8 bg-gradient-to-r from-primary-600 to-accent-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
-                >
-                  Create Free Account
-                  <ArrowRight size={18} />
-                </button>
-                <button
-                  onClick={() => onNavigate('login')}
-                  className="h-12 px-8 border-2 border-primary-600 text-primary-600 font-semibold rounded-xl hover:bg-primary-50 transition-all duration-200"
-                >
-                  Sign In
-                </button>
-              </div>
-
-              <p className="text-dark-600 text-sm mt-6">
-                No credit card required. Start with a free trading account.
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <Footer />
-    </div>
-  );
-}
-    'from-slate-900 via-slate-800 to-slate-900',
-    'from-indigo-900 via-purple-900 to-slate-900',
-    'from-slate-900 via-blue-900 to-slate-900',
-    'from-slate-900 via-green-900 to-slate-900',
-    'from-slate-900 via-rose-900 to-slate-900',
-  ];
-
-  const testimonials: Testimonial[] = [  
-    {
-      name: 'Dominic Lee',
-      role: 'Day Investor',
-      company: 'Independent',
-      image: 'https://i.pravatar.cc/200?img=11',
-      quote: 'The platform is incredibly fast. My orders execute in milliseconds. Worth every penny.',
-      rating:  5,
-    },
-    {
-      name: 'Michael Johnson',
-      role: 'Portfolio Manager',
-      company: 'Johnson Capital',
-      image: 'https://i.pravatar.cc/200?img=12',
-      quote: 'Best trading platform I\'ve used. Charts, tools, and support are all top-notch.',
-      rating: 5,
-    },
-    {
-      name: 'David Park',
-      role: 'Tech Entrepreneur',
-      company: 'StartupX',
-      image: 'https://i.pravatar.cc/200?img=13',
-      quote: 'Security and speed matter for my business. StockFx API integration with fintech tools is seamless.',
-      rating: 5,
-    },
-    {
-      name: 'Jessica Rodriguez',
-      role: 'Wealth Advisor',
-      company: 'Rodriguez & Associates',
-      image: 'https://i.pravatar.cc/200?img=14',
-      quote: 'Best platform for managing multi-client portfolios. The reporting tools save me hours daily.',
-      rating: 5,
-    },
-    {
-      name: 'James Mitchell',
-      role: 'Crypto Investor',
-      company: 'Independent',
-      image: 'https://i.pravatar.cc/200?img=15',
-      quote: 'Seamless crypto trading with the same professional tools as traditional stocks. Highly impressed!',
-      rating: 5,
-    },
-    {
-      name: 'Emma Thompson',
-      role: 'Financial Analyst',
-      company: 'Global Insights',
-      image: 'https://i.pravatar.cc/200?img=16',
-      quote: 'The analytics dashboard is phenomenal. Real-time insights that actually help me make better decisions.',
-      rating: 5,
-    },
-  ];
-
-  const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
-
   const faqs = [
     {
       question: 'How do I get started with StockFx?',
@@ -503,9 +216,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     },
   ];
 
-  const [activePartner, setActivePartner] = useState<number | null>(null);
-
-
   // Show contact modal every 2 minutes
   useEffect(() => {
     const timer = setInterval(() => {
@@ -532,6 +242,10 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
 
     return () => clearInterval(waTimer);
   }, []);
+
+  const handleLogoClick = () => {
+    onNavigate('landing');
+  };
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>

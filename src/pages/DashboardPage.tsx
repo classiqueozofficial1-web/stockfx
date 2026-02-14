@@ -1,10 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DashboardSidebar } from '../components/investment/DashboardSidebar';
 import { StatsCard } from '../components/investment/StatsCard';
-import {
-  TransactionItem } from
-'../components/investment/TransactionItem';
+import { TransactionItem } from '../components/investment/TransactionItem';
 import { PortfolioChart } from '../components/investment/PortfolioChart';
 import { AssetAllocationChart } from '../components/investment/AssetAllocationChart';
 import { MarketTrendsChart } from '../components/investment/MarketTrendsChart';
@@ -23,13 +21,13 @@ import {
   ArrowUpRight,
   Menu,
   X,
-  CheckCircle2 } from
-'lucide-react';
+  CheckCircle2,
+} from 'lucide-react';
+
 interface DashboardPageProps {
   onNavigate: (page: string) => void;
 }
 
-import { useEffect } from 'react';
 import { getDashboard, clearToken, refreshCurrentUser } from '../lib/session';
 import { updateUser } from '../lib/userStore';
 
@@ -591,35 +589,22 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
                     price: '$1,780.00',
                     change: '+2.1%',
                     up: true
-                  }].
-                  map((stock) =>
-                  <div
-                    key={stock.symbol}
-                    className="p-4 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer">
-
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600 mr-4">
-                          {stock.symbol}
-                        </div>
-                        <div>
-                          <p className="font-bold text-slate-900">
-                            {stock.symbol}
-                          </p>
-                          <p className="text-xs text-slate-500">{stock.name}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium text-slate-900">
-                          {stock.price}
-                        </p>
-                        <p
-                        className={`text-xs font-medium ${stock.up ? 'text-emerald-600' : 'text-red-600'}`}>
-
-                          {stock.change}
-                        </p>
+                  }
+                ].map((stock) => (
+                  <div key={stock.symbol} className="p-4 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer">
+                    <div className="flex items-center">
+                      <div className="h-10 w-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600 mr-4">{stock.symbol}</div>
+                      <div>
+                        <p className="font-bold text-slate-900">{stock.symbol}</p>
+                        <p className="text-xs text-slate-500">{stock.name}</p>
                       </div>
                     </div>
-                  )}
+                    <div className="text-right">
+                      <p className="font-medium text-slate-900">{stock.price}</p>
+                      <p className={`text-xs font-medium ${stock.up ? 'text-emerald-600' : 'text-red-600'}`}>{stock.change}</p>
+                    </div>
+                  </div>
+                ))}
                 </div>
               </div>
             </div>
@@ -754,8 +739,8 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
                     label: t('dashboard.cash'),
                     color: 'bg-orange-500',
                     value: '10%'
-                  }].
-                  map((item) =>
+                  }
+                ].map((item) =>
                   <div
                     key={item.label}
                     className="flex items-center justify-between text-sm">
