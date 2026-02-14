@@ -10,7 +10,7 @@ import {
   ArrowRight,
   Star,
   CheckCircle2,
-  BriefcaseIcon,
+  Briefcase,
   ChartCandlestick,
   Target,
   Smartphone,
