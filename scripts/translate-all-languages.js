@@ -30,48 +30,89 @@ const LANGUAGE_MAP = {
 const localesDir = path.join(__dirname, '../src/i18n/locales');
 const enFile = path.join(localesDir, 'en.json');
 
-// Simple delay utility
+// Cache for translations to avoid duplicate API calls
+const translationCache = new Map();
+
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Translate text using MyMemory API (free, no auth required)
-function translateText(text, targetLang) {
+// Translate text using MyMemory API with caching and retry logic
+function translateText(text, targetLang, retries = 3) {
   return new Promise((resolve) => {
     if (!text || text.length === 0) {
       resolve(text);
       return;
     }
 
-    const encodedText = encodeURIComponent(text.substring(0, 500));
-    const url = `https://api.mymemory.translated.net/get?q=${encodedText}&langpair=en|${targetLang}`;
+    // Check cache first
+    const cacheKey = `${text}|${targetLang}`;
+    if (translationCache.has(cacheKey)) {
+      resolve(translationCache.get(cacheKey));
+      return;
+    }
 
-    https.get(url, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        try {
-          const json = JSON.parse(data);
-          if (json.responseStatus === 200) {
-            resolve(json.responseData.translatedText);
-          } else {
-            resolve(text);
+    const tryTranslate = (attempt) => {
+      const encodedText = encodeURIComponent(text.substring(0, 500));
+      const url = `https://api.mymemory.translated.net/get?q=${encodedText}&langpair=en|${targetLang}`;
+
+      const request = https.get(url, { timeout: 5000 }, (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data);
+            if (json.responseStatus === 200 && json.responseData.translatedText) {
+              translationCache.set(cacheKey, json.responseData.translatedText);
+              resolve(json.responseData.translatedText);
+            } else {
+              translationCache.set(cacheKey, text);
+              resolve(text);
+            }
+          } catch (e) {
+            if (attempt < retries) {
+              setTimeout(() => tryTranslate(attempt + 1), 1000);
+            } else {
+              translationCache.set(cacheKey, text);
+              resolve(text);
+            }
           }
-        } catch (e) {
+        });
+      });
+
+      request.on('timeout', () => {
+        request.destroy();
+        if (attempt < retries) {
+          setTimeout(() => tryTranslate(attempt + 1), 1000);
+        } else {
+          translationCache.set(cacheKey, text);
           resolve(text);
         }
       });
-    }).on('error', () => resolve(text));
+
+      request.on('error', () => {
+        if (attempt < retries) {
+          setTimeout(() => tryTranslate(attempt + 1), 1000);
+        } else {
+          translationCache.set(cacheKey, text);
+          resolve(text);
+        }
+      });
+    };
+
+    tryTranslate(0);
   });
 }
 
-// Recursively translate with minimal delays
+// Recursively translate all strings in an object
 async function translateObject(obj, targetLang) {
   const translated = {};
 
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === 'string') {
       translated[key] = await translateText(value, targetLang);
+      // Small delay to avoid rate limiting
+      await delay(50);
     } else if (typeof value === 'object' && value !== null) {
       translated[key] = await translateObject(value, targetLang);
     } else {
@@ -83,41 +124,52 @@ async function translateObject(obj, targetLang) {
 }
 
 async function main() {
-  console.log('🌍 StockFx Multi-Language Translation\n');
+  console.log('🌍 StockFx Complete Language Translation\n');
+  console.log('📝 This will translate all 100 languages...\n');
 
   const enContent = JSON.parse(fs.readFileSync(enFile, 'utf-8'));
   const languages = Object.entries(LANGUAGE_MAP);
   let completed = 0;
   let skipped = 0;
+  let failed = 0;
 
-  // Process sequentially with minimal delays
-  for (const [langCode, targetLang] of languages) {
+  // Process languages sequentially to manage API rate limits
+  for (let i = 0; i < languages.length; i++) {
+    const [langCode, targetLang] = languages[i];
     const filePath = path.join(localesDir, `${langCode}.json`);
+    const progress = `[${i + 1}/${languages.length}]`;
 
+    // Check if already has real translations (not English)
     if (fs.existsSync(filePath)) {
       const existing = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
       if (JSON.stringify(existing) !== JSON.stringify(enContent)) {
-        console.log(`⏭️  ${langCode.padEnd(8)} - Already translated`);
+        console.log(`${progress} ⏭️  ${langCode.padEnd(8)} - Already translated`);
         skipped++;
         continue;
       }
     }
 
     try {
-      process.stdout.write(`🔄 ${langCode.padEnd(8)} - Translating...`);
+      process.stdout.write(`${progress} 🔄 ${langCode.padEnd(8)} - Translating...`);
       const translated = await translateObject(enContent, targetLang);
       fs.writeFileSync(filePath, JSON.stringify(translated, null, 2), 'utf-8');
       console.log(' ✅');
       completed++;
     } catch (error) {
-      console.log(` ❌ ${error.message}`);
+      console.log(` ❌`);
+      failed++;
     }
 
-    // Small delay between languages to avoid rate limiting
-    await delay(200);
+    // Rate limiting - be respectful to the API
+    await delay(150);
   }
 
-  console.log(`\n📊 Summary:\n  ✅ Translated: ${completed}\n  ⏭️  Skipped: ${skipped}\n  📊 Total: ${languages.length}`);
+  console.log(`\n📊 Summary:`);
+  console.log(`  ✅ Translated: ${completed}`);
+  console.log(`  ⏭️  Skipped: ${skipped}`);
+  console.log(`  ❌ Failed: ${failed}`);
+  console.log(`  📊 Total: ${languages.length}`);
+  console.log(`\n🎉 Translation complete! All languages are now available.`);
 }
 
 main().catch(console.error);

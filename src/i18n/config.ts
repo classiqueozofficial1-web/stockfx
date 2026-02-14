@@ -50,7 +50,12 @@ SUPPORTED_LANGUAGES.forEach(lang => {
   
   resources[lang.code] = { translation };
 });
-
+// Debug: Log loaded languages
+if (typeof window !== 'undefined') {
+  console.debug('i18n: Loaded locales:', Object.keys(allTranslations).sort());
+  console.debug('i18n: Total resources configured:', Object.keys(resources).length);
+  console.debug('i18n: Supported languages:', SUPPORTED_LANGUAGES.map(l => l.code).length);
+}
 
 // Get saved language from localStorage or detect browser language
 const getSavedLanguage = () => {
