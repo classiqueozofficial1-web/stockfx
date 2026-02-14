@@ -44,6 +44,13 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const [activeFeature, setActiveFeature] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
   const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const backgroundGradients = [
+    'from-emerald-700 to-amber-500',
+    'from-purple-700 to-pink-500',
+    'from-slate-800 to-indigo-600',
+    'from-amber-500 to-orange-400',
+    'from-blue-700 to-emerald-500',
+  ];
   const [showContactModal, setShowContactModal] = useState(false);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
