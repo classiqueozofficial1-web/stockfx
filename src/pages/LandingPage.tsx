@@ -239,7 +239,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               {/* Testimonial Text */}
               <div className="mb-6">
                 <Quote className="h-5 w-5 text-amber-500/40 mb-3" />
-                <p className="text-sm text-slate-300 italic leading-relaxed line-clamp-4">\"{testimonial.text}\"</p>
+                <p className="text-sm text-slate-300 italic leading-relaxed line-clamp-4">{testimonial.text}</p>
               </div>
 
               {/* Bottom Badge */}
