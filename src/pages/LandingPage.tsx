@@ -32,6 +32,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
   
   const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activePartner, setActivePartner] = useState<number | null>(null);
@@ -119,14 +120,13 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     },
   ];
 
-  // Show contact modal every 2 minutes
+  // Auto-rotate testimonials every 6 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setShowContactModal(true);
-    }, 120000);
-
+      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [testimonials.length]);
 
   // Show WhatsApp modal every 1 minute
   useEffect(() => {
@@ -211,35 +211,103 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-10 sm:py-14">
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-2">{t('testimonials.title')}</h2>
-        <p className="text-center text-slate-300 mb-8 text-xs sm:text-sm">{t('testimonials.subtitle')}</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              onClick={() => setActiveTestimonial(activeTestimonial === i ? null : i)}
-              className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 transition-transform duration-300 cursor-pointer ${
-                activeTestimonial === i ? '-translate-y-3 scale-105 ring-2 ring-amber-400 z-20' : 'hover:-translate-y-1 hover:shadow-lg'
-              }`}
+      {/* Testimonials with Carousel */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-4 sm:mb-6">{t('testimonials.title')}</h2>
+        <p className="text-center text-slate-300 mb-12 text-sm sm:text-base">{t('testimonials.subtitle')}</p>
+        
+        <div className="relative mx-auto max-w-5xl">
+          {/* Carousel Container */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            {/* Left Arrow */}
+            <button
+              onClick={() => setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+              className="flex-shrink-0 p-2 sm:p-3 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 transition-all duration-200 hover:scale-110"
+              aria-label="Previous testimonial"
             >
-              <div className="flex items-center gap-2 mb-3">
-                {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Testimonials Viewer */}
+            <div className="flex-1 overflow-hidden">
+              <div className="relative">
+                {testimonials.map((testimonial, index) => {
+                  const position = ((index - testimonialIndex + testimonials.length) % testimonials.length);
+                  let translateX = '100%';
+                  let opacity = 0;
+                  let zIndex = 0;
+
+                  if (position === 0) {
+                    translateX = '0%';
+                    opacity = 1;
+                    zIndex = 10;
+                  } else if (position === testimonials.length - 1) {
+                    translateX = '-100%';
+                    opacity = 0;
+                    zIndex = 0;
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className="absolute inset-0 transition-all duration-700 ease-out"
+                      style={{
+                        transform: `translateX(${translateX})`,
+                        opacity: opacity,
+                        zIndex: zIndex,
+                      }}
+                    >
+                      <div className="bg-gradient-to-br from-white/5 to-amber-500/5 backdrop-blur-sm border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 sm:p-8 h-full transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/10">
+                        <div className="flex items-center gap-2 mb-4">
+                          {[...Array(testimonial.rating)].map((_, j) => (
+                            <Star key={j} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                          ))}
+                        </div>
+                        <Quote className="h-6 w-6 text-amber-500/40 mb-4" />
+                        <p className="text-sm sm:text-base text-slate-300 mb-6 italic leading-relaxed">\"{testimonial.text}\"</p>
+                        <div className="flex items-center pt-4 border-t border-white/10">
+                          <img src={testimonial.image} alt={testimonial.name} className="h-14 w-14 rounded-full object-cover border-2 border-amber-400/30" />
+                          <div className="ml-4">
+                            <p className="font-semibold text-white">{testimonial.name}</p>
+                            <p className="text-xs text-amber-400/70">{testimonial.role}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <Quote className="h-6 w-6 text-amber-500/30 mb-3" />
-              <p className="text-sm text-slate-300 mb-4 italic">"{t.text}"</p>
-              <div className="flex items-center">
-                <img src={t.image} alt={t.name} className={`h-12 w-12 rounded-full object-cover border border-amber-500/30 ${activeTestimonial === i ? 'ring-2 ring-amber-400' : ''}`} />
-                <div className="ml-3">
-                  <p className="text-sm font-semibold text-white">{t.name}</p>
-                  <p className="text-xs text-slate-400">{t.role}</p>
-                </div>
-              </div>
+              {/* Spacer to maintain height */}
+              <div className="h-64 sm:h-72 md:h-80"></div>
             </div>
-          ))}
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => setTestimonialIndex((prev) => (prev + 1) % testimonials.length)}
+              className="flex-shrink-0 p-2 sm:p-3 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 transition-all duration-200 hover:scale-110"
+              aria-label="Next testimonial"
+            >
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Indicators */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setTestimonialIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  testimonialIndex === index ? 'w-8 bg-amber-400' : 'w-2 bg-white/30 hover:bg-white/50'
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
