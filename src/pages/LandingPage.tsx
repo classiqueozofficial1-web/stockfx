@@ -31,7 +31,6 @@ interface LandingPageProps {
 export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
   
-  const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
