@@ -283,7 +283,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <div 
               key={i} 
               onClick={() => setExpandedPlan(expandedPlan === i ? null : i)}
-              className={`rounded-xl p-8 border transition-all duration-500 cursor-pointer transform hover:scale-110 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/50 animate-in fade-in slide-in-from-bottom-8 ${
+              className={`rounded-xl p-8 border transition-all duration-500 cursor-pointer transform hover:scale-110 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/50 animate-in fade-in slide-in-from-left-8 ${
                 expandedPlan === i 
                   ? 'ring-2 ring-amber-400 scale-110 -translate-y-2 shadow-2xl shadow-amber-500/50' 
                   : ''

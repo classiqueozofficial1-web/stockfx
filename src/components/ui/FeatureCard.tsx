@@ -18,7 +18,7 @@ export function FeatureCard({ icon, title, description, color = 'amber', index =
 
   return (
     <div 
-      className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 animate-in fade-in slide-in-from-bottom-8"
+      className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 animate-in fade-in slide-in-from-left-8"
       style={{
         animationDelay: `${index * 100}ms`,
         animationFillMode: 'both'
