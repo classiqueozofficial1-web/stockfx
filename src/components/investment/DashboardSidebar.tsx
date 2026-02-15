@@ -5,8 +5,8 @@ import {
   ArrowRightLeft,
   Settings,
   LogOut,
-  CreditCard } from
-'lucide-react';
+  CreditCard,
+} from 'lucide-react';
 import { Logo } from './Logo';
 interface DashboardSidebarProps {
   activeTab: string;
@@ -50,11 +50,10 @@ export function DashboardSidebar({
   }];
 
   return (
-    <div className="hidden md:flex flex-col w-64 bg-slate-900 text-white h-screen fixed left-0 top-0 border-r border-slate-800 overflow-hidden">
+    <div className="hidden md:flex flex-col w-64 bg-gradient-to-b from-slate-900 via-slate-900 to-black text-white h-screen fixed left-0 top-0 border-r border-amber-500/20 overflow-hidden shadow-2xl shadow-black/50">
       {/* Logo Area */}
-      <div className="p-4 sm:p-6 flex items-center border-b border-slate-800">
-        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">SF</div>
-        <span className="font-bold ml-3 text-white hidden sm:inline">StockFx</span>
+      <div className="p-4 sm:p-5 flex items-center border-b border-amber-500/20 bg-gradient-to-r from-amber-500/5 to-orange-500/5">
+        <Logo size="md" showText={true} variant="dark" />
       </div>
 
       {/* Navigation */}

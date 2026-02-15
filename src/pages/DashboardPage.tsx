@@ -377,7 +377,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1 bg-gradient-to-b from-slate-900/50 to-transparent">
               {[
                 { id: 'overview', label: 'Overview', icon: LayoutDashboard },
                 { id: 'portfolio', label: 'Portfolio', icon: PieChart },
@@ -395,21 +395,21 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
                       setIsMobileMenuOpen(false);
                     }}
                     className={`w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      isActive ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                      isActive ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30' : 'text-slate-300 hover:text-amber-300 hover:bg-white/5'
                     }`}>
-                    <Icon className={`mr-3 h-5 w-5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                    <Icon className={`mr-3 h-5 w-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-amber-300/70'}`} />
                     {item.label}
                   </button>
                 );
               })}
             </nav>
-            <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+            <div className="p-3 border-t border-amber-500/20 bg-gradient-to-r from-amber-500/5 to-orange-500/5">
               <button
                 onClick={() => {
                   handleLogout();
                   setIsMobileMenuOpen(false);
                 }}
-                className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
+                className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors">
                 <LogOut className="mr-3 h-4 w-4" />
                 Sign Out
               </button>
@@ -421,17 +421,20 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
       {/* Main Content */}
       <div className="flex-1 md:ml-64 w-full">
         {/* Top Bar */}
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 px-3 sm:px-4 lg:px-8 h-16 flex items-center justify-between overflow-x-hidden">
+        <header className="bg-gradient-to-r from-white to-slate-50 border-b border-amber-200/30 sticky top-0 z-30 px-3 sm:px-4 lg:px-8 h-16 flex items-center justify-between overflow-x-hidden shadow-md shadow-amber-500/5">
             <div className="flex items-center md:hidden gap-2">
             <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="text-slate-500 hover:text-slate-700">
+            className="text-amber-600 hover:text-amber-700 transition-colors">
 
               <Menu className="h-6 w-6" />
             </button>
-            <div className="flex items-center gap-1">
-              <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white font-bold text-xs">SF</div>
-              <span className="font-bold text-sm text-slate-900">StockFx</span>
+            <div className="flex items-center gap-1.5">
+              <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center text-white font-bold text-xs">SFX</div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs text-amber-900">StockFx</span>
+                <span className="text-xs text-amber-700/70">Dashboard</span>
+              </div>
             </div>
           </div>
 

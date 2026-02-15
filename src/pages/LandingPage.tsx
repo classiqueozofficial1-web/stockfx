@@ -258,8 +258,12 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
       <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
-        <div className="hidden md:flex items-center gap-1 sm:gap-2 cursor-pointer" onClick={handleLogoClick}>
-          <Logo size="sm" variant="light" showText={false} />
+        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" onClick={handleLogoClick}>
+          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-amber-500/30">SFX</div>
+          <div className="hidden sm:flex flex-col">
+            <span className="font-bold text-white text-sm">StockFx</span>
+            <span className="text-xs text-amber-200/70">Invest Smart</span>
+          </div>
         </div>
         <div className="hidden md:flex gap-2 items-center">
           <LanguageSwitcher />
@@ -267,8 +271,12 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
         <div className="md:hidden flex gap-2 items-center">
-          <div className="flex items-center justify-center w-full cursor-pointer" onClick={handleLogoClick}>
-            <Logo size="md" variant="light" showText={true} className="max-w-[220px]" />
+          <div className="flex items-center gap-2 cursor-pointer py-2" onClick={handleLogoClick}>
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-amber-500/30">SFX</div>
+            <div className="flex flex-col">
+              <span className="font-bold text-white text-sm">StockFx</span>
+              <span className="text-xs text-amber-200/70">Invest</span>
+            </div>
           </div>
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
