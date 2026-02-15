@@ -58,7 +58,7 @@ export function DashboardSidebar({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4 sm:py-6 px-3 space-y-1">
+      <nav className="flex-1 overflow-y-auto py-3 sm:py-4 md:py-6 px-2 sm:px-3 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -66,15 +66,13 @@ export function DashboardSidebar({
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`
-                w-full flex items-center px-3 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200
-                ${isActive ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20' : 'text-slate-400 hover:text-white hover:bg-slate-800'}
-              `}>
-
-              <Icon
-                className={`mr-3 h-5 w-5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-
-              {item.label}
+                  className={`
+                    w-full flex items-center px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200
+                    ${isActive ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20' : 'text-slate-400 hover:text-white hover:bg-slate-800'}
+                  `}>
+                  <Icon
+                    className={`mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                  <span className="truncate">{item.label}</span>
             </button>);
 
         })}

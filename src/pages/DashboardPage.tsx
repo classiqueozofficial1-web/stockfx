@@ -541,47 +541,46 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         </header>
 
         {/* Dashboard Content */}
-        <main className="p-2 sm:p-3 lg:p-4 max-w-7xl mx-auto">
+        <main className="w-full min-h-screen bg-slate-50 p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6">
           {activeTab === 'overview' ? (
             <>
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <StatsCard
-              title="Total Balance"
-              value={`$${balance.toFixed(2)}`}
-              change="0%"
-              icon={Wallet} />
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
+                <StatsCard
+                  title="Total Balance"
+                  value={`$${balance.toFixed(2)}`}
+                  change="0%"
+                  icon={Wallet} />
 
-            <StatsCard
-              title="Total Profit"
-              value={`$${(user.totalProfit ?? 0).toFixed(2)}`}
-              change="0%"
-              icon={TrendingUp}
-              iconColor="text-blue-600"
-              iconBgColor="bg-blue-100" />
+                <StatsCard
+                  title="Total Profit"
+                  value={`$${(user.totalProfit ?? 0).toFixed(2)}`}
+                  change="0%"
+                  icon={TrendingUp}
+                  iconColor="text-blue-600"
+                  iconBgColor="bg-blue-100" />
 
-            <StatsCard
-              title="Monthly Income"
-              value={`$${(user.monthlyIncome ?? 0).toFixed(2)}`}
-              change="0%"
-              icon={DollarSign}
-              iconColor="text-purple-600"
-              iconBgColor="bg-purple-100" />
+                <StatsCard
+                  title="Monthly Income"
+                  value={`$${(user.monthlyIncome ?? 0).toFixed(2)}`}
+                  change="0%"
+                  icon={DollarSign}
+                  iconColor="text-purple-600"
+                  iconBgColor="bg-purple-100" />
 
-            <StatsCard
-              title="Active Trades"
-              value={`${user.activeTrades ?? 0}`}
-              change={`${(user.portfolioPerformance ?? 0).toFixed(1)}%`}
-              isPositive={(user.portfolioPerformance ?? 0) >= 0}
-              icon={Activity}
-              iconColor="text-orange-600"
-              iconBgColor="bg-orange-100" />
+                <StatsCard
+                  title="Active Trades"
+                  value={`${user.activeTrades ?? 0}`}
+                  change={`${(user.portfolioPerformance ?? 0).toFixed(1)}%`}
+                  isPositive={(user.portfolioPerformance ?? 0) >= 0}
+                  icon={Activity}
+                  iconColor="text-orange-600"
+                  iconBgColor="bg-orange-100" />
+              </div>
 
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main Chart Section */}
-            <div className="lg:col-span-2 space-y-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              {/* Main Chart Section */}
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6 md:space-y-8">
               <PortfolioChart totalBalance={balance} />
 
               <MarketTrendsChart />
@@ -645,8 +644,8 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
               </div>
             </div>
 
-            {/* Right Column - Transactions & Quick Actions */}
-            <div className="space-y-8">
+              {/* Right Column - Transactions & Quick Actions */}
+              <div className="space-y-4 sm:space-y-6 md:space-y-8">
               {/* User Profile Card */}
               <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-6 text-white shadow-lg shadow-emerald-600/20 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl"></div>
@@ -797,13 +796,13 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
             </div>
           </div>
 
-          {/* Additional Visualization Sections */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+              {/* Additional Visualization Sections */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 md:mt-10">
             <AssetAllocationChart />
             <GainLossHeatmap />
           </div>
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="mt-6 sm:mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             <PriceMovementCard
               symbol="AAPL"
               name="Apple Inc."
@@ -843,6 +842,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
           )}
         </main>
       </div>
-    </div>);
+    </div>
+  );
 
 }
