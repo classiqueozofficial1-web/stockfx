@@ -279,11 +279,15 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <div 
               key={i} 
               onClick={() => setExpandedPlan(expandedPlan === i ? null : i)}
-              className={`rounded-xl p-8 border transition-all duration-300 cursor-pointer transform hover:scale-105 ${
+              className={`rounded-xl p-8 border transition-all duration-500 cursor-pointer transform hover:scale-110 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/50 animate-in fade-in slide-in-from-bottom-8 ${
                 expandedPlan === i 
-                  ? 'ring-2 ring-amber-400 scale-105' 
+                  ? 'ring-2 ring-amber-400 scale-110 -translate-y-2 shadow-2xl shadow-amber-500/50' 
                   : ''
-              } ${plan.popular ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500 shadow-xl' : 'bg-white/5 border-white/10'}`}>
+              } ${plan.popular ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500 shadow-xl' : 'bg-white/5 border-white/10'}`}
+              style={{
+                animationDelay: `${i * 100}ms`,
+                animationFillMode: 'both'
+              }}>
               
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
