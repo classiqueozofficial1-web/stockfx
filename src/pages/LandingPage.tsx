@@ -172,9 +172,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
         <div className="md:hidden flex gap-2 items-center">
-          <div className="cursor-pointer" onClick={handleLogoClick}>
-            <Logo size="sm" showText={false} variant="light" />
-          </div>
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="sm">Get Started</AnimatedButton>
