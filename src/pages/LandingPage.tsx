@@ -142,16 +142,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950">
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-5 sm:py-6 max-w-7xl mx-auto">
-        <div className="flex items-center cursor-pointer hover:opacity-90 transition-opacity" onClick={handleLogoClick}>
-          <Logo size="md" showText={true} variant="light" />
+      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-5 sm:py-6 max-w-full mx-auto border-b border-white/10">
+        <div className="flex items-center cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0" onClick={handleLogoClick}>
+          <Logo size="sm" showText={true} variant="light" />
         </div>
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-8 lg:gap-10 ml-auto">
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-2 sm:gap-3 ml-auto">
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="sm">Get Started</AnimatedButton>
