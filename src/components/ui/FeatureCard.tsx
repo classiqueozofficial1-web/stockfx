@@ -17,7 +17,7 @@ export function FeatureCard({ icon, title, description, color = 'amber' }: Featu
 
   return (
     <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
-      <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${colorClass} text-xl`}>
+      <div className={`w-16 h-16 rounded-lg flex items-center justify-center mb-6 pt-2 ${colorClass} text-2xl`}>
         {typeof icon === 'string' ? icon : icon}
       </div>
       <h3 className="text-lg font-bold text-gray-900 mb-2">{title}</h3>
