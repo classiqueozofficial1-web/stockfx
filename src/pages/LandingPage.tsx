@@ -5,15 +5,9 @@ import {
   BarChart3,
   Lock,
   Users,
-  Zap,
-  Globe,
-  ArrowRight,
   Star,
   CheckCircle2,
   Briefcase,
-  ChartCandlestick,
-  Target,
-  Smartphone,
   Quote,
   Mail,
   X,
@@ -24,11 +18,8 @@ import {
   Cloud,
   ChevronDown,
 } from 'lucide-react';
-import { Header } from '../components/Header';
-import { Hero } from '../components/Hero';
-import { Footer } from '../components/Footer';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
-import { Logo } from '../components/ui/Logo';
+import { Logo } from '../components/investment/Logo';
 import { AnimatedButton } from '../components/ui/AnimatedButton';
 import { FeatureCard } from '../components/ui/FeatureCard';
 import { StatCounter } from '../components/ui/StatCounter';
@@ -41,7 +32,6 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
   
   // State variables
-  const [activeFeature, setActiveFeature] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
   const [backgroundIndex, setBackgroundIndex] = useState(0);
   const backgroundGradients = [
@@ -57,44 +47,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activePartner, setActivePartner] = useState<number | null>(null);
 
-  const features = [
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: 'Lightning Fast',
-      description: 'Order execution in milliseconds with advanced order routing.',
-      color: 'primary',
-    },
-    {
-      icon: <Lock className="w-6 h-6" />,
-      title: 'Bank-Level Security',
-      description: '256-bit encryption, 2FA, and 95% cold storage assets.',
-      color: 'accent',
-    },
-    {
-      icon: <Smartphone className="w-6 h-6" />,
-      title: 'Mobile Trading',
-      description: 'Full-featured trading app available on iOS and Android.',
-      color: 'primary',
-    },
-    {
-      icon: <Globe className="w-6 h-6" />,
-      title: 'Global Markets',
-      description: 'Access stocks, crypto, forex, and commodities worldwide.',
-      color: 'accent',
-    },
-    {
-      icon: <ChartCandlestick className="w-6 h-6" />,
-      title: 'Pro Tools',
-      description: 'Advanced charting, technical analysis, and backtesting.',
-      color: 'primary',
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: 'Expert Support',
-      description: '24/7 professional support from experienced traders.',
-      color: 'accent',
-    },
-  ];
+
 
   const testimonials = [
     {
@@ -127,57 +80,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     },
   ];
 
-  const stats = [
-    { label: 'Active Traders', value: '2M+' },
-    { label: 'Assets Under Trading', value: '$500B+' },
-    { label: 'Commission Free Trades', value: '100%' },
-    { label: 'Uptime Guarantee', value: '99.9%' },
-  ];
 
-  const pricingPlans = [
-    {
-      name: 'Starter',
-      price: '$0',
-      description: 'Perfect for beginners',
-      features: [
-        'Commission-free stocks & ETFs',
-        'Basic charting tools',
-        'Mobile app access',
-        '2 watchlists',
-        'Email support',
-      ],
-      cta: 'Get Started',
-    },
-    {
-      name: 'Pro',
-      price: 'From $99/mo',
-      description: 'For active traders',
-      features: [
-        'Everything in Starter',
-        'Level 2 market data',
-        'Advanced charting & analysis',
-        'Unlimited watchlists',
-        '24/7 priority support',
-        'API access',
-      ],
-      cta: 'Start Free Trial',
-      popular: true,
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      description: 'For institutions',
-      features: [
-        'Everything in Pro',
-        'Dedicated account manager',
-        'Custom integrations',
-        'White-label solutions',
-        'SLA guarantees',
-        'Institutional pricing',
-      ],
-      cta: 'Contact Sales',
-    },
-  ];
+
+
 
   const faqs = [
     {
@@ -258,12 +163,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
       {/* Navigation */}
       <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" onClick={handleLogoClick}>
-          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-amber-500/30">SFX</div>
-          <div className="hidden sm:flex flex-col">
-            <span className="font-bold text-white text-sm">StockFx</span>
-            <span className="text-xs text-amber-200/70">Invest Smart</span>
-          </div>
+        <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity" onClick={handleLogoClick}>
+          <Logo size="md" showText={true} variant="light" />
         </div>
         <div className="hidden md:flex gap-2 items-center">
           <LanguageSwitcher />
@@ -271,12 +172,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
         <div className="md:hidden flex gap-2 items-center">
-          <div className="flex items-center gap-2 cursor-pointer py-2" onClick={handleLogoClick}>
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-amber-500/30">SFX</div>
-            <div className="flex flex-col">
-              <span className="font-bold text-white text-sm">StockFx</span>
-              <span className="text-xs text-amber-200/70">Invest</span>
-            </div>
+          <div className="cursor-pointer" onClick={handleLogoClick}>
+            <Logo size="sm" showText={false} variant="light" />
           </div>
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
@@ -368,7 +265,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 ))}
               </div>
               <Quote className="h-6 w-6 text-amber-500/30 mb-3" />
-              <p className="text-sm text-slate-300 mb-4 italic">"{t.quote}"</p>
+              <p className="text-sm text-slate-300 mb-4 italic">"{t.text}"</p>
               <div className="flex items-center">
                 <img src={t.image} alt={t.name} className={`h-12 w-12 rounded-full object-cover border border-amber-500/30 ${activeTestimonial === i ? 'ring-2 ring-amber-400' : ''}`} />
                 <div className="ml-3">
@@ -803,7 +700,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <footer className="border-t border-slate-700 py-12 px-6 mt-12 bg-black/30">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 pb-8 border-b border-slate-700">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-1 mb-2">
               <Logo size="md" variant="light" showText={true} />
             </div>
             <p className="text-slate-400 text-sm max-w-xs">The next-generation platform for stocks, crypto, and ETFs. Professional tools. Zero complexity.</p>
