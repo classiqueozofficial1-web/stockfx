@@ -5,9 +5,10 @@ interface FeatureCardProps {
   title: string;
   description: string;
   color?: 'amber' | 'blue' | 'emerald' | 'purple';
+  index?: number;
 }
 
-export function FeatureCard({ icon, title, description, color = 'amber' }: FeatureCardProps) {
+export function FeatureCard({ icon, title, description, color = 'amber', index = 0 }: FeatureCardProps) {
   const colorClass = {
     amber: 'bg-amber-100 text-amber-600',
     blue: 'bg-blue-100 text-blue-600',
@@ -16,7 +17,13 @@ export function FeatureCard({ icon, title, description, color = 'amber' }: Featu
   }[color];
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+    <div 
+      className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 animate-in fade-in slide-in-from-bottom-8"
+      style={{
+        animationDelay: `${index * 100}ms`,
+        animationFillMode: 'both'
+      }}
+    >
       <div className={`w-16 h-16 rounded-lg flex items-center justify-center mb-6 pt-2 ${colorClass} text-2xl`}>
         {typeof icon === 'string' ? icon : icon}
       </div>

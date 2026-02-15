@@ -187,21 +187,25 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white text-center mb-8 sm:mb-10">{t('features.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <FeatureCard 
+            index={0}
             icon="?" 
             title={t('features.fast.name')} 
             description={t('features.fast.desc')}
             color="amber" />
           <FeatureCard 
+            index={1}
             icon="??" 
             title={t('features.security.name')} 
             description={t('features.security.desc')}
             color="blue" />
           <FeatureCard 
+            index={2}
             icon="??" 
             title={t('features.mobile.name')} 
             description={t('features.mobile.desc')}
             color="emerald" />
           <FeatureCard 
+            index={3}
             icon="??" 
             title={t('features.global.name')} 
             description={t('features.global.desc')}
