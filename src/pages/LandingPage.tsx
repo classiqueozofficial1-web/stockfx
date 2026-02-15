@@ -218,7 +218,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="group bg-gradient-to-br from-white/5 to-amber-500/5 backdrop-blur-sm border border-white/10 hover:border-amber-500/30 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/20 hover:scale-105 hover:-translate-y-2"
+              className="group flex flex-col bg-gradient-to-br from-white/5 to-amber-500/5 backdrop-blur-sm border border-white/10 hover:border-amber-500/30 rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/20 md:hover:scale-105 md:hover:-translate-y-2"
             >
               {/* Top Section: Photo & Country Info */}
               <div className="flex flex-col items-center mb-6 pb-6 border-b border-white/10">
@@ -245,9 +245,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               </div>
 
               {/* Testimonial Text */}
-              <div className="mb-6">
+              <div className="mb-6 flex-1">
                 <Quote className="h-5 w-5 text-amber-500/40 mb-3" />
-                <p className="text-sm text-slate-300 italic leading-relaxed line-clamp-4">{testimonial.text}</p>
+                <p className="text-sm text-slate-300 italic leading-relaxed">{testimonial.text}</p>
               </div>
 
               {/* Bottom Badge */}
