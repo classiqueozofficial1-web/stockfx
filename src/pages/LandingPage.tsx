@@ -31,21 +31,12 @@ interface LandingPageProps {
 export function LandingPage({ onNavigate }: LandingPageProps) {
   const { t } = useTranslation();
   
-  // State variables
   const [activeTestimonial, setActiveTestimonial] = useState<number | null>(null);
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
-  const backgroundGradients = [
-    'from-emerald-700 to-amber-500',
-    'from-purple-700 to-pink-500',
-    'from-slate-800 to-indigo-600',
-    'from-amber-500 to-orange-400',
-    'from-blue-700 to-emerald-500',
-  ];
-  const [showContactModal, setShowContactModal] = useState(false);
-  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activePartner, setActivePartner] = useState<number | null>(null);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
 
 
@@ -132,25 +123,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       setShowContactModal(true);
-    }, 120000); // 2 minutes
+    }, 120000);
 
     return () => clearInterval(timer);
   }, []);
-
-  // Rotate background gradient every 5 seconds
-  useEffect(() => {
-    const bgTimer = setInterval(() => {
-      setBackgroundIndex((prev) => (prev + 1) % backgroundGradients.length);
-    }, 5000);
-
-    return () => clearInterval(bgTimer);
-  }, [backgroundGradients.length]);
 
   // Show WhatsApp modal every 1 minute
   useEffect(() => {
     const waTimer = setInterval(() => {
       setShowWhatsAppModal(true);
-    }, 60000); // 1 minute
+    }, 60000);
 
     return () => clearInterval(waTimer);
   }, []);
@@ -160,18 +142,18 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[backgroundIndex]} transition-all duration-1000 ease-in-out`}>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950">
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-7xl mx-auto">
-        <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity" onClick={handleLogoClick}>
+      <nav className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-5 sm:py-6 max-w-7xl mx-auto">
+        <div className="flex items-center cursor-pointer hover:opacity-90 transition-opacity" onClick={handleLogoClick}>
           <Logo size="md" showText={true} variant="light" />
         </div>
-        <div className="hidden md:flex gap-2 items-center">
+        <div className="hidden md:flex items-center gap-6">
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">{t('nav.getStarted')}</AnimatedButton>
         </div>
-        <div className="md:hidden flex gap-2 items-center">
+        <div className="md:hidden flex items-center gap-3">
           <LanguageSwitcher />
           <AnimatedButton onClick={() => onNavigate('login')} variant="ghost" size="sm">{t('nav.signIn')}</AnimatedButton>
           <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="sm">Get Started</AnimatedButton>
@@ -179,40 +161,26 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-12 lg:py-20 text-center">
-        <div className="inline-flex items-center px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm font-medium mb-4">
-          <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 mr-1 animate-pulse" />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 text-center">
+        <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold mb-6 sm:mb-8">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 mr-2 animate-pulse" />
           {t('hero.badge')}
         </div>
-        <h1 className="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 leading-tight">
           {t('hero.title1')}
           <br />
           <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">{t('hero.title2')}</span>
         </h1>
-        <p className="hero-desc text-xs sm:text-sm md:text-base lg:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
           {t('hero.description')}
         </p>
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md" className="hero-cta">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <AnimatedButton onClick={() => onNavigate('register')} variant="primary" size="md">
             {t('hero.startButton')}
           </AnimatedButton>
-          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="md" className="hero-cta">
+          <AnimatedButton onClick={() => onNavigate('login')} variant="outline" size="md">
             {t('hero.signInButton')}
           </AnimatedButton>
-        </div>
-
-        {/* Background Carousel Indicators */}
-        <div className="flex gap-1 justify-center mt-6 sm:mt-8">
-          {backgroundGradients.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setBackgroundIndex(index)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                backgroundIndex === index ? 'w-6 bg-amber-400' : 'w-1.5 bg-white/30 hover:bg-white/50'
-              }`}
-              aria-label={`Background ${index + 1}`}
-            />
-          ))}
         </div>
       </section>
 
