@@ -43,29 +43,29 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   const testimonials = [
     {
       name: 'Dominic Lee',
-      role: 'Day Trader',
-      text: 'As a beginner, I was nervous about investing. StockFx’s educational resources helped me make wiser decisions, and I ended the quarter with profits above my expectations.',
+      role: 'Day Trader',      country: 'Singapore',
+      flag: '🇸🇬',      text: 'As a beginner, I was nervous about investing. StockFx’s educational resources helped me make wiser decisions, and I ended the quarter with profits above my expectations.',
       rating: 5,
       image: 'https://i.pravatar.cc/200?img=11',
     },
     {
       name: 'Michael Johnson',
-      role: 'Portfolio Manager',
-      text: 'I started investing with StockFx six months ago. After learning their strategy tips and sticking to a plan, I saw my portfolio grow steadily. I’m really happy with the results.',
+      role: 'Portfolio Manager',      country: 'United States',
+      flag: '🇺🇸',      text: 'I started investing with StockFx six months ago. After learning their strategy tips and sticking to a plan, I saw my portfolio grow steadily. I’m really happy with the results.',
       rating: 5,
       image: 'https://i.pravatar.cc/200?img=12',
     },
     {
       name: 'Jessica Rodriguez',
-      role: 'Wealth Advisor',
-      text: 'I funded my StockFx account with $10,000 after doing my own research and planning my strategy carefully. Over time, by staying disciplined and managing my risk, my portfolio grew significantly. I appreciated having access to market tools and educational resources that helped me make informed decisions. While I understand investing always carries risk, I’m happy with the progress I’ve achieved so far.',
+      role: 'Wealth Advisor',      country: 'Mexico',
+      flag: '🇲🇽',      text: 'I funded my StockFx account with $10,000 after doing my own research and planning my strategy carefully. Over time, by staying disciplined and managing my risk, my portfolio grew significantly. I appreciated having access to market tools and educational resources that helped me make informed decisions. While I understand investing always carries risk, I’m happy with the progress I’ve achieved so far.',
       rating: 5,
       image: 'https://i.pravatar.cc/200?img=14',
     },
     {
       name: 'Emma Thompson',
-      role: 'Financial Analyst',
-      text: 'I opened my StockFx account with $2,000 and committed to a disciplined strategy over several months. Through careful research and calculated trades, my account eventually grew by about 50%, reaching nearly $3,000. I understand markets involve risk, but I’m proud of the progress I made using the tools and insights available on the platform.',
+      role: 'Financial Analyst',      country: 'United Kingdom',
+      flag: '🇬🇧',      text: 'I opened my StockFx account with $2,000 and committed to a disciplined strategy over several months. Through careful research and calculated trades, my account eventually grew by about 50%, reaching nearly $3,000. I understand markets involve risk, but I’m proud of the progress I made using the tools and insights available on the platform.',
       rating: 5,
       image: 'https://i.pravatar.cc/200?img=16',
     },
@@ -268,9 +268,13 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                         <p className="text-sm sm:text-base text-slate-300 mb-6 italic leading-relaxed">\"{testimonial.text}\"</p>
                         <div className="flex items-center pt-4 border-t border-white/10">
                           <img src={testimonial.image} alt={testimonial.name} className="h-14 w-14 rounded-full object-cover border-2 border-amber-400/30" />
-                          <div className="ml-4">
-                            <p className="font-semibold text-white">{testimonial.name}</p>
+                          <div className="ml-4 flex-1">
+                            <div className="flex items-center gap-2">
+                              <p className="font-semibold text-white">{testimonial.name}</p>
+                              <span className="text-lg">{testimonial.flag}</span>
+                            </div>
                             <p className="text-xs text-amber-400/70">{testimonial.role}</p>
+                            <p className="text-xs text-slate-400 mt-1">{testimonial.country}</p>
                           </div>
                         </div>
                       </div>
