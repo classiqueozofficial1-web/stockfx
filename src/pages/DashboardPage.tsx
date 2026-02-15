@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DashboardSidebar } from '../components/investment/DashboardSidebar';
 import { StatsCard } from '../components/investment/StatsCard';
-import { TransactionItem } from '../components/investment/TransactionItem';
 import { PortfolioChart } from '../components/investment/PortfolioChart';
 import { AssetAllocationChart } from '../components/investment/AssetAllocationChart';
 import { MarketTrendsChart } from '../components/investment/MarketTrendsChart';
@@ -22,6 +21,12 @@ import {
   Menu,
   X,
   CheckCircle2,
+  LayoutDashboard,
+  PieChart,
+  ArrowRightLeft,
+  CreditCard,
+  Settings,
+  LogOut,
 } from 'lucide-react';
 
 interface DashboardPageProps {
@@ -350,53 +355,84 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         onLogout={handleLogout}
         userName={user.name}
         userEmail={user.email}
-        balance={balance}
       />
 
 
       {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen &&
-      <div className="fixed inset-0 z-50 md:hidden">
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
           <div
-          className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
-          onClick={() => setIsMobileMenuOpen(false)}>
-        </div>
-          <div className="absolute left-0 top-0 bottom-0 w-64 bg-slate-900 z-50 animate-slide-in-left">
-            <div className="flex justify-end p-4">
+            className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="absolute left-0 top-0 bottom-0 w-64 bg-slate-900 text-white z-50 animate-slide-in-left flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">SF</div>
+                <span className="font-bold text-white">StockFx</span>
+              </div>
               <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-white">
-
-                <X className="h-6 w-6" />
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-slate-400 hover:text-white transition-colors">
+                <X className="h-5 w-5" />
               </button>
             </div>
-            <div className="h-full overflow-y-auto pb-20">
-              {/* Reusing sidebar logic would be better, but for simplicity in template: */}
-              <DashboardSidebar
-              activeTab={activeTab}
-              setActiveTab={(tab) => {
-                setActiveTab(tab);
-                setIsMobileMenuOpen(false);
-              }}
-              onLogout={() => onNavigate('landing')} />
-
+            <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+              {[
+                { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+                { id: 'portfolio', label: 'Portfolio', icon: PieChart },
+                { id: 'transactions', label: 'Transactions', icon: ArrowRightLeft },
+                { id: 'cards', label: 'Cards', icon: CreditCard },
+                { id: 'settings', label: 'Settings', icon: Settings },
+              ].map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isActive ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}>
+                    <Icon className={`mr-3 h-5 w-5 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                    {item.label}
+                  </button>
+                );
+              })}
+            </nav>
+            <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
+                <LogOut className="mr-3 h-4 w-4" />
+                Sign Out
+              </button>
             </div>
           </div>
         </div>
-      }
+      )}
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64 w-full">
         {/* Top Bar */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-30 px-3 sm:px-4 lg:px-8 h-16 flex items-center justify-between overflow-x-hidden">
-            <div className="flex items-center md:hidden">
+            <div className="flex items-center md:hidden gap-2">
             <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="text-slate-500 hover:text-slate-700 mr-4">
+            className="text-slate-500 hover:text-slate-700">
 
               <Menu className="h-6 w-6" />
             </button>
-            <span className="font-bold text-lg text-slate-900">{t('dashboard.investPro')}</span>
+            <div className="flex items-center gap-1">
+              <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white font-bold text-xs">SF</div>
+              <span className="font-bold text-sm text-slate-900">StockFx</span>
+            </div>
           </div>
 
               <div className="hidden md:flex items-center text-xl font-bold text-slate-900">

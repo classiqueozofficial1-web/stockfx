@@ -50,14 +50,15 @@ export function DashboardSidebar({
   }];
 
   return (
-    <div className="hidden md:flex flex-col w-64 bg-slate-900 text-white h-screen fixed left-0 top-0 border-r border-slate-800">
+    <div className="hidden md:flex flex-col w-64 bg-slate-900 text-white h-screen fixed left-0 top-0 border-r border-slate-800 overflow-hidden">
       {/* Logo Area */}
-      <div className="p-6 flex items-center border-b border-slate-800">
-        <Logo size="lg" variant="light" />
+      <div className="p-4 sm:p-6 flex items-center border-b border-slate-800">
+        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">SF</div>
+        <span className="font-bold ml-3 text-white hidden sm:inline">StockFx</span>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+      <nav className="flex-1 overflow-y-auto py-4 sm:py-6 px-3 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -66,7 +67,7 @@ export function DashboardSidebar({
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`
-                w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
+                w-full flex items-center px-3 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200
                 ${isActive ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/20' : 'text-slate-400 hover:text-white hover:bg-slate-800'}
               `}>
 
@@ -80,13 +81,13 @@ export function DashboardSidebar({
       </nav>
 
       {/* User Profile & Logout */}
-      <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+      <div className="p-3 sm:p-4 border-t border-slate-800 bg-slate-900/50">
         <div className="flex items-center mb-4 px-2">
-          <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold shadow-lg">
+          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold shadow-lg text-sm">
             {userName.charAt(0)}
           </div>
-          <div className="ml-3 overflow-hidden">
-            <p className="text-sm font-medium text-white truncate">
+          <div className="ml-2 sm:ml-3 overflow-hidden">
+            <p className="text-xs sm:text-sm font-medium text-white truncate">
               {userName}
             </p>
             <p className="text-xs text-slate-400 truncate">{userEmail}</p>
@@ -94,10 +95,11 @@ export function DashboardSidebar({
         </div>
         <button
           onClick={onLogout}
-          className="w-full flex items-center px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
+          className="w-full flex items-center px-3 py-2 text-xs sm:text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors">
 
-          <LogOut className="mr-3 h-4 w-4" />
-          Sign Out
+          <LogOut className="mr-2 sm:mr-3 h-4 w-4" />
+          <span className="hidden sm:inline">Sign Out</span>
+          <span className="sm:hidden">Out</span>
         </button>
       </div>
     </div>);
