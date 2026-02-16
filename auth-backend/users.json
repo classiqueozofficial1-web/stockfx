@@ -9,5 +9,32 @@
     "otp": "945160",
     "otpExpiry": "2026-02-16T09:26:42.477Z",
     "isVerified": false
+  },
+  {
+    "id": "1771241014314",
+    "email": "testuser@example.com",
+    "password": "$2a$10$aWarvn4gdJ.vi1tVf4RMweyZ3rhO.7cYMj52UCpNOpqfbzhKmYqkW",
+    "firstName": "Test",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:23:34.314Z",
+    "isVerified": true,
+    "hashedOtp": null,
+    "otpExpiry": null,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241014315,
+    "verifiedAt": "2026-02-16T11:23:55.389Z"
+  },
+  {
+    "id": "1771241059642",
+    "email": "ratelimit@example.com",
+    "password": "$2a$10$ZL6XLiYtXDleN7BVuoB3aOEIX./QuoduqlMSrv9phqlNzGnPjne8K",
+    "firstName": "Test",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:24:19.642Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$fOXFO21v13PTGy/kg89pTuDKRIqouLafMIpyT76SB3qmBnV2WBOy6",
+    "otpExpiry": 1771241359642,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241059642
   }
 ]

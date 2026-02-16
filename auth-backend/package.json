@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server-simple.js",
-    "dev": "nodemon src/server-simple.js",
+    "start": "node src/server-enhanced.js",
+    "dev": "nodemon src/server-enhanced.js",
     "test": "echo \"No tests yet\""
   },
   "dependencies": {
@@ -14,6 +14,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.0",
+    "nodemailer": "^8.0.1",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0"
   },
