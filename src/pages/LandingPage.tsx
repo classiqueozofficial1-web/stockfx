@@ -26,9 +26,10 @@ import { StatCounter } from '../components/ui/StatCounter';
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
+  onLogoClick?: () => void;
 }
 
-export function LandingPage({ onNavigate }: LandingPageProps) {
+export function LandingPage({ onNavigate, onLogoClick }: LandingPageProps) {
   const { t } = useTranslation();
   
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
@@ -144,6 +145,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
   }, []);
 
   const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
     onNavigate('landing');
   };
 

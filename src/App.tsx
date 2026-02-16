@@ -17,6 +17,9 @@ import { fetchCurrentUser, setCurrentUserFromProfile } from './lib/session';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('landing');
+  const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [lastLogoClickTime, setLastLogoClickTime] = useState(0);
   
   // Simple hash-based routing handler
   useEffect(() => {
@@ -49,8 +52,42 @@ export function App() {
         console.debug('No active session');
       }
     })();
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    
+    // Hidden keyboard shortcut: Ctrl+Shift+A for admin access
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
+        e.preventDefault();
+        setAdminUnlocked(true);
+        window.location.hash = 'admin-login';
+        console.log('🔐 Admin mode unlocked via keyboard shortcut');
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, []);
+  
+  // Handle logo clicks (5 clicks to unlock admin)
+  const handleLogoClick = () => {
+    const now = Date.now();
+    // Reset if more than 3 seconds have passed
+    if (now - lastLogoClickTime > 3000) {
+      setLogoClickCount(1);
+    } else {
+      setLogoClickCount(prev => prev + 1);
+    }
+    setLastLogoClickTime(now);
+    
+    // After 5 rapid clicks, unlock admin
+    if (logoClickCount + 1 === 5) {
+      setAdminUnlocked(true);
+      window.location.hash = 'admin-login';
+      console.log('🔐 Admin mode unlocked via logo easter egg');
+    }
+  };
   const navigate = (page: string) => {
     window.location.hash = page === 'landing' ? '' : page;
     // State update happens via the hashchange listener
@@ -64,7 +101,7 @@ export function App() {
   
   return (
     <ErrorBoundary>
-      {currentPage === 'landing' && <LandingPage onNavigate={navigate} />}
+      {currentPage === 'landing' && <LandingPage onNavigate={navigate} onLogoClick={handleLogoClick} />}
       {currentPage === 'login' && <LoginPage onNavigate={navigate} />}
       {currentPage === 'register' && <RegisterPage onNavigate={navigate} />}
       {currentPage === 'dashboard' && <DashboardPage onNavigate={navigate} />}
