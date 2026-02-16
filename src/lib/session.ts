@@ -305,13 +305,20 @@ export function adminLogout() {
   localStorage.removeItem('admin_session');
 }
 
-export function terminateAllUserSessions() {
+export async function terminateAllUserSessions() {
   try {
     // Call backend to terminate all sessions on server side
-    fetch(`${API_BASE}/api/auth/terminate-all-sessions`, {
+    const res = await fetch(`${API_BASE}/api/auth/terminate-all-sessions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }).catch(err => console.warn('Backend session termination failed:', err));
+    });
+    
+    const data = await res.json();
+    
+    if (!res.ok) {
+      console.error('Backend termination failed:', data);
+      throw new Error(data.error || 'Failed to terminate sessions');
+    }
     
     // Clear all user sessions in localStorage
     localStorage.removeItem('currentUser');
@@ -320,8 +327,13 @@ export function terminateAllUserSessions() {
     // Reset all active user sessions
     currentUser = null;
     
-    return { success: true, message: 'All user sessions terminated successfully' };
+    return { success: true, message: data.message || 'All user sessions terminated successfully' };
   } catch (error: any) {
+    console.error('Terminate sessions error:', error);
+    // Still clear local sessions even if backend fails
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('auth_token');
+    currentUser = null;
     return { success: false, message: error.message || 'Failed to terminate sessions' };
   }
 }

@@ -132,11 +132,18 @@ export function AdminPage({ onLogout }: AdminPageProps) {
     if (onLogout) onLogout();
   };
 
-  const handleTerminateAllSessions = () => {
+  const handleTerminateAllSessions = async () => {
     if (window.confirm('Are you sure? This will terminate all active user sessions.')) {
-      const result = terminateAllUserSessions();
-      showStatus(result.message, result.success ? 'success' : 'error');
-      loadSessions();
+      setLoading(true);
+      try {
+        const result = await terminateAllUserSessions();
+        showStatus(result.message, result.success ? 'success' : 'error');
+        loadSessions();
+      } catch (err: any) {
+        showStatus(err.message || 'Failed to terminate sessions', 'error');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
