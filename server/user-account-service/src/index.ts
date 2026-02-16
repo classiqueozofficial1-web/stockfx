@@ -1,6 +1,6 @@
 import express from 'express';
 import { connectToDatabase } from './db/client';
-import { setupRoutes } from './routes/auth.routes';
+import { setupRoutes } from './routes/index';
 import { config } from './config';
 
 const app = express();

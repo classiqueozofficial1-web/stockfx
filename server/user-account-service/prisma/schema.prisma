@@ -1,8 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  TERMINATED
+  ARCHIVED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
-  password  String
+  id                Int       @id @default(autoincrement())
+  username          String    @unique
+  email             String    @unique
+  password          String
+  firstName         String?
+  lastName          String?
+  status            UserStatus @default(ACTIVE)
+  role              UserRole   @default(USER)
+  phoneNumber       String?
+  address           String?
+  city              String?
+  country           String?
+  investmentAmount  Float?    @default(0)
+  portfolio         Json?     // Stores portfolio data as JSON
+  lastLoginAt       DateTime?
+  loginCount        Int       @default(0)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  terminatedAt      DateTime?
+  terminationReason String?
+  
+  // Relationships
+  auditLogs         AuditLog[]
+  sessions          Session[]
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Session {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  token     String  @unique
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([token])
+}
+
+model AuditLog {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  actionType    String    // e.g., "USER_DELETED", "USER_TERMINATED", "DATA_EXPORTED"
+  description   String?
+  oldData       Json?     // Stores previous user data for audit trail
+  newData       Json?     // Stores new user data
+  performedBy   Int?      // Admin who performed the action
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin         User?     @relation("AdminAudits", fields: [performedBy], references: [id])
+  
+  @@index([userId])
+  @@index([actionType])
+  @@index([createdAt])
+}
+
+// Self-relation for admin audits
+model AdminAuditLog {
+  id            Int       @id @default(autoincrement())
+  adminId       Int
+  targetUserId  Int
+  action        String    // e.g., "DELETE_USER", "TERMINATE_USER", "RESET_PASSWORD"
+  reason        String?
+  result        String    // e.g., "SUCCESS", "FAILED"
+  createdAt     DateTime  @default(now())
+  
+  @@index([adminId])
+  @@index([targetUserId])
+  @@index([createdAt])
 }
