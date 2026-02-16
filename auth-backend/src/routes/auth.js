@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { register, login, listUsers, updateBalance, editName, sendNotification } = require('../controllers/authController');
+const { register, login, listUsers, updateBalance, editName, sendNotification, verifyOTP, resendOTP } = require('../controllers/authController');
 const { googleAuth, googleCallback } = require('../services/oauth');
 
 // Admin endpoints
@@ -12,6 +12,8 @@ router.post('/user/notify', sendNotification);
 
 router.post('/register', register);
 router.post('/login', login);
+router.post('/verify-otp', verifyOTP);
+router.post('/resend-otp', resendOTP);
 
 // Google OAuth routes
 router.get('/google', googleAuth);
