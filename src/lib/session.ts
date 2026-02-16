@@ -79,10 +79,11 @@ export async function apiLogin(email: string, password: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    const data = await res.json();
     if (!res.ok) {
+      const data = await res.json();
       throw new Error(data.message || data.error || 'Login failed');
     }
+    const data = await res.json();
     if (data.token) setToken(data.token);
     // If the API returns a user profile, persist it locally for demo
     if (data.user) setCurrentUserFromProfile(data.user as UserRecord);
@@ -107,10 +108,11 @@ export async function apiRegister(name: string, email: string, password: string)
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
     });
-    const data = await res.json();
     if (!res.ok) {
+      const data = await res.json();
       throw new Error(data.message || data.error || 'Registration failed');
     }
+    const data = await res.json();
     if (data.token) setToken(data.token);
     return data;
   } catch (err: any) {
@@ -144,8 +146,11 @@ export async function getDashboard() {
     const res = await fetch(`${API_BASE}/api/dashboard`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Failed to fetch dashboard');
+    }
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to fetch dashboard');
     return data.user;
   } catch (err: any) {
     // Fall back to local user data
@@ -190,8 +195,11 @@ export async function apiListUsers() {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || 'Failed to fetch users');
+  }
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Failed to fetch users');
   return data.users;
 }
 
@@ -202,8 +210,11 @@ export async function apiUpdateBalance(userId: string, amount: number) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, amount }),
     });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Failed to update balance');
+    }
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to update balance');
     return data;
   } catch (err: any) {
     // Fallback: update local user store
@@ -228,8 +239,11 @@ export async function apiEditName(userId: string, name: string) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId, name }),
   });
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || 'Failed to edit name');
+  }
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Failed to edit name');
   return data;
 }
 
@@ -240,8 +254,11 @@ export async function apiSendNotification(userId: string, message: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, message }),
     });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Failed to send notification');
+    }
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to send notification');
     return data;
   } catch (err: any) {
     // Fallback: add notification to local user store
