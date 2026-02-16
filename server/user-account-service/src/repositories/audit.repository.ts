@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prismaClient from '../db/client';
 
 export class AuditLogRepository {
   /**
@@ -16,7 +14,7 @@ export class AuditLogRepository {
     ipAddress?: string;
     userAgent?: string;
   }) {
-    return prisma.auditLog.create({
+    return prismaClient.auditLog.create({
       data: {
         userId: data.userId,
         actionType: data.actionType,
@@ -36,13 +34,13 @@ export class AuditLogRepository {
   async getAuditLogsByUserId(userId: number, page: number = 1, limit: number = 50) {
     const skip = (page - 1) * limit;
     const [logs, total] = await Promise.all([
-      prisma.auditLog.findMany({
+      prismaClient.auditLog.findMany({
         where: { userId },
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit
       }),
-      prisma.auditLog.count({ where: { userId } })
+      prismaClient.auditLog.count({ where: { userId } })
     ]);
 
     return {
@@ -73,7 +71,7 @@ export class AuditLogRepository {
     }
 
     const [logs, total] = await Promise.all([
-      prisma.auditLog.findMany({
+      prismaClient.auditLog.findMany({
         where,
         orderBy: { createdAt: 'desc' },
         skip,
@@ -95,7 +93,7 @@ export class AuditLogRepository {
           }
         }
       }),
-      prisma.auditLog.count({ where })
+      prismaClient.auditLog.count({ where })
     ]);
 
     return {
@@ -113,7 +111,7 @@ export class AuditLogRepository {
    * Get audit logs by action type
    */
   async getAuditLogsByActionType(actionType: string, limit: number = 100) {
-    return prisma.auditLog.findMany({
+    return prismaClient.auditLog.findMany({
       where: { actionType },
       orderBy: { createdAt: 'desc' },
       take: limit,
@@ -133,6 +131,6 @@ export class AuditLogRepository {
    * Get total count of audit logs
    */
   async getAuditLogCount() {
-    return prisma.auditLog.count();
+    return prismaClient.auditLog.count();
   }
 }

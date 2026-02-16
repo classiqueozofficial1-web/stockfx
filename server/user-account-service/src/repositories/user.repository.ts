@@ -1,15 +1,11 @@
 import { User, UserStatus } from '../models/user.model';
-import { PrismaClient } from '@prisma/client';
+import prismaClient from '../db/client';
 
 export class UserRepository {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  constructor() {}
 
   async createUser(data: User): Promise<User> {
-    return await this.prisma.user.create({
+    return await prismaClient.user.create({
       data: {
         ...data,
         status: 'ACTIVE'
@@ -18,13 +14,13 @@ export class UserRepository {
   }
 
   async findUserById(id: number): Promise<User | null> {
-    return await this.prisma.user.findUnique({
+    return await prismaClient.user.findUnique({
       where: { id },
     });
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
+    return await prismaClient.user.findUnique({
       where: { email },
     });
   }
@@ -33,7 +29,7 @@ export class UserRepository {
    * Find user by email verification token
    */
   async findUserByVerificationToken(token: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({
+    return await prismaClient.user.findUnique({
       where: { emailVerificationToken: token },
     });
   }
@@ -42,7 +38,7 @@ export class UserRepository {
    * Verify user email and clear token
    */
   async verifyEmail(userId: number): Promise<User> {
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id: userId },
       data: {
         emailVerified: true,
@@ -60,7 +56,7 @@ export class UserRepository {
     token: string,
     expiresAt: Date
   ): Promise<User> {
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id: userId },
       data: {
         emailVerificationToken: token,
@@ -70,7 +66,7 @@ export class UserRepository {
   }
 
   async updateUser(id: number, data: Partial<User>): Promise<User> {
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id },
       data,
     });
@@ -81,7 +77,7 @@ export class UserRepository {
    * DO NOT use hard delete to ensure data is never lost
    */
   async archiveUser(id: number): Promise<User> {
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id },
       data: {
         status: 'ARCHIVED'
@@ -110,7 +106,7 @@ export class UserRepository {
     }
 
     const [users, total] = await Promise.all([
-      this.prisma.user.findMany({
+      prismaClient.user.findMany({
         where,
         skip,
         take: limit,
@@ -129,7 +125,7 @@ export class UserRepository {
         },
         orderBy: { createdAt: 'desc' }
       }),
-      this.prisma.user.count({ where })
+      prismaClient.user.count({ where })
     ]);
 
     return {
@@ -167,7 +163,7 @@ export class UserRepository {
       updateData.terminationReason = null;
     }
 
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id },
       data: updateData,
     });
@@ -177,7 +173,7 @@ export class UserRepository {
    * Record login activity
    */
   async recordLogin(id: number): Promise<User> {
-    return await this.prisma.user.update({
+    return await prismaClient.user.update({
       where: { id },
       data: {
         lastLoginAt: new Date(),
@@ -199,11 +195,11 @@ export class UserRepository {
       archivedUsers,
       admins
     ] = await Promise.all([
-      this.prisma.user.count(),
-      this.prisma.user.count({ where: { status: 'ACTIVE' } }),
-      this.prisma.user.count({ where: { status: 'TERMINATED' } }),
-      this.prisma.user.count({ where: { status: 'ARCHIVED' } }),
-      this.prisma.user.count({ where: { role: 'ADMIN' } })
+      prismaClient.user.count(),
+      prismaClient.user.count({ where: { status: 'ACTIVE' } }),
+      prismaClient.user.count({ where: { status: 'TERMINATED' } }),
+      prismaClient.user.count({ where: { status: 'ARCHIVED' } }),
+      prismaClient.user.count({ where: { role: 'ADMIN' } })
     ]);
 
     return {
@@ -220,7 +216,7 @@ export class UserRepository {
    * Find active users only
    */
   async findActiveUsers(limit: number = 100): Promise<User[]> {
-    return await this.prisma.user.findMany({
+    return await prismaClient.user.findMany({
       where: { status: 'ACTIVE' },
       take: limit,
       orderBy: { lastLoginAt: 'desc' }
@@ -231,7 +227,7 @@ export class UserRepository {
    * Find all users by status
    */
   async findUsersByStatus(status: UserStatus): Promise<User[]> {
-    return await this.prisma.user.findMany({
+    return await prismaClient.user.findMany({
       where: { status },
       orderBy: { createdAt: 'desc' }
     });
@@ -241,7 +237,7 @@ export class UserRepository {
    * Export all user data (no deletion, full preservation)
    */
   async exportAllUserData(): Promise<any> {
-    return await this.prisma.user.findMany({
+    return await prismaClient.user.findMany({
       include: {
         auditLogs: true,
         sessions: true
@@ -253,7 +249,7 @@ export class UserRepository {
    * Create admin user
    */
   async createAdminUser(data: User): Promise<User> {
-    return await this.prisma.user.create({
+    return await prismaClient.user.create({
       data: {
         ...data,
         role: 'ADMIN',
@@ -266,7 +262,7 @@ export class UserRepository {
    * Find all admins
    */
   async findAllAdmins(): Promise<User[]> {
-    return await this.prisma.user.findMany({
+    return await prismaClient.user.findMany({
       where: { role: 'ADMIN' }
     });
   }

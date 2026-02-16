@@ -6,19 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum UserStatus {
-  ACTIVE
-  TERMINATED
-  ARCHIVED
-}
-
-enum UserRole {
-  USER
-  ADMIN
 }
 
 model User {
@@ -28,14 +17,14 @@ model User {
   password          String
   firstName         String?
   lastName          String?
-  status            UserStatus @default(ACTIVE)
-  role              UserRole   @default(USER)
+  status            String    @default("ACTIVE")  // ACTIVE, TERMINATED, ARCHIVED
+  role              String    @default("USER")   // USER, ADMIN
   phoneNumber       String?
   address           String?
   city              String?
   country           String?
   investmentAmount  Float?    @default(0)
-  portfolio         Json?     // Stores portfolio data as JSON
+  portfolio         String?   // JSON stored as string
   lastLoginAt       DateTime?
   loginCount        Int       @default(0)
   emailVerified     Boolean   @default(false)
@@ -48,7 +37,9 @@ model User {
   
   // Relationships
   auditLogs         AuditLog[]
+  auditLogsPerformed AuditLog[] @relation("AdminAudits")
   sessions          Session[]
+  
   @@index([email])
   @@index([status])
   @@index([createdAt])
@@ -72,22 +63,20 @@ model AuditLog {
   userId        Int
   actionType    String    // e.g., "USER_DELETED", "USER_TERMINATED", "DATA_EXPORTED"
   description   String?
-  oldData       Json?     // Stores previous user data for audit trail
-  newData       Json?     // Stores new user data
+  oldData       String?   // JSON stored as string
+  newData       String?   // JSON stored as string
   performedBy   Int?      // Admin who performed the action
   ipAddress     String?
   userAgent     String?
   createdAt     DateTime  @default(now())
   
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  admin         User?     @relation("AdminAudits", fields: [performedBy], references: [id])
+  admin         User?     @relation("AdminAudits", fields: [performedBy], references: [id], onDelete: SetNull)
   
   @@index([userId])
   @@index([actionType])
   @@index([createdAt])
 }
-
-// Self-relation for admin audits
 model AdminAuditLog {
   id            Int       @id @default(autoincrement())
   adminId       Int
