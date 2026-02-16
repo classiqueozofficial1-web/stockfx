@@ -51,6 +51,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           email,
           password,
           firstName,
+          lastName,
         }),
       });
 

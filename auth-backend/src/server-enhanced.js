@@ -183,7 +183,7 @@ async function rateLimitOTP(req, res, next) {
  */
 app.post('/api/auth/register', async (req, res) => {
   try {
-    const { email, password, firstName } = req.body;
+    const { email, password, firstName, lastName } = req.body;
 
     // Validation
     if (!email || !password) {
@@ -219,6 +219,7 @@ app.post('/api/auth/register', async (req, res) => {
       email,
       password: hashedPassword,
       firstName: firstName || email.split('@')[0],
+      lastName: lastName || '',
       balance: 0,
       createdAt: new Date().toISOString(),
       isVerified: false,

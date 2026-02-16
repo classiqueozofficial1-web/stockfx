@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "1771252410520",
+    "email": "test@example.com",
+    "password": "$2a$10$nxhbhz6ZwPGqlnIiJ9tQP.0sjVzJ4p7uGR/g7FRJ.npPVbiQ9hHK6",
+    "firstName": "Test",
+    "balance": 0,
+    "createdAt": "2026-02-16T14:33:30.520Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$zBgzft82VBYPRUrppSn0reQAi0Epprci8WEZiJIkWNipHOspk5k7q",
+    "otpExpiry": 1771252710520,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771252410520
+  },
+  {
+    "id": "1771252516931",
+    "email": "johndoe@example.com",
+    "password": "$2a$10$RBB1JAB9QtTRjiDikHZ92ukMS6LPwDZodtq47XlFgzyJ.pxknvtaW",
+    "firstName": "John",
+    "lastName": "Doe",
+    "balance": 0,
+    "createdAt": "2026-02-16T14:35:16.931Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$Kg4TEWPkXL0Cuf/5L1KT0uOCBu2Wln9N4ppXBZutb1q69Mw3w981W",
+    "otpExpiry": 1771252816931,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771252516932
+  }
+]
