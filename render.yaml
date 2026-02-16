@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: stockfx-frontend
+    env: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run preview
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        value: https://stockfx-backend.onrender.com
