@@ -19,11 +19,18 @@ const MAX_OTP_ATTEMPTS = 5;
 const OTP_RESEND_COOLDOWN_SECONDS = 60;
 
 // ==================== EMAIL SERVICE ====================
+console.log('DEBUG: EMAIL_SERVICE =', process.env.EMAIL_SERVICE);
+console.log('DEBUG: EMAIL_USER =', process.env.EMAIL_USER);
+console.log('DEBUG: EMAIL_PASSWORD =', process.env.EMAIL_PASSWORD ? '***set***' : 'undefined');
+
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE || 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false, // Disable SSL cert validation for development
   },
 });
 
@@ -33,10 +40,13 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
     if (error) {
       console.warn('⚠️  Email service not configured. OTP will print to console.');
       console.warn('Set EMAIL_USER and EMAIL_PASSWORD in .env to enable email sending.');
+      console.error('Error details:', error.message);
     } else {
       console.log('✅ Email service ready');
     }
   });
+} else {
+  console.log('📧 Email service: Disabled (no credentials in .env)');
 }
 
 /**
@@ -44,39 +54,43 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
  */
 async function sendOtpEmail(email, otp) {
   try {
-    // If email not configured, log for development
-    if (!process.env.EMAIL_USER) {
+    // If email configured, try to send
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+      try {
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: 'StockFX - Your OTP Verification Code',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2>Email Verification</h2>
+              <p>Your OTP verification code is:</p>
+              <div style="font-size: 32px; font-weight: bold; color: #10b981; letter-spacing: 5px; margin: 20px 0;">
+                ${otp}
+              </div>
+              <p>This code will expire in 5 minutes.</p>
+              <p>If you didn't request this code, please ignore this email.</p>
+            </div>
+          `,
+        };
+        
+        await transporter.sendMail(mailOptions);
+        console.log(`📧 OTP email sent to ${email}`);
+        return true;
+      } catch (error) {
+        console.warn(`⚠️  Failed to send email: ${error.message}`);
+        // Fall back to console
+        console.log(`\n🔐 OTP for ${email}: ${otp}\n`);
+        return true;
+      }
+    } else {
+      // If email not configured, log for development
       console.log(`\n🔐 OTP for ${email}: ${otp}\n`);
       return true;
     }
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Your StockFx Email Verification Code',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2>Email Verification</h2>
-          <p>Your StockFx verification code is:</p>
-          <div style="background: #f0f0f0; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
-            <h1 style="letter-spacing: 5px; color: #059669; margin: 0;">${otp}</h1>
-          </div>
-          <p>This code expires in 5 minutes.</p>
-          <p>If you didn't request this code, please ignore this email.</p>
-          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
-          <p style="color: #666; font-size: 12px;">StockFx © 2026</p>
-        </div>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log(`✅ OTP sent to ${email}`);
-    return true;
   } catch (error) {
-    console.error('❌ Failed to send OTP email:', error.message);
-    // Log OTP to console as fallback
-    console.log(`\n🔐 OTP for ${email}: ${otp}\n`);
-    return true; // Still proceed for development
+    console.error('Error sending OTP:', error);
+    return false;
   }
 }
 

@@ -75,5 +75,57 @@
     "otpExpiry": 1771241997631,
     "otpAttempts": 0,
     "lastOtpRequest": 1771241697631
+  },
+  {
+    "id": "1771241747034",
+    "email": "test-232284756@example.com",
+    "password": "$2a$10$gRGOXcHzEXA74A/S6KjXgOBJdqkAN.Pr2MKh9L7QJzWRlsHakT9MO",
+    "firstName": "Test",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:35:47.034Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$fd7ju5NdXaFVG2wEfzJMOOknydLd2wqcEYEbUq0BXMftwPTxMfwHK",
+    "otpExpiry": 1771242047034,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241747035
+  },
+  {
+    "id": "1771241856092",
+    "email": "directtest@example.com",
+    "password": "$2a$10$3CdApe9WsPnDKq99TEWdxeiA4ZMsq/mOl0iymciglEBp6DtClHQke",
+    "firstName": "Direct",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:37:36.092Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$FthFQbhmSr3a7OD6bYcE5eNEKchyR7uoa9oyASsfpf84CmKf9ow3i",
+    "otpExpiry": 1771242156092,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241856092
+  },
+  {
+    "id": "1771244563051",
+    "email": "jane@example.com",
+    "password": "$2a$10$BFLMsV8eAEkzVfpLVzFccejc6FUGcMBSgHmXYIC2lspnwK27P1bvO",
+    "firstName": "Jane",
+    "balance": 0,
+    "createdAt": "2026-02-16T12:22:43.051Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$M2eiAUdNq7/J/GqushKdBepLbg8446eXcjRHwsFbiy92zGOqd/neK",
+    "otpExpiry": 1771244863051,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771244563051
+  },
+  {
+    "id": "1771244641980",
+    "email": "newuser@example.com",
+    "password": "$2a$10$21kliI409f75K2./WloaZeDnJ7qXjRv55CAccrNBSDHcAe68TrXra",
+    "firstName": "TestUser",
+    "balance": 0,
+    "createdAt": "2026-02-16T12:24:01.980Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$NL29W5vtiLQLZ6N.MQ2CFOlF.9FXBZWVQu9KfNClflbH5L0W7kQJG",
+    "otpExpiry": 1771244941980,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771244641981
   }
 ]
