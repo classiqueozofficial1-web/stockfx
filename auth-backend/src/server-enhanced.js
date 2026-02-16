@@ -524,6 +524,35 @@ app.get('/api/dashboard', (req, res) => {
   }
 });
 
+// Terminate all user sessions endpoint
+app.post('/api/auth/terminate-all-sessions', (req, res) => {
+  try {
+    // Read current users from file
+    const usersData = fs.readFileSync(USERS_FILE, 'utf8');
+    let users = JSON.parse(usersData);
+    
+    // Mark all user sessions as terminated
+    const now = new Date().toISOString();
+    users = users.map(user => ({
+      ...user,
+      sessionTerminatedAt: now,
+      lastSessionTermination: now
+    }));
+    
+    // Write back to file
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+    
+    res.json({ 
+      success: true, 
+      message: `All ${users.length} user sessions have been terminated`,
+      terminatedAt: now
+    });
+  } catch (err) {
+    console.error('Terminate all sessions error:', err.message);
+    res.status(500).json({ error: 'Failed to terminate sessions', details: err.message });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

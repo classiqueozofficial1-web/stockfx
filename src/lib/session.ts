@@ -307,6 +307,12 @@ export function adminLogout() {
 
 export function terminateAllUserSessions() {
   try {
+    // Call backend to terminate all sessions on server side
+    fetch(`${API_BASE}/api/auth/terminate-all-sessions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }).catch(err => console.warn('Backend session termination failed:', err));
+    
     // Clear all user sessions in localStorage
     localStorage.removeItem('currentUser');
     localStorage.removeItem('auth_token');
@@ -314,7 +320,6 @@ export function terminateAllUserSessions() {
     // Reset all active user sessions
     currentUser = null;
     
-    // Could also clear demo_users if needed, but keeping data for demo purposes
     return { success: true, message: 'All user sessions terminated successfully' };
   } catch (error: any) {
     return { success: false, message: error.message || 'Failed to terminate sessions' };
