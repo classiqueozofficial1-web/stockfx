@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { setCurrentUserFromProfile, apiRegister } from '../lib/session';
+
 interface RegisterPageProps {
   onNavigate: (page: string) => void;
 }
+
 export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -17,13 +19,12 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
-  // Verification flow
-  const [step, setStep] = useState<'form' | 'verify'>('form');
-  const [sentCode, setSentCode] = useState<string | null>(null);
-  const [codeInput, setCodeInput] = useState('');
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verifyError, setVerifyError] = useState<string | null>(null);
+  // Registration flow steps: 'form' | 'pending' | 'verified'
+  const [step, setStep] = useState<'form' | 'pending' | 'error'>('form');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successEmail, setSuccessEmail] = useState<string | null>(null);
   const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
@@ -36,75 +37,93 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     };
   }, [resendCooldown]);
 
-  const sendVerificationCode = (toEmail: string) => {
-    const code = String(Math.floor(100000 + Math.random() * 900000));
-    setSentCode(code);
-    setResendCooldown(30);
-    console.info('Simulated verification code for', toEmail, '→', code);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      // Start verification flow (simulate sending code)
-      sendVerificationCode(email);
-      setStep('verify');
-    }, 800);
-  };
+    setErrorMessage(null);
 
-  const handleVerify = async (e?: FormEvent) => {
-    if (e) e.preventDefault();
-    setIsVerifying(true);
-    setVerifyError(null);
-    setTimeout(async () => {
-      if (codeInput.trim() === sentCode) {
-        try {
-          // Call the API to register the user
-          const name = `${firstName} ${lastName}`.trim();
-          const user = await apiRegister(name, email, password);
-          setCurrentUserFromProfile(user);
-          onNavigate('dashboard');
-        } catch (err: any) {
-          setVerifyError(err?.message || 'Registration failed');
-        } finally {
-          setIsVerifying(false);
-        }
-        } else {
-        setIsVerifying(false);
-        setVerifyError(t('register.verifyError'));
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: email.split('@')[0],
+          email,
+          password,
+          firstName,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Registration failed');
+        setStep('error');
+        setIsLoading(false);
+        return;
       }
-    }, 800);
+
+      // Registration successful, show pending verification
+      setSuccessEmail(email);
+      setStep('pending');
+      setResendCooldown(30);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'An error occurred');
+      setStep('error');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleResend = () => {
+  const handleResendVerification = async () => {
     if (resendCooldown > 0) return;
-    sendVerificationCode(email);
+    
+    try {
+      const response = await fetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: successEmail }),
+      });
+
+      if (response.ok) {
+        setResendCooldown(30);
+        setErrorMessage(null);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Failed to resend verification email');
+    }
   };
+
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-slate-50 to-blue-50 -z-10 md:via-slate-100" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div
           className="flex justify-center mb-6 cursor-pointer"
           onClick={() => onNavigate('landing')}>
-
           <div className="animate-logo-entrance">
             <Logo size="xl" />
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {t('register.title')}
+          {step === 'pending' ? t('register.checkEmail') : t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          {t('register.subtitle')}{' '}
-          <button
-            onClick={() => onNavigate('login')}
-            className="font-medium text-emerald-600 hover:text-emerald-500">
-
-            {t('register.haveAccount')}
-          </button>
+          {step === 'pending' ? (
+            <>We sent a verification link to <strong>{successEmail}</strong></>
+          ) : (
+            <>
+              {t('register.subtitle')}{' '}
+              <button
+                onClick={() => onNavigate('login')}
+                className="font-medium text-emerald-600 hover:text-emerald-500">
+                {t('register.haveAccount')}
+              </button>
+            </>
+          )}
         </p>
       </div>
 
@@ -114,8 +133,20 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           {step === 'form' && (
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4">
-                <Input label={t('register.firstNameLabel')} placeholder={t('register.firstNamePlaceholder')} required value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
-                <Input label={t('register.lastNameLabel')} placeholder={t('register.lastNamePlaceholder')} required value={lastName} onChange={(e)=>setLastName(e.target.value)} />
+                <Input 
+                  label={t('register.firstNameLabel')} 
+                  placeholder={t('register.firstNamePlaceholder')} 
+                  required 
+                  value={firstName} 
+                  onChange={(e) => setFirstName(e.target.value)} 
+                />
+                <Input 
+                  label={t('register.lastNameLabel')} 
+                  placeholder={t('register.lastNamePlaceholder')} 
+                  required 
+                  value={lastName} 
+                  onChange={(e) => setLastName(e.target.value)} 
+                />
               </div>
 
               <Input
@@ -125,8 +156,8 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 required
                 leftIcon={<Mail className="h-5 w-5" />}
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)} />
-
+                onChange={(e) => setEmail(e.target.value)} 
+              />
 
               <Input
                 label={t('register.passwordLabel')}
@@ -136,8 +167,8 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 leftIcon={<Lock className="h-5 w-5" />}
                 helperText={t('register.passwordHelper')}
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)} />
-
+                onChange={(e) => setPassword(e.target.value)} 
+              />
 
               <div className="flex items-start">
                 <div className="flex h-5 items-center">
@@ -146,23 +177,19 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                     name="terms"
                     type="checkbox"
                     required
-                    className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
-
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" 
+                  />
                 </div>
                 <div className="ml-3 text-sm">
                   <label htmlFor="terms" className="font-medium text-slate-700">
                     {t('register.termsLabel')}{' '}
-                    <a
-                      href="#"
-                      className="text-emerald-600 hover:text-emerald-500">
-
+                    <a href="#" className="text-emerald-600 hover:text-emerald-500">
                       {t('register.terms')}
                     </a>{' '}
                     {t('register.and')}{' '}
-                    <a
-                      href="#"
-                      className="text-emerald-600 hover:text-emerald-500">
-
+                    <a href="#" className="text-emerald-600 hover:text-emerald-500">
                       {t('register.privacy')}
                     </a>
                   </label>
@@ -174,38 +201,84 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 className="w-full"
                 size="lg"
                 isLoading={isLoading}>
-
                 {t('register.createButton')}
               </Button>
             </form>
           )}
 
-          {step === 'verify' && (
-            <>
-              <form className="space-y-6" onSubmit={handleVerify}>
-                <Input label={t('register.verifyTitle')} placeholder={t('register.verifyPlaceholder')} required value={codeInput} onChange={(e)=>setCodeInput(e.target.value)} />
-
-                {verifyError && <p className="text-sm text-red-600">{verifyError}</p>}
-
-                {/* Debug: Show code for local dev */}
-                {sentCode && (
-                  <p className="text-xs text-emerald-600 text-center">{t('register.devCode')} <span className="font-mono font-bold">{sentCode}</span></p>
-                )}
-
-                <div className="flex items-center justify-between">
-                  <Button variant="ghost" onClick={()=>setStep('form')}>{t('register.changeEmail')}</Button>
-                  <div className="flex items-center gap-3">
-                    <button type="button" onClick={handleResend} disabled={resendCooldown > 0} className="text-sm text-slate-500 hover:text-slate-900">
-                      {resendCooldown > 0 ? `${t('register.resendCooldown').replace('{{seconds}}', String(resendCooldown))}` : t('register.resendCode')}
-                    </button>
-                    <Button type="submit" size="lg" isLoading={isVerifying}>{t('register.verifyButton')}</Button>
-                  </div>
-                </div>
-              </form>
-                      </>
-                    )}
-                  </div>
-                </div>
+          {step === 'pending' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <CheckCircle2 className="h-16 w-16 text-emerald-500" />
               </div>
-            );
-          }
+
+              <div className="text-center space-y-4">
+                <p className="text-slate-700">
+                  We've sent a verification link to your email. Please click the link in your email to confirm your account.
+                </p>
+                <p className="text-sm text-slate-500">
+                  The link will expire in 24 hours.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-center text-sm text-slate-600">
+                  {resendCooldown > 0 ? (
+                    <>Resend in {resendCooldown}s</>
+                  ) : (
+                    <>
+                      Didn't receive the email?{' '}
+                      <button
+                        onClick={handleResendVerification}
+                        className="font-medium text-emerald-600 hover:text-emerald-500">
+                        Resend verification link
+                      </button>
+                    </>
+                  )}
+                </p>
+
+                <Button
+                  onClick={() => {
+                    setStep('form');
+                    setSuccessEmail(null);
+                    setEmail('');
+                    setPassword('');
+                    setFirstName('');
+                    setLastName('');
+                    setErrorMessage(null);
+                  }}
+                  variant="outline"
+                  size="lg"
+                  className="w-full">
+                  Use different email
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 'error' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <AlertCircle className="h-16 w-16 text-red-500" />
+              </div>
+
+              <div className="text-center space-y-4">
+                <p className="text-red-600 font-medium">{errorMessage}</p>
+              </div>
+
+              <Button
+                onClick={() => {
+                  setStep('form');
+                  setErrorMessage(null);
+                }}
+                size="lg"
+                className="w-full">
+                Try again
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

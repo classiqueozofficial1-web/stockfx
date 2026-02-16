@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { VerifyEmailPage } from './pages/VerifyEmailPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AdminPage } from './pages/AdminPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
@@ -11,7 +12,7 @@ import { DisclosuresPage } from './pages/DisclosuresPage';
 import { CookiePolicyPage } from './pages/CookiePolicyPage';
 import './i18n/config';
 
-type Page = 'landing' | 'login' | 'register' | 'dashboard' | 'admin' | 'admin-login' | 'privacy' | 'terms' | 'disclosures' | 'cookies';
+type Page = 'landing' | 'login' | 'register' | 'verify-email' | 'dashboard' | 'admin' | 'admin-login' | 'privacy' | 'terms' | 'disclosures' | 'cookies';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { fetchCurrentUser, setCurrentUserFromProfile } from './lib/session';
 
@@ -29,6 +30,8 @@ export function App() {
         setCurrentPage('login');
       } else if (hash === 'register') {
         setCurrentPage('register');
+      } else if (hash === 'verify-email') {
+        setCurrentPage('verify-email');
       } else if (hash === 'dashboard') {
         setCurrentPage('dashboard');
       } else if (hash === 'admin') {
@@ -104,6 +107,7 @@ export function App() {
       {currentPage === 'landing' && <LandingPage onNavigate={navigate} onLogoClick={handleLogoClick} />}
       {currentPage === 'login' && <LoginPage onNavigate={navigate} />}
       {currentPage === 'register' && <RegisterPage onNavigate={navigate} />}
+      {currentPage === 'verify-email' && <VerifyEmailPage onNavigate={navigate} />}
       {currentPage === 'dashboard' && <DashboardPage onNavigate={navigate} />}
       {currentPage === 'admin-login' && !adminAuthed && <AdminLoginPage onSuccess={() => { setAdminAuthed(true); setCurrentPage('admin'); window.location.hash = 'admin'; }} />}
       {((currentPage === 'admin-login' && adminAuthed) || currentPage === 'admin') && <AdminPage onLogout={handleAdminLogout} />}
@@ -113,4 +117,4 @@ export function App() {
       {currentPage === 'cookies' && <CookiePolicyPage onNavigate={navigate} />}
     </ErrorBoundary>);
 
-}
+  }

@@ -175,14 +175,10 @@
     "and": "and",
     "privacy": "Privacy Policy",
     "createButton": "Create Account",
-    "verifyTitle": "Verification code",
-    "verifyPlaceholder": "123456",
-    "verifyError": "The verification code is incorrect.",
-    "devCode": "DEV: Your code is",
-    "changeEmail": "Change email",
-    "resendCode": "Resend code",
-    "resendCooldown": "Resend ({{seconds}}s)",
-    "verifyButton": "Verify"
+    "checkEmail": "Check your email",
+    "resendLink": "Resend verification link",
+    "changeEmail": "Use different email",
+    "useDifferentEmail": "Use different email"
   },
   "dashboard": {
     "loading": "Loading dashboard...",

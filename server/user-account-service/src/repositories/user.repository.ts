@@ -29,6 +29,46 @@ export class UserRepository {
     });
   }
 
+  /**
+   * Find user by email verification token
+   */
+  async findUserByVerificationToken(token: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: { emailVerificationToken: token },
+    });
+  }
+
+  /**
+   * Verify user email and clear token
+   */
+  async verifyEmail(userId: number): Promise<User> {
+    return await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        emailVerified: true,
+        emailVerificationToken: null,
+        emailVerificationExpires: null,
+      },
+    });
+  }
+
+  /**
+   * Update verification token (for resend)
+   */
+  async updateUserVerificationToken(
+    userId: number,
+    token: string,
+    expiresAt: Date
+  ): Promise<User> {
+    return await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        emailVerificationToken: token,
+        emailVerificationExpires: expiresAt,
+      },
+    });
+  }
+
   async updateUser(id: number, data: Partial<User>): Promise<User> {
     return await this.prisma.user.update({
       where: { id },

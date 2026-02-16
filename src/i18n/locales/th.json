@@ -147,12 +147,27 @@
     "forgotPassword": "ลืมรหัสผ่าน?"
   },
   "register": {
-    "title": "ลงทะเบียน",
-    "email": "อีเมล",
-    "password": "รหัสผ่าน",
-    "confirmPassword": "ยืนยันรหัสผ่าน",
-    "submit": "ลงทะเบียน",
-    "termsAgreement": "ฉันยอมรับเงื่อนไขและข้อตกลง"
+    "title": "Create your account",
+    "subtitle": "Already have an account?",
+    "haveAccount": "Sign in",
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "John",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Doe",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Create a password",
+    "passwordHelper": "Must be at least 8 characters",
+    "termsLabel": "I agree to the",
+    "terms": "Terms",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "createButton": "Create Account",
+    "checkEmail": "Check your email",
+    "resendLink": "Resend verification link",
+    "changeEmail": "Use different email",
+    "useDifferentEmail": "Use different email"
   },
   "dashboard": {
     "title": "แผงควบคุม",

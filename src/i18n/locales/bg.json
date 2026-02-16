@@ -147,12 +147,27 @@
     "forgotPassword": "Забравили сте паролата?"
   },
   "register": {
-    "title": "Регистрирайте се",
-    "email": "Имейл",
-    "password": "Парола",
-    "confirmPassword": "Потвърдете парола",
-    "submit": "Регистрирайте се",
-    "termsAgreement": "Съгласен/съгласна съм с условията и положенията"
+    "title": "Create your account",
+    "subtitle": "Already have an account?",
+    "haveAccount": "Sign in",
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "John",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Doe",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Create a password",
+    "passwordHelper": "Must be at least 8 characters",
+    "termsLabel": "I agree to the",
+    "terms": "Terms",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "createButton": "Create Account",
+    "checkEmail": "Check your email",
+    "resendLink": "Resend verification link",
+    "changeEmail": "Use different email",
+    "useDifferentEmail": "Use different email"
   },
   "dashboard": {
     "title": "Табло",

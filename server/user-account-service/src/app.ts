@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { authRoutes } from './routes/auth.routes';
-import { config } from './config';
+import authRoutes from './routes/auth.routes';
+import config from './config';
 
 const app = express();
 
