@@ -1,47 +1,47 @@
-/// <reference types="vite/client" />
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
-// import { Navbar } from '../components/investment/Navbar';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
-import { setCurrentUserFromProfile, apiLogin, apiHealth } from '../lib/session';
+import { setCurrentUser, setCurrentUserFromProfile } from '../lib/session';
+import { getUsers } from '../lib/userStore';
+
 interface LoginPageProps {
   onNavigate: (page: string) => void;
 }
+
 export function LoginPage({ onNavigate }: LoginPageProps) {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [serverStatus, setServerStatus] = useState<'unknown'|'checking'|'up'|'down'>('unknown');
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-
-  const checkServer = async () => {
-    setServerStatus('checking');
-    const ok = await apiHealth();
-    setServerStatus(ok ? 'up' : 'down');
-  };
-
-  // Auto-check server status on mount in development to give quick feedback
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      checkServer();
-    }
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     try {
-      const user = await apiLogin(email.toLowerCase().trim(), password);
+      // Find user from local userStore
+      const users = getUsers();
+      const user = users.find(u => 
+        u.email.toLowerCase() === email.toLowerCase().trim() && 
+        u.password === password
+      );
+
+      if (!user) {
+        setError('Invalid email or password');
+        setIsLoading(false);
+        return;
+      }
+
       setCurrentUserFromProfile(user);
+
       // Check for admin credentials
       if (
         email.toLowerCase().trim() === 'adminkingsley@gmail.com' &&
@@ -54,9 +54,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
     } catch (err: any) {
       const msg = err?.message || 'Login failed';
       setError(msg);
-      if (msg.toLowerCase().includes('network') || msg.toLowerCase().includes('failed to fetch')) {
-        setServerStatus('down');
-      }
     } finally {
       setIsLoading(false);
     }
@@ -89,13 +86,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
             {t('login.noAccount')}
           </button>
         </p>
-
-        {/* Persistent dev banner for server status (visible when server is down or checking) */}
-        {serverStatus !== 'up' && serverStatus !== 'unknown' && (
-          <div className={`mt-4 w-full text-center py-2 px-3 rounded ${serverStatus === 'down' ? 'bg-rose-50 border border-rose-100 text-rose-700' : 'bg-amber-50 border border-amber-100 text-amber-700'}`}>
-            {/* Removed auth server unreachable and retry message */}
-          </div>
-        )}
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
@@ -125,24 +115,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
 
             {error && (
               <div className="text-red-600 text-sm mb-2 text-center">{error}</div>
-            )}
-
-            {serverStatus === 'checking' && (
-              <div className="text-sm mt-2 text-center text-slate-600">
-                <div className="text-xs text-slate-500 mt-1">{t('login.serverChecking')}</div>
-              </div>
-            )}
-
-            {serverStatus === 'up' && (
-              <div className="text-sm mt-2 text-center text-emerald-600">
-                {t('login.serverUp')}
-              </div>
-            )}
-
-            {serverStatus === 'down' && (
-              <div className="text-sm mt-2 text-center text-slate-600">
-                {/* Message permanently removed */}
-              </div>
             )}
 
             <Button

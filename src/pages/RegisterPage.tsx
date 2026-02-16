@@ -1,9 +1,11 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { addUser, getUsers } from '../lib/userStore';
+import { setCurrentUserFromProfile } from '../lib/session';
 
 interface RegisterPageProps {
   onNavigate: (page: string) => void;
@@ -20,22 +22,10 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  // Registration flow steps: 'form' | 'otp' | 'verified' | 'error'
-  const [step, setStep] = useState<'form' | 'otp' | 'error'>('form');
+  // Registration flow steps: 'form' | 'success' | 'error'
+  const [step, setStep] = useState<'form' | 'success' | 'error'>('form');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successEmail, setSuccessEmail] = useState<string | null>(null);
-  const [otp, setOtp] = useState('');
-  const [resendCooldown, setResendCooldown] = useState(0);
 
-  useEffect(() => {
-    let t: number | undefined;
-    if (resendCooldown > 0) {
-      t = window.setTimeout(() => setResendCooldown((c) => c - 1), 1000);
-    }
-    return () => {
-      if (t) clearTimeout(t);
-    };
-  }, [resendCooldown]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,96 +33,40 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     setErrorMessage(null);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: email.split('@')[0],
-          email,
-          password,
-          firstName,
-          lastName,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Registration failed');
+      // Check if email already exists
+      const users = getUsers();
+      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        setErrorMessage(t('register.emailExists') || 'Email already registered');
         setStep('error');
         setIsLoading(false);
         return;
       }
 
-      // Registration successful, show OTP verification
-      setSuccessEmail(email);
-      setStep('otp');
-      setOtp('');
-      setResendCooldown(30);
+      // Create new user directly (no backend needed)
+      const newUser = addUser({
+        email: email.toLowerCase().trim(),
+        password,
+        firstName,
+        lastName,
+      });
+
+      // Auto-verify users (admin can verify later if needed)
+      newUser.verified = false;
+      newUser.registrationStatus = 'pending';
+
+      // Persist user and navigate to dashboard
+      setCurrentUserFromProfile(newUser);
+      setStep('success');
+      
+      // Auto-navigate after 1 second
+      setTimeout(() => {
+        onNavigate('login');
+      }, 1000);
     } catch (err: any) {
-      setErrorMessage(err.message || 'An error occurred');
+      setErrorMessage(err.message || 'Registration failed');
       setStep('error');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!otp || otp.length !== 6) {
-      setErrorMessage(t('register.invalidOtp'));
-      return;
-    }
-
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    try {
-      const response = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: successEmail, 
-          otp 
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || t('register.invalidOtp'));
-        return;
-      }
-
-      const data = await response.json();
-      // Store token and user in localStorage with correct keys
-      localStorage.setItem('auth_token', data.token);
-      localStorage.setItem('currentUser', JSON.stringify(data.user));
-      onNavigate('dashboard');
-    } catch (err: any) {
-      setErrorMessage(err.message || t('register.invalidOtp'));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleResendOTP = async () => {
-    if (resendCooldown > 0) return;
-    
-    try {
-      const response = await fetch('/api/auth/resend-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: successEmail }),
-      });
-
-      if (response.ok) {
-        setResendCooldown(30);
-        setErrorMessage(null);
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message);
-      }
-    } catch (err: any) {
-      setErrorMessage(t('register.resendError'));
     }
   };
 
@@ -149,11 +83,11 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {step === 'otp' ? t('register.verifyEmail') : t('register.title')}
+          {step === 'success' ? t('register.welcome') || 'Welcome!' : t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          {step === 'otp' ? (
-            <>We sent a verification code to <strong>{successEmail}</strong></>
+          {step === 'success' ? (
+            <>Registration successful! Redirecting to login...</>
           ) : (
             <>
               {t('register.subtitle')}{' '}
@@ -246,77 +180,20 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
             </form>
           )}
 
-          {step === 'otp' && (
-            <form className="space-y-6" onSubmit={handleVerifyOTP}>
-              <div>
-                <label htmlFor="otp" className="block text-sm font-medium text-slate-700">
-                  {t('register.verifyEmail')}
-                </label>
-                <input
-                  id="otp"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder={t('register.otpPlaceholder')}
-                  maxLength={6}
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                  className="mt-1 block w-full rounded-lg border border-slate-300 px-4 py-2 text-center text-2xl tracking-widest font-bold text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-emerald-500"
-                />
-                <p className="mt-2 text-sm text-slate-500 text-center">
-                  {t('register.enterCode')}
-                </p>
-              </div>
-
-              {errorMessage && (
-                <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
-                  {errorMessage}
+          {step === 'success' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <div className="h-16 w-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg className="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full"
-                size="lg"
-                isLoading={isLoading}>
-                {t('register.verifyButton')}
-              </Button>
-
-              <p className="text-center text-sm text-slate-600">
-                {resendCooldown > 0 ? (
-                  <>
-                    {t('register.resendIn', { seconds: resendCooldown })}
-                  </>
-                ) : (
-                  <>
-                    {t('register.enterCode').split('.')[0]}?{' '}
-                    <button
-                      type="button"
-                      onClick={handleResendOTP}
-                      className="font-medium text-emerald-600 hover:text-emerald-500">
-                      {t('register.resendCode')}
-                    </button>
-                  </>
-                )}
-              </p>
-
-              <Button
-                type="button"
-                onClick={() => {
-                  setStep('form');
-                  setSuccessEmail(null);
-                  setOtp('');
-                  setEmail('');
-                  setPassword('');
-                  setFirstName('');
-                  setLastName('');
-                  setErrorMessage(null);
-                }}
-                variant="outline"
-                size="lg"
-                className="w-full">
-                {t('register.useDifferentEmail')}
-              </Button>
-            </form>
+              </div>
+              <div className="text-center space-y-4">
+                <p className="text-emerald-600 font-medium">Account created successfully!</p>
+                <p className="text-slate-600">Redirecting to login...</p>
+              </div>
+            </div>
           )}
 
           {step === 'error' && (
