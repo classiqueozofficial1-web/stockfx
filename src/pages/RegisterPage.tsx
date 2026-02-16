@@ -21,10 +21,11 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  // Registration flow steps: 'form' | 'pending' | 'verified'
-  const [step, setStep] = useState<'form' | 'pending' | 'error'>('form');
+  // Registration flow steps: 'form' | 'otp' | 'verified' | 'error'
+  const [step, setStep] = useState<'form' | 'otp' | 'error'>('form');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successEmail, setSuccessEmail] = useState<string | null>(null);
+  const [otp, setOtp] = useState('');
   const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
@@ -62,9 +63,10 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
         return;
       }
 
-      // Registration successful, show pending verification
+      // Registration successful, show OTP verification
       setSuccessEmail(email);
-      setStep('pending');
+      setStep('otp');
+      setOtp('');
       setResendCooldown(30);
     } catch (err: any) {
       setErrorMessage(err.message || 'An error occurred');
@@ -74,11 +76,49 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     }
   };
 
-  const handleResendVerification = async () => {
+  const handleVerifyOTP = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!otp || otp.length !== 6) {
+      setErrorMessage('Please enter a valid 6-digit OTP');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: successEmail, 
+          otp 
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'OTP verification failed');
+        return;
+      }
+
+      const data = await response.json();
+      // Store token and redirect to dashboard
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      onNavigate('dashboard');
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Verification failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendOTP = async () => {
     if (resendCooldown > 0) return;
     
     try {
-      const response = await fetch('/api/auth/resend-verification', {
+      const response = await fetch('/api/auth/resend-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: successEmail }),
@@ -92,7 +132,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
         setErrorMessage(errorData.message);
       }
     } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to resend verification email');
+      setErrorMessage(err.message || 'Failed to resend OTP');
     }
   };
 
@@ -109,11 +149,11 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {step === 'pending' ? t('register.checkEmail') : t('register.title')}
+          {step === 'otp' ? t('register.verifyOTP') : t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          {step === 'pending' ? (
-            <>We sent a verification link to <strong>{successEmail}</strong></>
+          {step === 'otp' ? (
+            <>We sent a verification code to <strong>{successEmail}</strong></>
           ) : (
             <>
               {t('register.subtitle')}{' '}
@@ -206,54 +246,75 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
             </form>
           )}
 
-          {step === 'pending' && (
-            <div className="space-y-6">
-              <div className="flex justify-center">
-                <CheckCircle2 className="h-16 w-16 text-emerald-500" />
+          {step === 'otp' && (
+            <form className="space-y-6" onSubmit={handleVerifyOTP}>
+              <div>
+                <label htmlFor="otp" className="block text-sm font-medium text-slate-700">
+                  Verification Code
+                </label>
+                <input
+                  id="otp"
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="000000"
+                  maxLength={6}
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  className="mt-1 block w-full rounded-lg border border-slate-300 px-4 py-2 text-center text-2xl tracking-widest font-bold text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-emerald-500"
+                />
+                <p className="mt-2 text-sm text-slate-500 text-center">
+                  Enter the 6-digit code sent to your email
+                </p>
               </div>
 
-              <div className="text-center space-y-4">
-                <p className="text-slate-700">
-                  We've sent a verification link to your email. Please click the link in your email to confirm your account.
-                </p>
-                <p className="text-sm text-slate-500">
-                  The link will expire in 24 hours.
-                </p>
-              </div>
+              {errorMessage && (
+                <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+                  {errorMessage}
+                </div>
+              )}
 
-              <div className="space-y-3">
-                <p className="text-center text-sm text-slate-600">
-                  {resendCooldown > 0 ? (
-                    <>Resend in {resendCooldown}s</>
-                  ) : (
-                    <>
-                      Didn't receive the email?{' '}
-                      <button
-                        onClick={handleResendVerification}
-                        className="font-medium text-emerald-600 hover:text-emerald-500">
-                        Resend verification link
-                      </button>
-                    </>
-                  )}
-                </p>
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                isLoading={isLoading}>
+                Verify Code
+              </Button>
 
-                <Button
-                  onClick={() => {
-                    setStep('form');
-                    setSuccessEmail(null);
-                    setEmail('');
-                    setPassword('');
-                    setFirstName('');
-                    setLastName('');
-                    setErrorMessage(null);
-                  }}
-                  variant="outline"
-                  size="lg"
-                  className="w-full">
-                  Use different email
-                </Button>
-              </div>
-            </div>
+              <p className="text-center text-sm text-slate-600">
+                {resendCooldown > 0 ? (
+                  <>Resend in {resendCooldown}s</>
+                ) : (
+                  <>
+                    Didn't receive the code?{' '}
+                    <button
+                      type="button"
+                      onClick={handleResendOTP}
+                      className="font-medium text-emerald-600 hover:text-emerald-500">
+                      Resend OTP
+                    </button>
+                  </>
+                )}
+              </p>
+
+              <Button
+                type="button"
+                onClick={() => {
+                  setStep('form');
+                  setSuccessEmail(null);
+                  setOtp('');
+                  setEmail('');
+                  setPassword('');
+                  setFirstName('');
+                  setLastName('');
+                  setErrorMessage(null);
+                }}
+                variant="outline"
+                size="lg"
+                className="w-full">
+                Use different email
+              </Button>
+            </form>
           )}
 
           {step === 'error' && (
