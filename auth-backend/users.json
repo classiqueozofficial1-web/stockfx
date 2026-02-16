@@ -168,5 +168,32 @@
     "otpAttempts": 0,
     "lastOtpRequest": 1771247148913,
     "verifiedAt": "2026-02-16T13:06:19.478Z"
+  },
+  {
+    "id": "1771247445815",
+    "email": "classiqueozofficial1@gmail.com",
+    "password": "$2a$10$HIZ/2oN2x/bQdjKQFNQn3elxKYdB3k0yYH.Y6I1t3d2h/FVlLNPBu",
+    "firstName": "king",
+    "balance": 0,
+    "createdAt": "2026-02-16T13:10:45.815Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$fDoCCxu2/S4DggNqJ5VVE.yE3p6H6dG7BcMDPKGPii8F/TrC8vN26",
+    "otpExpiry": 1771247745815,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771247445815
+  },
+  {
+    "id": "1771247542725",
+    "email": "sarahharsey203@gmail.com",
+    "password": "$2a$10$GZl9uONOw8Hq6.PcGzYo1.pS9756sXJJE/jQ4JxsqcZjLBYm/abI2",
+    "firstName": "king",
+    "balance": 0,
+    "createdAt": "2026-02-16T13:12:22.725Z",
+    "isVerified": true,
+    "hashedOtp": null,
+    "otpExpiry": null,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771247542725,
+    "verifiedAt": "2026-02-16T13:12:46.392Z"
   }
 ]
