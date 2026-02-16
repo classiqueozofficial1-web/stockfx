@@ -195,5 +195,19 @@
     "otpAttempts": 0,
     "lastOtpRequest": 1771247542725,
     "verifiedAt": "2026-02-16T13:12:46.392Z"
+  },
+  {
+    "id": "1771248145212",
+    "email": "deliveryocean40@gmail.com",
+    "password": "$2a$10$iDhjuVqFk059.MFkECEEGO7BMkDoN.SGDGUgrG6pWtcvYfF0vY4zO",
+    "firstName": "Sarah",
+    "balance": 0,
+    "createdAt": "2026-02-16T13:22:25.212Z",
+    "isVerified": true,
+    "hashedOtp": null,
+    "otpExpiry": null,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771248145212,
+    "verifiedAt": "2026-02-16T13:22:58.520Z"
   }
 ]
