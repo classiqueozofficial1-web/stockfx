@@ -36,5 +36,31 @@
     "otpExpiry": 1771241359642,
     "otpAttempts": 0,
     "lastOtpRequest": 1771241059642
+  },
+  {
+    "id": "1771241273335",
+    "email": "testquick@example.com",
+    "password": "$2a$10$DITd6jMzOAPFI3P.1pp15ecxJ3eWrpwl3DV497.XG2YHxL7dEnnXm",
+    "firstName": "Quick",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:27:53.336Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$vDh9ovn7NgUAF236schx/urYR7/N3MyZQ/zuieEu66sSGRNuNBlZm",
+    "otpExpiry": 1771241573335,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241273336
+  },
+  {
+    "id": "1771241343363",
+    "email": "testfix@example.com",
+    "password": "$2a$10$bIoFRqjdvimG/2gtepLaZOXjvYnmHPsB.DxA0BgiNmDfUN./UCKee",
+    "firstName": "Fix",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:29:03.364Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$nWL52MPvQLMdOJBxuKTFLeH5o1LQGwcBGpohfD/lv2E9CcqdtYjDC",
+    "otpExpiry": 1771241643363,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241343364
   }
 ]
