@@ -46,7 +46,7 @@ function saveUsers(users) {
 }
 
 // Register endpoint
-app.post('/auth/register', async (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
   try {
     const { email, password, name } = req.body;
     if (!email || !password) {
@@ -96,7 +96,7 @@ app.post('/auth/register', async (req, res) => {
 });
 
 // Login endpoint
-app.post('/auth/login', async (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -138,7 +138,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Verify OTP endpoint
-app.post('/auth/verify-otp', async (req, res) => {
+app.post('/api/auth/verify-otp', async (req, res) => {
   try {
     const { email, otp } = req.body;
     if (!email || !otp) {
@@ -184,7 +184,7 @@ app.post('/auth/verify-otp', async (req, res) => {
 });
 
 // Resend OTP endpoint
-app.post('/auth/resend-otp', async (req, res) => {
+app.post('/api/auth/resend-otp', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -215,7 +215,7 @@ app.post('/auth/resend-otp', async (req, res) => {
 });
 
 // List users (admin)
-app.get('/auth/users', (req, res) => {
+app.get('/api/auth/users', (req, res) => {
   try {
     const users = loadUsers();
     res.json({
@@ -233,7 +233,7 @@ app.get('/auth/users', (req, res) => {
 });
 
 // Update balance (admin)
-app.post('/auth/user/balance', (req, res) => {
+app.post('/api/auth/user/balance', (req, res) => {
   try {
     const { userId, amount } = req.body;
     const users = loadUsers();
@@ -250,7 +250,7 @@ app.post('/auth/user/balance', (req, res) => {
 });
 
 // Edit name (admin)
-app.post('/auth/user/name', (req, res) => {
+app.post('/api/auth/user/name', (req, res) => {
   try {
     const { userId, name } = req.body;
     const users = loadUsers();
@@ -267,7 +267,7 @@ app.post('/auth/user/name', (req, res) => {
 });
 
 // Send notification (admin)
-app.post('/auth/user/notify', (req, res) => {
+app.post('/api/auth/user/notify', (req, res) => {
   try {
     const { userId, message } = req.body;
     const users = loadUsers();

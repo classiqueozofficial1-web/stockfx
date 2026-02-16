@@ -1,0 +1,13 @@
+[
+  {
+    "id": "1771233402477",
+    "email": "test@example.com",
+    "name": "test@example.com",
+    "password": "$2a$10$pb.Yf0Q/2QxJd/sTUd.tUe7ID3BZtTV3Y/rpYx1dqZF4Rv4eElglS",
+    "balance": 0,
+    "createdAt": "2026-02-16T09:16:42.477Z",
+    "otp": "945160",
+    "otpExpiry": "2026-02-16T09:26:42.477Z",
+    "isVerified": false
+  }
+]
