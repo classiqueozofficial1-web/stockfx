@@ -524,27 +524,25 @@ app.get('/api/dashboard', (req, res) => {
   }
 });
 
-// Terminate all user sessions endpoint
+// Terminate all user sessions endpoint - deletes all user records
 app.post('/api/auth/terminate-all-sessions', (req, res) => {
   try {
     // Read current users from file
     const usersData = fs.readFileSync(DB_FILE, 'utf8');
     let users = JSON.parse(usersData);
+    const deletedCount = users.length;
     
-    // Mark all user sessions as terminated
-    const now = new Date().toISOString();
-    users = users.map(user => ({
-      ...user,
-      sessionTerminatedAt: now,
-      lastSessionTermination: now
-    }));
+    // Clear all users - reset to empty array
+    users = [];
     
     // Write back to file
     fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
     
+    const now = new Date().toISOString();
     res.json({ 
       success: true, 
-      message: `All ${users.length} user sessions have been terminated`,
+      message: `All ${deletedCount} user records have been deleted and sessions terminated`,
+      deletedCount: deletedCount,
       terminatedAt: now
     });
   } catch (err) {

@@ -133,12 +133,13 @@ export function AdminPage({ onLogout }: AdminPageProps) {
   };
 
   const handleTerminateAllSessions = async () => {
-    if (window.confirm('Are you sure? This will terminate all active user sessions.')) {
+    if (window.confirm('Are you sure? This will delete all user records and terminate all sessions. This action cannot be undone!')) {
       setLoading(true);
       try {
         const result = await terminateAllUserSessions();
         showStatus(result.message, result.success ? 'success' : 'error');
         loadSessions();
+        loadUsers();  // Reload users list to clear from admin panel
       } catch (err: any) {
         showStatus(err.message || 'Failed to terminate sessions', 'error');
       } finally {
