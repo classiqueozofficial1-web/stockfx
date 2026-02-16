@@ -64,7 +64,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow p-6 border border-slate-100">
             <h3 className="text-sm font-medium text-slate-600 mb-2">Account Balance</h3>
-            <p className="text-3xl font-bold text-slate-900" >\</p>
+            <p className="text-3xl font-bold text-slate-900">${(user.balance || 0).toFixed(2)}</p>
           </div>
           <div className="bg-white rounded-xl shadow p-6 border border-slate-100">
             <h3 className="text-sm font-medium text-slate-600 mb-2">Email</h3>
@@ -72,7 +72,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
           </div>
           <div className="bg-white rounded-xl shadow p-6 border border-slate-100">
             <h3 className="text-sm font-medium text-slate-600 mb-2">Status</h3>
-            <span className={inline-block px-3 py-1 rounded-full text-sm font-medium {} + ${user.isVerified ? 'bg-emerald-100 text-emerald-800' : 'bg-yellow-100 text-yellow-800'}}>
+            <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${user.isVerified ? 'bg-emerald-100 text-emerald-800' : 'bg-yellow-100 text-yellow-800'}`}>
               {user.isVerified ? 'Verified' : 'Unverified'}
             </span>
           </div>
@@ -82,7 +82,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Dashboard</h2>
           <p className="text-slate-600 mb-4">OTP-based registration and email verification system is now active!</p>
           <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-800">
-             Email OTP system ready. Users receive verification codes at their email address upon registration.
+            ✅ Email OTP system ready. Users receive verification codes at their email address upon registration.
           </div>
         </div>
       </div>
