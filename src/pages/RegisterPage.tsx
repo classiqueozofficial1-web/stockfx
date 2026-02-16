@@ -102,9 +102,9 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
       }
 
       const data = await response.json();
-      // Store token and redirect to dashboard
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      // Store token and user in localStorage with correct keys
+      localStorage.setItem('auth_token', data.token);
+      localStorage.setItem('currentUser', JSON.stringify(data.user));
       onNavigate('dashboard');
     } catch (err: any) {
       setErrorMessage(err.message || t('register.invalidOtp'));

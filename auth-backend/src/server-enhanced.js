@@ -493,6 +493,33 @@ app.post('/api/auth/user/name', (req, res) => {
   }
 });
 
+// Dashboard endpoint - returns user data for authenticated users
+app.get('/api/dashboard', (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: 'No authorization header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    const users = loadUsers();
+    const user = users.find(u => u.id === decoded.id);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Remove sensitive data before returning
+    const { password, otpHash, otpExpires, otpAttempts, otpResendCooldown, ...safeUser } = user;
+    res.json({ user: safeUser });
+  } catch (err) {
+    console.error('Dashboard error:', err.message);
+    res.status(401).json({ error: 'Invalid or expired token' });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
