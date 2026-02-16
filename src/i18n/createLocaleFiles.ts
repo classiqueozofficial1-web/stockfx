@@ -20,22 +20,22 @@ const FULLY_TRANSLATED = ['en', 'es', 'fr', 'de', 'zh', 'pt', 'it', 'ru', 'ja', 
  * Language names in their native script for reference
  * This helps translators understand which language they're translating
  */
-const LANGUAGE_REFERENCE: Record<string, string> = {
-  da: 'Danish', fi: 'Finnish', el: 'Greek', hu: 'Hungarian', cs: 'Czech',
-  ro: 'Romanian', sk: 'Slovak', sl: 'Slovenian', hr: 'Croatian', sr: 'Serbian',
-  bg: 'Bulgarian', uk: 'Ukrainian', et: 'Estonian', lv: 'Latvian', lt: 'Lithuanian',
-  he: 'Hebrew', ar: 'Arabic', th: 'Thai', vi: 'Vietnamese', id: 'Indonesian',
-  ms: 'Malay', tl: 'Filipino', bn: 'Bengali', hi: 'Hindi', ta: 'Tamil',
-  te: 'Telugu', kn: 'Kannada', ml: 'Malayalam', ur: 'Urdu', fa: 'Persian',
-  af: 'Afrikaans', zu: 'Zulu', sw: 'Swahili', mg: 'Malagasy', ny: 'Chichewa',
-  mt: 'Maltese', ca: 'Catalan', gl: 'Galician', eu: 'Basque', sq: 'Albanian',
-  mk: 'Macedonian', be: 'Belarusian', hy: 'Armenian', ka: 'Georgian', az: 'Azerbaijani',
-  kk: 'Kazakh', ky: 'Kyrgyz', uz: 'Uzbek', tk: 'Turkmen', mn: 'Mongolian',
-  bo: 'Tibetan', my: 'Burmese', km: 'Khmer', lo: 'Lao', si: 'Sinhala',
-  ne: 'Nepali', gu: 'Gujarati', pa: 'Punjabi', mr: 'Marathi', or: 'Odia',
-  as: 'Assamese', mai: 'Maithili', sat: 'Santali', sd: 'Sindhi', ps: 'Pashto',
-  ak: 'Akan', am: 'Amharic', om: 'Oromo', ti: 'Tigrinya'
-};
+// const LANGUAGE_REFERENCE: Record<string, string> = {
+//   da: 'Danish', fi: 'Finnish', el: 'Greek', hu: 'Hungarian', cs: 'Czech',
+//   ro: 'Romanian', sk: 'Slovak', sl: 'Slovenian', hr: 'Croatian', sr: 'Serbian',
+//   bg: 'Bulgarian', uk: 'Ukrainian', et: 'Estonian', lv: 'Latvian', lt: 'Lithuanian',
+//   he: 'Hebrew', ar: 'Arabic', th: 'Thai', vi: 'Vietnamese', id: 'Indonesian',
+//   ms: 'Malay', tl: 'Filipino', bn: 'Bengali', hi: 'Hindi', ta: 'Tamil',
+//   te: 'Telugu', kn: 'Kannada', ml: 'Malayalam', ur: 'Urdu', fa: 'Persian',
+//   af: 'Afrikaans', zu: 'Zulu', sw: 'Swahili', mg: 'Malagasy', ny: 'Chichewa',
+//   mt: 'Maltese', ca: 'Catalan', gl: 'Galician', eu: 'Basque', sq: 'Albanian',
+//   mk: 'Macedonian', be: 'Belarusian', hy: 'Armenian', ka: 'Georgian', az: 'Azerbaijani',
+//   kk: 'Kazakh', ky: 'Kyrgyz', uz: 'Uzbek', tk: 'Turkmen', mn: 'Mongolian',
+//   bo: 'Tibetan', my: 'Burmese', km: 'Khmer', lo: 'Lao', si: 'Sinhala',
+//   ne: 'Nepali', gu: 'Gujarati', pa: 'Punjabi', mr: 'Marathi', or: 'Odia',
+//   as: 'Assamese', mai: 'Maithili', sat: 'Santali', sd: 'Sindhi', ps: 'Pashto',
+//   ak: 'Akan', am: 'Amharic', om: 'Oromo', ti: 'Tigrinya'
+// };
 
 /**
  * Create a locale file with a TRANSLATION NEEDED notice

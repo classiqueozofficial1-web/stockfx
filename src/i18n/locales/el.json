@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Επενδυτικά σχέδια προσαρμοσμένα στις ανάγκες σας",
     "subtitle": "Επιλέξτε ένα επίπεδο επένδυσης που ταιριάζει με το μέγεθος του χαρτοφυλακίου σας",
-    "starter": {
-      "name": "Αρχικό",
-      "price": "1.000 $ - 5.000 $",
-      "desc": "Εύρος Αρχικής Επένδυσης",
-      "duration": "1 μήνα"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Διαδικτυακά ",
-      "price": "5.000 $ - 25.000 $",
-      "desc": "Εύρος Επενδύσεων Ανάπτυξης",
-      "duration": "2-3 Μήνες",
-      "popular": "Πιο δημοφιλή"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Εταιρική",
-      "price": "25 000",
-      "desc": "Εύρος Επένδυσης Premium",
-      "duration": "4 μήνες"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Επενδύσεις χωρίς προμήθεια",
-      "basicCharting": "Βασικά εργαλεία διαγραμμάτων",
-      "mobileAccess": "Πρόσβαση στην εφαρμογή για κινητά",
-      "watchlists": "2 λίστες παρακολούθησης",
-      "emailSupport": "Υποστήριξη μέσω Email",
-      "advancedCharting": "Σύνθετη χαρτογράφηση & ανάλυση",
-      "level2": "Δεδομένα επιπέδου 2 σε πραγματικό χρόνο",
-      "unlimitedWatchlists": "Απεριόριστες λίστες παρακολούθησης",
-      "support24": "Προτεραιότητα στην υποστήριξη 24 ώρες το 24-ωρο",
-      "apiAccess": "Πρόσβαση API ",
-      "advancedAlerts": "Προχωρημένες ειδοποιήσεις",
-      "dedicatedManager": "Ειδικός διαχειριστής χαρτοφυλακίου",
-      "strategy": "Συμβουλευτική προσαρμοσμένης στρατηγικής",
-      "whiteLabel": "Λύσεις λευκής ετικέτας",
-      "integrations": "Προηγμένες ενσωματώσεις",
-      "sla": "Εγγυήσεις SLA",
-      "institutionalPricing": "Θεσμική τιμολόγηση"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Ξεκινήστε να επενδύετε"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "Η εμπιστοσύνη σας, η προτεραιότητά μας",

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../components/ui/Button';
-import { getUsers, updateUser, deleteUser as removeUser } from '../lib/userStore';
+import { getUsers, updateUser, deleteUser as removeUser, Notification } from '../lib/userStore';
 
 
 interface User {
@@ -10,7 +10,7 @@ interface User {
   status: 'active' | 'blocked';
   createdAt: string;
   balance: number;
-  notifications: string[];
+  notifications: Notification[];
   registrationStatus: 'pending' | 'confirmed';
   verified?: boolean;
 }
@@ -19,14 +19,20 @@ interface User {
 
 
   const AdminDashboardPage = () => {
-    const [users, setUsers] = useState<User[]>(getUsers());
+    const [users, setUsers] = useState<User[]>(getUsers().map(user => ({
+      ...user,
+      notifications: user.notifications.map((n: any) => typeof n === 'string' ? { message: n } : (typeof n === 'object' && n.message ? n : { message: JSON.stringify(n) }))
+    })));
     const [selected, setSelected] = useState<User | null>(null);
     const [showBalanceModal, setShowBalanceModal] = useState<User | null>(null);
     const [showNotifModal, setShowNotifModal] = useState<User | null>(null);
     const [notifMsg, setNotifMsg] = useState('');
     const [balanceInput, setBalanceInput] = useState('');
   
-    const refresh = () => setUsers([...getUsers()]);
+    const refresh = () => setUsers(getUsers().map(user => ({
+      ...user,
+      notifications: user.notifications.map((n: any) => typeof n === 'string' ? { message: n } : (typeof n === 'object' && n.message ? n : { message: JSON.stringify(n) }))
+    })));
     const handleBlock = (id: string) => {
       const user = users.find(u => u.id === id);
       if (user) {
@@ -48,7 +54,7 @@ interface User {
     const handleSendNotif = (id: string, msg: string) => {
       const user = users.find((u: User) => u.id === id);
       if (user) {
-        updateUser(id, { notifications: [...user.notifications, msg] });
+        updateUser(id, { notifications: [...user.notifications, { id: Date.now().toString(), message: msg, timestamp: new Date().toISOString() }] });
         refresh();
       }
       setShowNotifModal(null);
@@ -108,7 +114,7 @@ interface User {
                 <td className="px-6 py-4 whitespace-nowrap max-w-xs">
                   <ul className="text-xs text-slate-500 space-y-1 max-h-16 overflow-y-auto">
                     {user.notifications.slice(-2).map((n, i) => (
-                      <li key={i}>• {n}</li>
+                      <li key={i}>• {n.message}</li>
                     ))}
                   </ul>
                 </td>
@@ -137,7 +143,7 @@ interface User {
             <div className="mb-2"><b>Notifications:</b>
               <ul className="text-xs text-slate-500 space-y-1 max-h-16 overflow-y-auto">
                 {selected.notifications.map((n, i) => (
-                  <li key={i}>• {n}</li>
+                  <li key={i}>• {n.message}</li>
                 ))}
               </ul>
             </div>

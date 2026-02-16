@@ -43,24 +43,31 @@
   "pricing": {
     "title": "Investment Plans Tailored for You",
     "subtitle": "Choose an investment tier that matches your portfolio size",
-    "starter": {
-      "name": "Starter",
-      "price": "$1,000 - $5,000",
-      "desc": "Initial Investment Range",
-      "duration": "1 Month"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Pro",
-      "price": "$5,000 - $25,000",
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
       "desc": "Growth Investment Range",
       "duration": "2-3 Months",
       "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Enterprise",
-      "price": "$25,000+",
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
       "desc": "Premium Investment Range",
-      "duration": "4+ Months"
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
       "commissionFree": "Commission-free investments",
@@ -78,8 +85,14 @@
       "strategy": "Custom strategy consulting",
       "whiteLabel": "White-label solutions",
       "integrations": "Advanced integrations",
-      "sla": "SLA guarantees",
-      "institutionalPricing": "Institutional pricing"
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
     "button": "Start Investing"
   },

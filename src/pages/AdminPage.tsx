@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getUsers } from '../lib/userStore';
 import { apiUpdateBalance, apiSendNotification, refreshCurrentUser, adminLogout, terminateAllUserSessions, terminateUserSession, getActiveSessions } from '../lib/session';
 import { updateDashboardStats } from '../lib/userStore';
-import { Wallet, Send, Edit2, LogOut, Home, ArrowLeft, TrendingUp, DollarSign, Activity, Zap, AlertCircle } from 'lucide-react';
+import { Wallet, Send, LogOut, Home, ArrowLeft, TrendingUp, Zap, AlertCircle } from 'lucide-react';
 
 interface AdminPageProps {
   onLogout?: () => void;
@@ -13,7 +13,6 @@ export function AdminPage({ onLogout }: AdminPageProps) {
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [statusType, setStatusType] = useState<'success' | 'error' | null>(null);
   const [loading, setLoading] = useState(false);
-  const [editName, setEditName] = useState<{[id: string]: string}>({});
   const [editBalance, setEditBalance] = useState<{[id: string]: number}>({});
   const [notifyMsg, setNotifyMsg] = useState<{[id: string]: string}>({});
   const [editProfit, setEditProfit] = useState<{[id: string]: number}>({});
@@ -137,9 +136,6 @@ export function AdminPage({ onLogout }: AdminPageProps) {
     showStatus(result.message, result.success ? 'success' : 'error');
     loadSessions();
   };
-
-  const userId = users[0]?.id || '';
-  const userId_alt = userId ? users[0]?._id || users[0]?.id : '';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6">

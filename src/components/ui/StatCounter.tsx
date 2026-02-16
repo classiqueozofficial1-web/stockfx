@@ -5,7 +5,7 @@ interface StatCounterProps {
   trend?: 'up' | 'down';
 }
 
-export function StatCounter({ label, value, icon, trend }: StatCounterProps) {
+export function StatCounter({ label, value }: StatCounterProps) {
   return (
     <div className="bg-white rounded-lg p-6 border border-gray-200 text-center hover:shadow-lg transition-all duration-300">
       <div className="text-3xl font-bold text-blue-600 mb-2">{value}</div>

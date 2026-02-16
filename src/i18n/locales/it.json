@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Piani di investimento personalizzati per te",
     "subtitle": "Scegli un livello di investimento adatto alle dimensioni del tuo portafoglio",
-    "starter": {
-      "name": "Base",
-      "price": "$1.000 - $5.000",
-      "desc": "Intervallo di investimento iniziale",
-      "duration": "1 mese"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Pro",
-      "price": "$5.000 - $25.000",
-      "desc": "Intervallo di investimento di crescita",
-      "duration": "2-3 mesi",
-      "popular": "Più popolare"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Aziendale",
-      "price": "$25.000+",
-      "desc": "Intervallo di investimento premium",
-      "duration": "4+ mesi"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Scambi senza commissioni",
-      "basicCharting": "Strumenti grafici di base",
-      "mobileAccess": "Accesso all'app mobile",
-      "watchlists": "2 liste di controllo",
-      "emailSupport": "Supporto via email",
-      "advancedCharting": "Grafici e analisi avanzati",
-      "level2": "Dati di livello 2 in tempo reale",
-      "unlimitedWatchlists": "Liste di controllo illimitate",
-      "support24": "Supporto prioritario 24/7",
-      "apiAccess": "Accesso API",
-      "advancedAlerts": "Avvisi avanzati",
-      "dedicatedManager": "Gestore portafoglio dedicato",
-      "strategy": "Consulenza strategia personalizzata",
-      "whiteLabel": "Soluzioni white-label",
-      "integrations": "Integrazioni avanzate",
-      "sla": "Garanzie SLA",
-      "institutionalPricing": "Prezzi istituzionali"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Inizia a investire"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "La tua fiducia, la nostra priorità",

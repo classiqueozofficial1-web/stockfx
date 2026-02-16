@@ -103,26 +103,34 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
 
   const pricing = [
     {
-      name: 'Starter',
-      price: '$1,000 - $5,000',
-      description: 'Initial Investment Range',
+      name: 'Basic Investment',
+      price: '$300 - $5,000',
+      description: 'Standard Investment Range',
       duration: '1 Month',
+      isStandard: true,
       features: ['Commission-free investments', 'Basic charting tools', 'Mobile app access', '2 watchlists', 'Email support'],
     },
     {
-      name: 'Pro',
-      price: '$5,000 - $25,000',
+      name: 'Premium',
+      price: '$5,000 - $50,000',
       description: 'Growth Investment Range',
       duration: '2-3 Months',
       features: ['Advanced charting & analysis', 'Real-time Level 2 data', 'Unlimited watchlists', 'Priority 24/7 support', 'API access', 'Advanced alerts'],
       popular: true,
     },
     {
-      name: 'Enterprise',
-      price: '$25,000+',
+      name: 'Gold',
+      price: '$50,000+',
       description: 'Premium Investment Range',
-      duration: '4+ Months',
-      features: ['Dedicated portfolio manager', 'Custom strategy consulting', 'White-label solutions', 'Advanced integrations', 'SLA guarantees', 'Institutional pricing'],
+      duration: '3-6 Months',
+      features: ['Dedicated portfolio manager', 'Custom strategy consulting', 'White-label solutions', 'Advanced integrations', 'VIP support', 'Exclusive research'],
+    },
+    {
+      name: 'Annual Investment',
+      price: '$100,000+',
+      description: 'Institutional Investment Range',
+      duration: '12+ Months',
+      features: ['Dedicated investment advisor', 'Full portfolio management', 'Custom hedge strategies', '24/7 concierge support', 'Priority execution', 'Exclusive events & networking'],
     },
   ];
 
@@ -278,16 +286,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <h2 className="text-4xl font-bold text-white text-center mb-4">Why Choose StockFx?</h2>
         <p className="text-center text-slate-300 mb-12">{t('pricing.subtitle')}</p>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {pricing.map((plan, i) => (
             <div 
               key={i} 
               onClick={() => setExpandedPlan(expandedPlan === i ? null : i)}
-              className={`rounded-xl p-8 border transition-all duration-500 cursor-pointer transform hover:scale-110 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/50 animate-in fade-in slide-in-from-left-8 ${
+              className={`rounded-xl p-6 border transition-all duration-500 cursor-pointer transform hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/50 animate-in fade-in slide-in-from-left-8 ${
                 expandedPlan === i 
-                  ? 'ring-2 ring-amber-400 scale-110 -translate-y-2 shadow-2xl shadow-amber-500/50' 
+                  ? 'ring-2 ring-amber-400 scale-105 -translate-y-2 shadow-2xl shadow-amber-500/50' 
                   : ''
-              } ${plan.popular ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500 shadow-xl' : 'bg-white/5 border-white/10'}`}
+              } ${plan.popular ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500 shadow-xl' : plan.isStandard ? 'bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border-emerald-500/30' : 'bg-white/5 border-white/10'}`}
               style={{
                 animationDelay: `${i * 100}ms`,
                 animationFillMode: 'both'
@@ -295,15 +303,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  {plan.popular && <div className="inline-block px-3 py-1 bg-amber-500 text-white rounded-full text-xs font-semibold mb-4">{t('pricing.pro.popular')}</div>}
-                  <h3 className="text-2xl font-bold text-white mb-1">{plan.name}</h3>
+                  {plan.popular && <div className="inline-block px-3 py-1 bg-amber-500 text-white rounded-full text-xs font-semibold mb-4">Most Popular</div>}
+                  {plan.isStandard && <div className="inline-block px-3 py-1 bg-emerald-500 text-white rounded-full text-xs font-semibold mb-4">Standard</div>}
+                  <h3 className="text-xl font-bold text-white mb-1">{plan.name}</h3>
                   <p className="text-sm text-slate-400 mb-4">{plan.description}</p>
                 </div>
                 <ChevronDown className={`h-6 w-6 text-amber-400 transition-transform duration-300 flex-shrink-0 ml-2 ${expandedPlan === i ? 'rotate-180' : ''}`} />
               </div>
 
               <p className="text-3xl font-black text-amber-400 mb-2">{plan.price}</p>
-              <p className="text-sm text-amber-300 font-semibold mb-6">{t('pricing.starter.duration')}: {plan.duration}</p>
+              <p className="text-sm text-amber-300 font-semibold mb-6">Duration: {plan.duration}</p>
               
               <ul className={`space-y-3 overflow-hidden transition-all duration-300 ${expandedPlan === i ? 'mb-8 max-h-96 opacity-100' : 'max-h-96 opacity-100'}`}>
                 {plan.features.map((f, j) => (
@@ -467,7 +476,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
           </div>
           <div className="border-t border-slate-700 pt-8 text-center text-slate-400 text-sm">
-            <p>&copy; 2024 StockFx Investment Inc. All rights reserved. NMLS #123456</p>
+            <p>&copy; 2012 StockFx Investment Inc. All rights reserved. NMLS #5464336</p>
           </div>
         </div>
       </footer>

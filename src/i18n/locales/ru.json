@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Инвестиционные планы, адаптированные для вас",
     "subtitle": "Выберите уровень инвестиций, соответствующий размеру вашего портфеля",
-    "starter": {
-      "name": "Стартер",
-      "price": "$1,000 - $5,000",
-      "desc": "Диапазон начальных инвестиций",
-      "duration": "1 месяц"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Про",
-      "price": "$5,000 - $25,000",
-      "desc": "Диапазон роста инвестиций",
-      "duration": "2-3 месяца",
-      "popular": "Самый популярный"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Предприятие",
-      "price": "$25,000+",
-      "desc": "Диапазон премиум-инвестиций",
-      "duration": "4+ месяца"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Торговля без комиссии",
-      "basicCharting": "Базовые инструменты графиков",
-      "mobileAccess": "Доступ к мобильному приложению",
-      "watchlists": "2 списка отслеживания",
-      "emailSupport": "Поддержка по электронной почте",
-      "advancedCharting": "Продвинутые графики и анализ",
-      "level2": "Данные уровня 2 в реальном времени",
-      "unlimitedWatchlists": "Неограниченные списки отслеживания",
-      "support24": "Приоритетная поддержка 24/7",
-      "apiAccess": "Доступ к API",
-      "advancedAlerts": "Продвинутые оповещения",
-      "dedicatedManager": "Выделенный управляющий портфелем",
-      "strategy": "Консультирование по пользовательской стратегии",
-      "whiteLabel": "Решения white-label",
-      "integrations": "Продвинутые интеграции",
-      "sla": "Гарантии SLA",
-      "institutionalPricing": "Институциональные цены"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Начать инвестировать"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "Ваше доверие - наш приоритет",

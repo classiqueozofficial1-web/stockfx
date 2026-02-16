@@ -249,7 +249,12 @@ export async function apiSendNotification(userId: string, message: string) {
     pushUserNotification(userId, message);
     // If current user, update persisted profile
     if (currentUser && currentUser.id === userId) {
-      const newNotifications = [...(currentUser.notifications || []), message];
+      const notification = {
+        id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        message,
+        timestamp: new Date().toISOString(),
+      };
+      const newNotifications = [...(currentUser.notifications || []), notification];
       updateUser(userId, { notifications: newNotifications });
       setCurrentUserFromProfile({ ...currentUser, notifications: newNotifications });
     }

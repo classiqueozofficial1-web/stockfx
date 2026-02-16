@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Investeringsplaner anpassade för dig",
     "subtitle": "Välj en investeringsnivå som passar ditt portföljstorleken",
-    "starter": {
-      "name": "Startare",
-      "price": "$1.000 - $5.000",
-      "desc": "Initialinvesteringsintervall",
-      "duration": "1 månad"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Pro",
-      "price": "$5.000 - $25.000",
-      "desc": "Investeringstillväxt intervall",
-      "duration": "2-3 månader",
-      "popular": "Mest populär"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Företag",
-      "price": "$25.000+",
-      "desc": "Premium investeringsintervall",
-      "duration": "4+ månader"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Provisionsfri handel",
-      "basicCharting": "Grundläggande diagramverktyg",
-      "mobileAccess": "Mobil appåtkomst",
-      "watchlists": "2 bevakningslistor",
-      "emailSupport": "E-poststöd",
-      "advancedCharting": "Avancerade diagram och analys",
-      "level2": "Realtidsnivå 2-data",
-      "unlimitedWatchlists": "Obegränsade bevakningslistor",
-      "support24": "Prioritetsstöd 24/7",
-      "apiAccess": "API-åtkomst",
-      "advancedAlerts": "Avancerade aviseringar",
-      "dedicatedManager": "Dedikerad portföljförvaltare",
-      "strategy": "Anpassad strategi rådgivning",
-      "whiteLabel": "White-label-lösningar",
-      "integrations": "Avancerade integrationer",
-      "sla": "SLA-garantier",
-      "institutionalPricing": "Institutionell prissättning"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Börja investera"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "Ditt förtroende, vår prioritet",

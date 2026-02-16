@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Plany inwestycyjne dostosowane do Ciebie",
     "subtitle": "Wybierz poziom inwestycji odpowiadający wielkości Twojego portfela",
-    "starter": {
-      "name": "Starter",
-      "price": "$1.000 - $5.000",
-      "desc": "Zakres inwestycji początkowej",
-      "duration": "1 miesiąc"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Pro",
-      "price": "$5.000 - $25.000",
-      "desc": "Zakres wzrostu inwestycji",
-      "duration": "2-3 miesiące",
-      "popular": "Najpopularniejszy"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Enterprise",
-      "price": "$25.000+",
-      "desc": "Zakres inwestycji premium",
-      "duration": "4+ miesiące"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Handel bez prowizji",
-      "basicCharting": "Podstawowe narzędzia do tworzenia wykresów",
-      "mobileAccess": "Dostęp do aplikacji mobilnej",
-      "watchlists": "2 listy obserwowanych",
-      "emailSupport": "Wsparcie przez e-mail",
-      "advancedCharting": "Zaawansowane wykresy i analiza",
-      "level2": "Dane poziomu 2 w czasie rzeczywistym",
-      "unlimitedWatchlists": "Nieograniczone listy obserwowanych",
-      "support24": "Priorytetowe wsparcie 24/7",
-      "apiAccess": "Dostęp do API",
-      "advancedAlerts": "Zaawansowane alerty",
-      "dedicatedManager": "Dedykowany menedżer portfela",
-      "strategy": "Konsultacje strategii niestandardowej",
-      "whiteLabel": "Rozwiązania white-label",
-      "integrations": "Zaawansowane integracje",
-      "sla": "Gwarancje SLA",
-      "institutionalPricing": "Ceny instytucjonalne"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Zacznij inwestować"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "Twoje zaufanie, nasza priorytet",

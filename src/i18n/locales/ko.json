@@ -43,45 +43,58 @@
   "pricing": {
     "title": "당신을 위한 투자 계획",
     "subtitle": "포트폴리오 규모에 맞는 투자 수준을 선택하세요",
-    "starter": {
-      "name": "스타터",
-      "price": "$1,000 - $5,000",
-      "desc": "초기 투자 범위",
-      "duration": "1개월"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "프로",
-      "price": "$5,000 - $25,000",
-      "desc": "성장 투자 범위",
-      "duration": "2-3개월",
-      "popular": "가장 인기 있는"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "엔터프라이즈",
-      "price": "$25,000+",
-      "desc": "프리미엄 투자 범위",
-      "duration": "4개월 이상"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "수수료 없는 거래",
-      "basicCharting": "기본 차트 도구",
-      "mobileAccess": "모바일 앱 접근",
-      "watchlists": "2개의 관심목록",
-      "emailSupport": "이메일 지원",
-      "advancedCharting": "고급 차트 및 분석",
-      "level2": "실시간 레벨 2 데이터",
-      "unlimitedWatchlists": "무제한 관심목록",
-      "support24": "우선 24/7 지원",
-      "apiAccess": "API 액세스",
-      "advancedAlerts": "고급 알림",
-      "dedicatedManager": "전담 포트폴리오 관리자",
-      "strategy": "맞춤형 전략 컨설팅",
-      "whiteLabel": "화이트 라벨 솔루션",
-      "integrations": "고급 통합",
-      "sla": "SLA 보증",
-      "institutionalPricing": "기관 가격 책정"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "투자 시작"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "당신의 신뢰, 우리의 우선순위",

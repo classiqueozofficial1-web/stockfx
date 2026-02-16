@@ -43,45 +43,58 @@
   "pricing": {
     "title": "Investiční plány šité na míru",
     "subtitle": "Vyberte si investiční úroveň, která odpovídá velikosti vašeho portfolia",
-    "starter": {
-      "name": "Spouštěč",
-      "price": "$ 1,000 - $ 5,000",
-      "desc": "Rozsah počáteční investice",
-      "duration": "1 měsíc"
+    "basic": {
+      "name": "Basic Investment",
+      "price": "$300 - $5,000",
+      "desc": "Standard Investment Range",
+      "duration": "1 Month",
+      "standard": "Standard"
     },
-    "pro": {
-      "name": "Pro",
-      "price": "5 000 - 25 000",
-      "desc": "Rozsah investic do růstu",
-      "duration": "2-3 měsíce",
-      "popular": "Nejvíce populární"
+    "premium": {
+      "name": "Premium",
+      "price": "$5,000 - $50,000",
+      "desc": "Growth Investment Range",
+      "duration": "2-3 Months",
+      "popular": "Most Popular"
     },
-    "enterprise": {
-      "name": "Podnikání",
-      "price": "25 000",
-      "desc": "Prémiové investiční rozpětí",
-      "duration": "4 měsíce"
+    "gold": {
+      "name": "Gold",
+      "price": "$50,000+",
+      "desc": "Premium Investment Range",
+      "duration": "3-6 Months"
+    },
+    "annual": {
+      "name": "Annual Investment",
+      "price": "$100,000+",
+      "desc": "Institutional Investment Range",
+      "duration": "12+ Months"
     },
     "features": {
-      "commissionFree": "Investice bez provize",
-      "basicCharting": "Základní grafické nástroje",
-      "mobileAccess": "Přístup k mobilní aplikaci",
-      "watchlists": "2 seznamy sledovaných",
-      "emailSupport": "E-mailová podpora",
-      "advancedCharting": "Pokročilé mapování a analýza",
-      "level2": "Data úrovně 2 v reálném čase",
-      "unlimitedWatchlists": "Neomezené seznamy sledovaných",
-      "support24": "Prioritní nonstop podpora",
-      "apiAccess": "Přístup k rozhraní API ",
-      "advancedAlerts": "Pokročilá upozornění",
-      "dedicatedManager": "Vyhrazený správce portfolia",
-      "strategy": "Konzultace strategie na míru",
-      "whiteLabel": "Řešení s bílou etiketou",
-      "integrations": "Pokročilé integrace",
-      "sla": "Záruky SLA",
-      "institutionalPricing": "Institucionální tvorba cen"
+      "commissionFree": "Commission-free investments",
+      "basicCharting": "Basic charting tools",
+      "mobileAccess": "Mobile app access",
+      "watchlists": "2 watchlists",
+      "emailSupport": "Email support",
+      "advancedCharting": "Advanced charting & analysis",
+      "level2": "Real-time Level 2 data",
+      "unlimitedWatchlists": "Unlimited watchlists",
+      "support24": "Priority 24/7 support",
+      "apiAccess": "API access",
+      "advancedAlerts": "Advanced alerts",
+      "dedicatedManager": "Dedicated portfolio manager",
+      "strategy": "Custom strategy consulting",
+      "whiteLabel": "White-label solutions",
+      "integrations": "Advanced integrations",
+      "vipSupport": "VIP support",
+      "exclusiveResearch": "Exclusive research",
+      "investmentAdvisor": "Dedicated investment advisor",
+      "portfolioManagement": "Full portfolio management",
+      "hedgeStrategies": "Custom hedge strategies",
+      "concierge": "24/7 concierge support",
+      "priorityExecution": "Priority execution",
+      "exclusiveEvents": "Exclusive events & networking"
     },
-    "button": "Začněte investovat"
+    "button": "Start Investing"
   },
   "trust": {
     "title": "Vaše důvěra, naše priorita",
