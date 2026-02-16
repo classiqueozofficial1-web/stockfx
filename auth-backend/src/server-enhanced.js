@@ -528,7 +528,7 @@ app.get('/api/dashboard', (req, res) => {
 app.post('/api/auth/terminate-all-sessions', (req, res) => {
   try {
     // Read current users from file
-    const usersData = fs.readFileSync(USERS_FILE, 'utf8');
+    const usersData = fs.readFileSync(DB_FILE, 'utf8');
     let users = JSON.parse(usersData);
     
     // Mark all user sessions as terminated
@@ -540,7 +540,7 @@ app.post('/api/auth/terminate-all-sessions', (req, res) => {
     }));
     
     // Write back to file
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+    fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
     
     res.json({ 
       success: true, 
