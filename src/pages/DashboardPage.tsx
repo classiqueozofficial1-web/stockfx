@@ -64,9 +64,9 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
   }
 
   const portfolioValue = user?.balance || 0;
-  const totalProfit = user?.totalProfit || 2450.50;
-  const monthlyIncome = user?.monthlyIncome || 1200.75;
-  const activeTrades = user?.activeTrades || 12;
+  const totalProfit = user?.totalProfit || 0;
+  const monthlyIncome = user?.monthlyIncome || 0;
+  const activeTrades = user?.activeTrades || 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex">

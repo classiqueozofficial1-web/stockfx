@@ -129,6 +129,11 @@ export async function apiRegister(name: string, email: string, password: string)
       notifications: [],
       registrationStatus: 'confirmed',
       verified: true,
+      // Dashboard stats - initialized to 0, editable by admin only
+      totalProfit: 0,
+      monthlyIncome: 0,
+      activeTrades: 0,
+      portfolioPerformance: 0,
     };
     addUser(newUser);
     setCurrentUserFromProfile(newUser);
@@ -245,6 +250,31 @@ export async function apiEditName(userId: string, name: string) {
   }
   const data = await res.json();
   return data;
+}
+
+export async function apiUpdateMetrics(userId: string, totalProfit?: number, monthlyIncome?: number) {
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/user/metrics`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, totalProfit, monthlyIncome }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Failed to update metrics');
+    }
+    const data = await res.json();
+    // Update current user if applicable
+    if (currentUser && currentUser.id === userId) {
+      if (totalProfit !== undefined) currentUser.totalProfit = totalProfit;
+      if (monthlyIncome !== undefined) currentUser.monthlyIncome = monthlyIncome;
+      setCurrentUserFromProfile(currentUser);
+    }
+    return data;
+  } catch (err: any) {
+    console.warn('API update metrics failed:', err?.message || err);
+    throw err;
+  }
 }
 
 export async function apiSendNotification(userId: string, message: string) {

@@ -223,6 +223,11 @@ app.post('/api/auth/register', async (req, res) => {
       balance: 0,
       createdAt: new Date().toISOString(),
       isVerified: false,
+      // Dashboard stats - initialized to 0, editable by admin only
+      totalProfit: 0,
+      monthlyIncome: 0,
+      activeTrades: 0,
+      portfolioPerformance: 0,
       // OTP fields
       hashedOtp,
       otpExpiry,
@@ -292,6 +297,10 @@ app.post('/api/auth/login', async (req, res) => {
         lastName: user.lastName || '',
         balance: user.balance,
         isVerified: true,
+        totalProfit: user.totalProfit || 0,
+        monthlyIncome: user.monthlyIncome || 0,
+        activeTrades: user.activeTrades || 0,
+        portfolioPerformance: user.portfolioPerformance || 0,
       },
     });
   } catch (err) {
@@ -398,6 +407,10 @@ app.post('/api/auth/verify-otp', async (req, res) => {
         lastName: user.lastName || '',
         balance: user.balance,
         isVerified: true,
+        totalProfit: user.totalProfit || 0,
+        monthlyIncome: user.monthlyIncome || 0,
+        activeTrades: user.activeTrades || 0,
+        portfolioPerformance: user.portfolioPerformance || 0,
       },
     });
   } catch (err) {
@@ -459,6 +472,10 @@ app.get('/api/auth/users', (req, res) => {
         balance: u.balance,
         isVerified: u.isVerified,
         createdAt: u.createdAt,
+        totalProfit: u.totalProfit || 0,
+        monthlyIncome: u.monthlyIncome || 0,
+        activeTrades: u.activeTrades || 0,
+        portfolioPerformance: u.portfolioPerformance || 0,
       })),
     });
   } catch (err) {
@@ -493,6 +510,40 @@ app.post('/api/auth/user/name', (req, res) => {
     user.firstName = firstName;
     saveUsers(users);
     res.json({ message: 'Name updated', firstName: user.firstName });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+/**
+ * POST /api/auth/user/dashboard-stats
+ * Update dashboard stats (admin only) - Total Profit, Monthly Income, Active Trades, Portfolio Performance
+ */
+app.post('/api/auth/user/dashboard-stats', (req, res) => {
+  try {
+    const { userId, totalProfit, monthlyIncome, activeTrades, portfolioPerformance } = req.body;
+    const users = loadUsers();
+    const user = users.find(u => u.id === userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // Update dashboard stats
+    if (totalProfit !== undefined) user.totalProfit = totalProfit;
+    if (monthlyIncome !== undefined) user.monthlyIncome = monthlyIncome;
+    if (activeTrades !== undefined) user.activeTrades = activeTrades;
+    if (portfolioPerformance !== undefined) user.portfolioPerformance = portfolioPerformance;
+    saveUsers(users);
+    res.json({ 
+      message: 'Dashboard stats updated',
+      user: {
+        id: user.id,
+        email: user.email,
+        totalProfit: user.totalProfit,
+        monthlyIncome: user.monthlyIncome,
+        activeTrades: user.activeTrades,
+        portfolioPerformance: user.portfolioPerformance,
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

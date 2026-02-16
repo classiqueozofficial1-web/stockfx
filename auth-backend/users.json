@@ -12,5 +12,34 @@
     "otpExpiry": 1771253355559,
     "otpAttempts": 0,
     "lastOtpRequest": 1771253055560
+  },
+  {
+    "id": "1771253510054",
+    "email": "paulkingsley357@gmail.com",
+    "password": "$2a$10$q8AjEZ/dMQ6ripGVQ/owo.aW20ureJr.vJlHc7Is0iKpwiWiGXlxu",
+    "firstName": "dan",
+    "lastName": "jihn",
+    "balance": 2000,
+    "createdAt": "2026-02-16T14:51:50.054Z",
+    "isVerified": true,
+    "hashedOtp": null,
+    "otpExpiry": null,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771253510054,
+    "verifiedAt": "2026-02-16T14:52:17.939Z"
+  },
+  {
+    "id": "1771254157575",
+    "email": "deliveryocean40@gmail.com",
+    "password": "$2a$10$l.ck6mACvSOP24Tas/ItT.nfYoXgWjeyEWo28ZmUGKnLfcRdt/zeK",
+    "firstName": "king",
+    "lastName": "junr",
+    "balance": 0,
+    "createdAt": "2026-02-16T15:02:37.575Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$GNQAz77V61qzRjH99v.YHejcnSQW/hEJP2IqZOc40GMMNyL1grEkO",
+    "otpExpiry": 1771254457575,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771254157575
   }
 ]
