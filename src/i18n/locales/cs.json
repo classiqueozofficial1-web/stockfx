@@ -178,7 +178,19 @@
     "checkEmail": "Check your email",
     "resendLink": "Resend verification link",
     "changeEmail": "Use different email",
-    "useDifferentEmail": "Use different email"
+    "useDifferentEmail": "Use different email",
+    "verifyEmail": "Verify Your Email",
+    "enterCode": "Enter the 6-digit code sent to your email",
+    "otpPlaceholder": "000000",
+    "verifyButton": "Verify Code",
+    "otpExpired": "OTP has expired. Please request a new code.",
+    "invalidOtp": "Invalid OTP. Please try again.",
+    "resendCode": "Resend Code",
+    "resendInProgress": "Resending...",
+    "resendSuccess": "Code sent successfully",
+    "resendError": "Failed to resend code",
+    "otpSent": "Code sent to {{email}}",
+    "resendIn": "Resend in {{seconds}}s"
   },
   "dashboard": {
     "loading": "Načítání řídicího panelu...",

@@ -79,7 +79,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const handleVerifyOTP = async (e: FormEvent) => {
     e.preventDefault();
     if (!otp || otp.length !== 6) {
-      setErrorMessage('Please enter a valid 6-digit OTP');
+      setErrorMessage(t('register.invalidOtp'));
       return;
     }
 
@@ -98,7 +98,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || 'OTP verification failed');
+        setErrorMessage(errorData.message || t('register.invalidOtp'));
         return;
       }
 
@@ -108,7 +108,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
       localStorage.setItem('user', JSON.stringify(data.user));
       onNavigate('dashboard');
     } catch (err: any) {
-      setErrorMessage(err.message || 'Verification failed');
+      setErrorMessage(err.message || t('register.invalidOtp'));
     } finally {
       setIsLoading(false);
     }
@@ -132,7 +132,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
         setErrorMessage(errorData.message);
       }
     } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to resend OTP');
+      setErrorMessage(t('register.resendError'));
     }
   };
 
@@ -149,7 +149,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {step === 'otp' ? t('register.verifyOTP') : t('register.title')}
+          {step === 'otp' ? t('register.verifyEmail') : t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
           {step === 'otp' ? (
@@ -250,20 +250,20 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
             <form className="space-y-6" onSubmit={handleVerifyOTP}>
               <div>
                 <label htmlFor="otp" className="block text-sm font-medium text-slate-700">
-                  Verification Code
+                  {t('register.verifyEmail')}
                 </label>
                 <input
                   id="otp"
                   type="text"
                   inputMode="numeric"
-                  placeholder="000000"
+                  placeholder={t('register.otpPlaceholder')}
                   maxLength={6}
                   value={otp}
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                   className="mt-1 block w-full rounded-lg border border-slate-300 px-4 py-2 text-center text-2xl tracking-widest font-bold text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:ring-emerald-500"
                 />
                 <p className="mt-2 text-sm text-slate-500 text-center">
-                  Enter the 6-digit code sent to your email
+                  {t('register.enterCode')}
                 </p>
               </div>
 
@@ -278,20 +278,22 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 className="w-full"
                 size="lg"
                 isLoading={isLoading}>
-                Verify Code
+                {t('register.verifyButton')}
               </Button>
 
               <p className="text-center text-sm text-slate-600">
                 {resendCooldown > 0 ? (
-                  <>Resend in {resendCooldown}s</>
+                  <>
+                    {t('register.resendIn', { seconds: resendCooldown })}
+                  </>
                 ) : (
                   <>
-                    Didn't receive the code?{' '}
+                    {t('register.enterCode').split('.')[0]}?{' '}
                     <button
                       type="button"
                       onClick={handleResendOTP}
                       className="font-medium text-emerald-600 hover:text-emerald-500">
-                      Resend OTP
+                      {t('register.resendCode')}
                     </button>
                   </>
                 )}
@@ -312,7 +314,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 variant="outline"
                 size="lg"
                 className="w-full">
-                Use different email
+                {t('register.useDifferentEmail')}
               </Button>
             </form>
           )}
