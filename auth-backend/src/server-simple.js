@@ -14,6 +14,17 @@ const PORT = process.env.PORT || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const DB_FILE = path.join(__dirname, '../users.json');
 
+// OTP utility functions
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function sendOTPEmail(email, otp) {
+  console.log(`🔐 OTP for ${email}: ${otp}`);
+  // In production, integrate with email service
+  return true;
+}
+
 // Simple file-based storage
 function loadUsers() {
   try {
@@ -50,29 +61,33 @@ app.post('/auth/register', async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Generate OTP
+    const otp = generateOTP();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    
     const newUser = {
       id: Date.now().toString(),
       email,
       name: name || email,
       password: hashedPassword,
       balance: 0,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      otp,
+      otpExpiry: otpExpiry.toISOString(),
+      isVerified: false
     };
 
     users.push(newUser);
     saveUsers(users);
 
-    const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '7d' });
+    // Send OTP to email
+    await sendOTPEmail(email, otp);
 
     res.status(201).json({
-      message: 'User registered successfully',
-      token,
-      user: {
-        id: newUser.id,
-        email: newUser.email,
-        name: newUser.name,
-        balance: newUser.balance
-      }
+      message: 'User created. OTP sent to email',
+      email,
+      tempToken: email // Temporary identifier for OTP verification
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -120,6 +135,83 @@ app.post('/auth/login', async (req, res) => {
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
+});
+
+// Verify OTP endpoint
+app.post('/auth/verify-otp', async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+      return res.status(400).json({ message: 'Email and OTP required' });
+    }
+
+    const users = loadUsers();
+    const user = users.find(u => u.email === email);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check OTP validity
+    if (user.otp !== otp) {
+      return res.status(401).json({ message: 'Invalid OTP' });
+    }
+    if (new Date() > new Date(user.otpExpiry)) {
+      return res.status(401).json({ message: 'OTP expired' });
+    }
+
+    // Mark user as verified
+    user.isVerified = true;
+    user.otp = null;
+    user.otpExpiry = null;
+    saveUsers(users);
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.json({
+      message: 'Email verified successfully',
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        balance: user.balance
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Resend OTP endpoint
+app.post('/auth/resend-otp', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: 'Email required' });
+    }
+
+    const users = loadUsers();
+    const user = users.find(u => u.email === email);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Generate new OTP
+    const otp = generateOTP();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+
+    user.otp = otp;
+    user.otpExpiry = otpExpiry.toISOString();
+    saveUsers(users);
+
+    // Send OTP to email
+    await sendOTPEmail(email, otp);
+
+    res.json({ message: 'OTP sent to email' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
 // List users (admin)
