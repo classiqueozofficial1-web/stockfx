@@ -205,7 +205,6 @@ app.post('/api/auth/register', async (req, res) => {
       email,
       password: hashedPassword,
       firstName: firstName || email.split('@')[0],
-      firstName: firstName || '',
       balance: 0,
       createdAt: new Date().toISOString(),
       isVerified: false,

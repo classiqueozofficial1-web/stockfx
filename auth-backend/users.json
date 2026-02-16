@@ -62,5 +62,18 @@
     "otpExpiry": 1771241643363,
     "otpAttempts": 0,
     "lastOtpRequest": 1771241343364
+  },
+  {
+    "id": "1771241697631",
+    "email": "quicktest@example.com",
+    "password": "$2a$10$0.ZIqxxDMUU/n8USfVIAK.WO8YKZx.gqokR1ujEr.jQdcvfDWnnjS",
+    "firstName": "Quick",
+    "balance": 0,
+    "createdAt": "2026-02-16T11:34:57.631Z",
+    "isVerified": false,
+    "hashedOtp": "$2a$10$ywnA.DktV1a4B6WmmoKiv.5bmV5DNAoxgjf/m1rdmog3HDtT/IXDS",
+    "otpExpiry": 1771241997631,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771241697631
   }
 ]
