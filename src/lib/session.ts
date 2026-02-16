@@ -74,7 +74,7 @@ export function refreshCurrentUser() {
 // --- API helpers (talk to the dev auth server) ---
 export async function apiLogin(email: string, password: string) {
   try {
-    const res = await fetch(`${API_BASE}/auth/login`, {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -102,7 +102,7 @@ export async function apiLogin(email: string, password: string) {
 
 export async function apiRegister(name: string, email: string, password: string) {
   try {
-    const res = await fetch(`${API_BASE}/auth/register`, {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
@@ -141,7 +141,7 @@ export async function getDashboard() {
   if (!token) throw new Error('Not authenticated');
   
   try {
-    const res = await fetch(`${API_BASE}/dashboard`, {
+    const res = await fetch(`${API_BASE}/api/dashboard`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const data = await res.json();
@@ -186,7 +186,7 @@ export async function apiHealth() {
 
 // --- Admin API helpers ---
 export async function apiListUsers() {
-  const res = await fetch(`${API_BASE}/auth/users`, {
+  const res = await fetch(`${API_BASE}/api/auth/users`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
@@ -197,7 +197,7 @@ export async function apiListUsers() {
 
 export async function apiUpdateBalance(userId: string, amount: number) {
   try {
-    const res = await fetch(`${API_BASE}/auth/user/balance`, {
+    const res = await fetch(`${API_BASE}/api/auth/user/balance`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, amount }),
@@ -223,7 +223,7 @@ export async function apiUpdateBalance(userId: string, amount: number) {
 }
 
 export async function apiEditName(userId: string, name: string) {
-  const res = await fetch(`${API_BASE}/auth/user/name`, {
+  const res = await fetch(`${API_BASE}/api/auth/user/name`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId, name }),

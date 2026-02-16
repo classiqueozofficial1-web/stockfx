@@ -21,13 +21,24 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
-    getDashboard()
-      .then(setUser)
-      .catch((err) => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getDashboard();
+        console.log('Dashboard user data:', userData);
+        if (userData && userData.id) {
+          setUser(userData);
+        } else {
+          throw new Error('No user data');
+        }
+      } catch (err: any) {
+        console.error('Dashboard error:', err);
         setError(err.message || 'Not authenticated');
         setUser(null);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleLogout = () => {

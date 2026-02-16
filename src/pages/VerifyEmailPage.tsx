@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Logo } from '../components/investment/Logo';
 import { CheckCircle2, AlertCircle, Loader } from 'lucide-react';
-import { setCurrentUserFromProfile } from '../lib/session';
+
 
 interface VerifyEmailPageProps {
   onNavigate: (page: string) => void;
 }
 
 export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
-  const { t } = useTranslation();
+  useTranslation();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -47,7 +47,7 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
           return;
         }
 
-        const data = await response.json();
+        await response.json();
         setStatus('success');
 
         // Auto-navigate to login after 3 seconds

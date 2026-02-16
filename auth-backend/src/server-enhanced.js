@@ -288,7 +288,9 @@ app.post('/api/auth/login', async (req, res) => {
         id: user.id,
         email: user.email,
         firstName: user.firstName,
+        lastName: user.lastName || '',
         balance: user.balance,
+        isVerified: true,
       },
     });
   } catch (err) {
@@ -392,7 +394,9 @@ app.post('/api/auth/verify-otp', async (req, res) => {
         id: user.id,
         email: user.email,
         firstName: user.firstName,
+        lastName: user.lastName || '',
         balance: user.balance,
+        isVerified: true,
       },
     });
   } catch (err) {

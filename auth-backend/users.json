@@ -209,5 +209,19 @@
     "otpAttempts": 0,
     "lastOtpRequest": 1771248145212,
     "verifiedAt": "2026-02-16T13:22:58.520Z"
+  },
+  {
+    "id": "1771249117112",
+    "email": "markwahlbergonly451@gmail.com",
+    "password": "$2a$10$wanTeef1A7Vo.j0IVUZbb.w5KIPFqjXWMPbdS5/7DMrk/gNjTP54O",
+    "firstName": "emedion",
+    "balance": 0,
+    "createdAt": "2026-02-16T13:38:37.112Z",
+    "isVerified": true,
+    "hashedOtp": null,
+    "otpExpiry": null,
+    "otpAttempts": 0,
+    "lastOtpRequest": 1771249117112,
+    "verifiedAt": "2026-02-16T13:39:03.735Z"
   }
 ]

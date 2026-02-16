@@ -18,7 +18,7 @@ import { fetchCurrentUser, setCurrentUserFromProfile } from './lib/session';
 
 export function App() {
   const [currentPage, setCurrentPage] = useState<Page>('landing');
-  const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const [, setAdminUnlocked] = useState(false);
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [lastLogoClickTime, setLastLogoClickTime] = useState(0);
   

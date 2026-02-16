@@ -30,15 +30,24 @@ export function AdminPage({ onLogout }: AdminPageProps) {
 
   const loadUsers = () => {
     try {
-      // Try API first, fall back to local store
-      Promise.resolve(getUsers())
+      // Try to load from backend first
+      fetch('http://localhost:4000/api/auth/users')
+        .then(res => res.json())
         .then(data => {
-          setUsers(Array.isArray(data) ? data : []);
+          if (data.users && Array.isArray(data.users)) {
+            console.log('Loaded users from backend:', data.users);
+            setUsers(data.users);
+          } else {
+            // Fallback to local store
+            setUsers(getUsers());
+          }
         })
-        .catch(() => {
+        .catch(err => {
+          console.warn('Failed to load from backend, using local store:', err);
           setUsers(getUsers());
         });
     } catch (e) {
+      console.error('Error loading users:', e);
       setUsers(getUsers());
     }
   };
