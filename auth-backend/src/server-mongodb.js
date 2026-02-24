@@ -747,7 +747,7 @@ app.get('/api/health', (req, res) => {
 
 // Connect to MongoDB and start server
 connectMongoDB().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`\n✅ Auth server running on http://localhost:${PORT}`);
     console.log(`📧 Email service: ${process.env.EMAIL_USER ? 'Enabled' : 'Disabled (console fallback)'}`);
     console.log(`🗄️  Database: MongoDB`);
