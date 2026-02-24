@@ -193,5 +193,20 @@
     "monthlyIncome": 0,
     "activeTrades": 0,
     "portfolioPerformance": 0
+  },
+  {
+    "id": "1771941299521",
+    "email": "paul@gmail.com",
+    "password": "$2a$10$9UMJKN5miUNL908OsrTvtetwkee.DlZdLnuG0NqhO2TmBPX1huGz.",
+    "firstName": "king",
+    "lastName": "paul",
+    "balance": 0,
+    "createdAt": "2026-02-24T13:54:59.521Z",
+    "isVerified": false,
+    "status": "active",
+    "totalProfit": 0,
+    "monthlyIncome": 0,
+    "activeTrades": 0,
+    "portfolioPerformance": 0
   }
 ]
