@@ -145,27 +145,37 @@ export async function apiRegister(name: string, email: string, password: string)
 // Fetch dashboard data using token
 export async function getDashboard() {
   const token = getToken();
-  if (!token) throw new Error('Not authenticated');
   
-  try {
-    const res = await fetch(`${API_BASE}/api/dashboard`, {
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || 'Failed to fetch dashboard');
+  // Try API first if token exists
+  if (token) {
+    try {
+      const res = await fetch(`${API_BASE}/api/dashboard`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log('✅ Dashboard data from API:', data.user);
+        return data.user;
+      } else {
+        const data = await res.json();
+        console.warn('API dashboard error:', data.error);
+      }
+    } catch (err: any) {
+      console.warn('API dashboard failed:', err.message);
     }
-    const data = await res.json();
-    return data.user;
-  } catch (err: any) {
-    // Fall back to local user data
-    console.warn('API dashboard failed, using local storage:', err.message);
-    const localUser = getCurrentUser();
-    if (localUser) {
-      return localUser;
-    }
-    throw new Error('Not authenticated');
+  } else {
+    console.warn('⚠️ No auth token found in localStorage');
   }
+  
+  // Fall back to local user data from localStorage
+  const localUser = getCurrentUser();
+  if (localUser) {
+    console.log('✅ Dashboard data from localStorage:', localUser);
+    return localUser;
+  }
+  
+  console.error('❌ No user data available - not authenticated');
+  throw new Error('Not authenticated');
 }
 
 export async function fetchCurrentUser() {

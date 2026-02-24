@@ -4,8 +4,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
-import { addUser, getUsers } from '../lib/userStore';
-import { setCurrentUserFromProfile } from '../lib/session';
+import { addUser } from '../lib/userStore';
 
 interface RegisterPageProps {
   onNavigate: (page: string) => void;
@@ -22,9 +21,10 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [password, setPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  // Registration flow steps: 'form' | 'success' | 'error'
-  const [step, setStep] = useState<'form' | 'success' | 'error'>('form');
+  // Registration flow steps: 'form' | 'verify' | 'verified' | 'error'
+  const [step, setStep] = useState<'form' | 'verify' | 'verified' | 'error'>('form');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [registeredEmail, setRegisteredEmail] = useState<string>('');
 
 
   const handleSubmit = async (e: FormEvent) => {
@@ -33,35 +33,43 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     setErrorMessage(null);
 
     try {
-      // Check if email already exists
-      const users = getUsers();
-      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-        setErrorMessage(t('register.emailExists') || 'Email already registered');
-        setStep('error');
-        setIsLoading(false);
-        return;
-      }
-
-      // Create new user directly (no backend needed)
-      const newUser = addUser({
-        email: email.toLowerCase().trim(),
-        password,
-        firstName,
-        lastName,
+      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
+      
+      // Call backend registration endpoint with email verification
+      const response = await fetch(`${backendUrl}/api/auth/register-with-link`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.toLowerCase().trim(),
+          password,
+          firstName,
+          lastName,
+        }),
       });
 
-      // Auto-verify users (admin can verify later if needed)
-      newUser.verified = false;
-      newUser.registrationStatus = 'pending';
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
 
-      // Persist user and navigate to dashboard
-      setCurrentUserFromProfile(newUser);
-      setStep('success');
-      
-      // Auto-navigate after 1 second
-      setTimeout(() => {
-        onNavigate('login');
-      }, 1000);
+      // Also save locally for demo purposes
+      const fullName = `${firstName} ${lastName}`.trim();
+      addUser({
+        id: Date.now().toString(),
+        name: fullName || email.split('@')[0],
+        email: email.toLowerCase().trim(),
+        password,
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        balance: 0,
+        notifications: [],
+        registrationStatus: 'pending',
+        verified: false,
+      });
+
+      // Proceed to verification step
+      setRegisteredEmail(email);
+      setStep('verify');
     } catch (err: any) {
       setErrorMessage(err.message || 'Registration failed');
       setStep('error');
@@ -83,11 +91,13 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {step === 'success' ? t('register.welcome') || 'Welcome!' : t('register.title')}
+          {step === 'verify' || step === 'verified' ? t('register.checkEmail') || 'Check Your Email' : t('register.title')}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          {step === 'success' ? (
-            <>Registration successful! Redirecting to login...</>
+          {step === 'verify' ? (
+            <>A verification link has been sent to <b>{registeredEmail}</b></>
+          ) : step === 'verified' ? (
+            <>Email verified! Redirecting to login...</>
           ) : (
             <>
               {t('register.subtitle')}{' '}
@@ -180,7 +190,49 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
             </form>
           )}
 
-          {step === 'success' && (
+          {step === 'verify' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <div className="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Mail className="h-8 w-8 text-blue-600" />
+                </div>
+              </div>
+              <div className="text-center space-y-4">
+                <p className="text-slate-700 font-medium">Verify Your Email Address</p>
+                <p className="text-slate-600 text-sm">
+                  We've sent a verification link to <b>{registeredEmail}</b>. Please check your email and click the link to verify your account.
+                </p>
+                <p className="text-slate-500 text-xs">
+                  Didn't receive the email? Check your spam folder or contact support.
+                </p>
+              </div>
+              <Button
+                onClick={() => {
+                  setStep('verified');
+                  setTimeout(() => {
+                    onNavigate('login');
+                  }, 2000);
+                }}
+                size="lg"
+                className="w-full">
+                Email Verified
+              </Button>
+              <button
+                onClick={() => {
+                  setStep('form');
+                  setFirstName('');
+                  setLastName('');
+                  setEmail('');
+                  setPassword('');
+                  setTermsAccepted(false);
+                }}
+                className="w-full text-slate-600 hover:text-slate-700 text-sm">
+                Back to Registration
+              </button>
+            </div>
+          )}
+
+          {step === 'verified' && (
             <div className="space-y-6">
               <div className="flex justify-center">
                 <div className="h-16 w-16 bg-emerald-100 rounded-full flex items-center justify-center">
@@ -190,7 +242,7 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 </div>
               </div>
               <div className="text-center space-y-4">
-                <p className="text-emerald-600 font-medium">Account created successfully!</p>
+                <p className="text-emerald-600 font-medium">Email Verified Successfully!</p>
                 <p className="text-slate-600">Redirecting to login...</p>
               </div>
             </div>
@@ -210,10 +262,15 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
                 onClick={() => {
                   setStep('form');
                   setErrorMessage(null);
+                  setFirstName('');
+                  setLastName('');
+                  setEmail('');
+                  setPassword('');
+                  setTermsAccepted(false);
                 }}
                 size="lg"
                 className="w-full">
-                Try again
+                Try Again
               </Button>
             </div>
           )}

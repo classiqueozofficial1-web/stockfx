@@ -27,7 +27,55 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
     setError('');
     setIsLoading(true);
     try {
-      // Find user from local userStore
+      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
+      
+      // Try backend login first (for users registered via backend)
+      const response = await fetch(`${backendUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.toLowerCase().trim(),
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Store JWT token and user info with correct localStorage keys
+        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: data.user.id,
+          email: data.user.email,
+          name: `${data.user.firstName} ${data.user.lastName || ''}`.trim(),
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          verified: true,
+          status: 'active',
+          password: '',
+          createdAt: data.user.createdAt || new Date().toISOString(),
+          balance: data.user.balance || 0,
+          notifications: [],
+          registrationStatus: 'confirmed',
+          totalProfit: data.user.totalProfit || 0,
+          monthlyIncome: data.user.monthlyIncome || 0,
+          activeTrades: data.user.activeTrades || 0,
+          portfolioPerformance: data.user.portfolioPerformance || 0,
+        }));
+        
+        // Check for admin credentials
+        if (
+          email.toLowerCase().trim() === 'adminkingsley@gmail.com' &&
+          password === 'Kingsley2000'
+        ) {
+          onNavigate('admin');
+        } else {
+          onNavigate('dashboard');
+        }
+        return;
+      }
+
+      // Fallback to local userStore for demo/testing
       const users = getUsers();
       const user = users.find(u => 
         u.email.toLowerCase() === email.toLowerCase().trim() && 
@@ -35,22 +83,14 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
       );
 
       if (!user) {
-        setError('Invalid email or password');
+        const errorData = await response.json();
+        setError(errorData.message || 'Invalid email or password');
         setIsLoading(false);
         return;
       }
 
       setCurrentUserFromProfile(user);
-
-      // Check for admin credentials
-      if (
-        email.toLowerCase().trim() === 'adminkingsley@gmail.com' &&
-        password === 'Kingsley2000'
-      ) {
-        onNavigate('admin');
-      } else {
-        onNavigate('dashboard');
-      }
+      onNavigate('dashboard');
     } catch (err: any) {
       const msg = err?.message || 'Login failed';
       setError(msg);

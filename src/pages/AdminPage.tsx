@@ -276,6 +276,35 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                   {/* Expanded Details */}
                   {expandedUserId === uid && (
                     <div className="bg-slate-900/50 border-t border-slate-700 p-6 space-y-6">
+                      {/* User Info */}
+                      <div className="bg-slate-800 rounded-lg p-4 border border-slate-700">
+                        <h4 className="text-sm font-semibold text-slate-300 mb-3">User Information</h4>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="text-slate-500">First Name</p>
+                            <p className="text-white font-medium">{user.firstName || '-'}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-500">Last Name</p>
+                            <p className="text-white font-medium">{user.lastName || '-'}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-500">Email</p>
+                            <p className="text-white font-medium text-xs break-all">{user.email}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-500">Verified</p>
+                            <p className={`font-medium text-sm ${user.isVerified ? 'text-emerald-400' : 'text-red-400'}`}>
+                              {user.isVerified ? '✓ Yes' : '✗ No'}
+                            </p>
+                          </div>
+                          <div className="col-span-2">
+                            <p className="text-slate-500">Member Since</p>
+                            <p className="text-white font-medium text-xs">{new Date(user.createdAt).toLocaleDateString()}</p>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* Update Balance */}
                       <div>
                         <label className="block text-sm font-medium text-slate-300 mb-2">Update Balance</label>

@@ -43,7 +43,31 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
 
   const handleLogout = () => {
     clearToken();
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
     onNavigate('login');
+  };
+
+  // Helper to get display name with fallback
+  const getDisplayName = (userData: any) => {
+    if (!userData) return 'User';
+    
+    // If firstName/lastName exist and are not empty, use them
+    const firstName = userData.firstName?.trim() || '';
+    const lastName = userData.lastName?.trim() || '';
+    
+    if (firstName || lastName) {
+      return `${firstName} ${lastName}`.trim() || 'User';
+    }
+    
+    // Fallback: use the combined 'name' field if it exists (for old data)
+    if (userData.name && userData.name.trim()) {
+      return userData.name.trim();
+    }
+    
+    return 'User';
   };
 
   if (loading) {
@@ -75,8 +99,8 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onLogout={handleLogout}
-        userName={user.firstName}
-        userEmail={user.email}
+        userName={getDisplayName(user)}
+        userEmail={user?.email || ''}
       />
 
       {/* Main Content */}
@@ -85,7 +109,7 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
         <div className="bg-white border-b border-slate-200 p-6 mb-6">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-bold text-slate-900">Welcome back, {user.firstName}! 👋</h1>
+              <h1 className="text-4xl font-bold text-slate-900">Welcome back, {getDisplayName(user)}! 👋</h1>
               <p className="text-slate-600 mt-2">Here's what's happening with your portfolio today.</p>
             </div>
             <Button onClick={handleLogout} variant="outline">
@@ -159,10 +183,10 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
               <h3 className="font-bold text-slate-900 mb-4">Account Information</h3>
               <div className="space-y-3 text-sm">
-                <p><span className="text-slate-600">Name:</span> <span className="font-medium text-slate-900">{user.firstName} {user.lastName || ''}</span></p>
-                <p><span className="text-slate-600">Email:</span> <span className="font-medium text-slate-900">{user.email}</span></p>
+                <p><span className="text-slate-600">Name:</span> <span className="font-medium text-slate-900">{getDisplayName(user)}</span></p>
+                <p><span className="text-slate-600">Email:</span> <span className="font-medium text-slate-900">{user?.email}</span></p>
                 <p><span className="text-slate-600">Status:</span> <span className="font-medium text-emerald-600">✓ Verified</span></p>
-                <p><span className="text-slate-600">Member Since:</span> <span className="font-medium text-slate-900">{new Date(user.createdAt || Date.now()).toLocaleDateString()}</span></p>
+                <p><span className="text-slate-600">Member Since:</span> <span className="font-medium text-slate-900">{new Date(user?.createdAt || Date.now()).toLocaleDateString()}</span></p>
               </div>
             </div>
 

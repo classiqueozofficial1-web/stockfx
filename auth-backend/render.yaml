@@ -3,7 +3,7 @@ services:
     name: stockfx-backend
     env: node
     buildCommand: npm ci
-    startCommand: node src/server-enhanced.js
+    startCommand: node src/server-mongodb.js
     plan: free
     envVars:
       - key: PORT
@@ -12,7 +12,15 @@ services:
         value: production
       - key: CORS_ORIGIN
         value: https://stockfx-frontend.onrender.com
-      - key: GMAIL_USER
+      - key: MONGO_URI
         sync: false
-      - key: GMAIL_PASSWORD
+      - key: JWT_SECRET
         sync: false
+      - key: EMAIL_SERVICE
+        value: gmail
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+      - key: FRONTEND_URL
+        value: https://stockfx-frontend.onrender.com

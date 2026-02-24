@@ -21,7 +21,6 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
         // Get token from URL query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-        const emailParam = urlParams.get('email');
 
         if (!token) {
           setErrorMessage('Invalid verification link');
@@ -29,13 +28,11 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
           return;
         }
 
-        setEmail(emailParam || 'your email');
+        const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
 
-        // Call the verification endpoint
-        const response = await fetch('/api/auth/verify-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
+        // Call the verification endpoint with GET request
+        const response = await fetch(`${backendUrl}/api/auth/verify-email?token=${token}`, {
+          method: 'GET',
         });
 
         if (!response.ok) {
@@ -47,13 +44,33 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
           return;
         }
 
-        await response.json();
+        const data = await response.json();
+
+        // Store JWT token and user info with correct localStorage keys
+        if (data.token) {
+          localStorage.setItem('auth_token', data.token);
+          localStorage.setItem('currentUser', JSON.stringify({
+            id: data.user.id,
+            email: data.user.email,
+            name: `${data.user.firstName} ${data.user.lastName}`.trim(),
+            firstName: data.user.firstName,
+            lastName: data.user.lastName,
+            verified: true,
+            status: 'active',
+            password: '',
+            createdAt: new Date().toISOString(),
+            balance: data.user.balance || 0,
+            notifications: [],
+            registrationStatus: 'confirmed',
+          }));
+          setEmail(data.user.email);
+        }
         setStatus('success');
 
-        // Auto-navigate to login after 3 seconds
+        // Auto-navigate to dashboard after 2 seconds (automatically logged in with JWT)
         setTimeout(() => {
-          onNavigate('login');
-        }, 3000);
+          onNavigate('dashboard');
+        }, 2000);
       } catch (err: any) {
         setErrorMessage(err.message || 'An error occurred during verification');
         setStatus('error');

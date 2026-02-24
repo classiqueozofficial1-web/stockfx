@@ -3,10 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 const emailService = require('./services/emailService');
+const User = require('./models/user');
+const connectMongoDB = require('./config/mongodb');
 
 const app = express();
 app.use(cors());
@@ -14,7 +15,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const DB_FILE = path.join(__dirname, '../users.json');
 const OTP_EXPIRY_MINUTES = 5;
 const MAX_OTP_ATTEMPTS = 5;
 const OTP_RESEND_COOLDOWN_SECONDS = 60;
@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
   tls: {
-    rejectUnauthorized: false, // Disable SSL cert validation for development
+    rejectUnauthorized: false,
   },
 });
 
@@ -55,7 +55,6 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
  */
 async function sendOtpEmail(email, otp) {
   try {
-    // If email configured, try to send
     if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
       try {
         const mailOptions = {
@@ -80,12 +79,10 @@ async function sendOtpEmail(email, otp) {
         return true;
       } catch (error) {
         console.warn(`⚠️  Failed to send email: ${error.message}`);
-        // Fall back to console
         console.log(`\n🔐 OTP for ${email}: ${otp}\n`);
         return true;
       }
     } else {
-      // If email not configured, log for development
       console.log(`\n🔐 OTP for ${email}: ${otp}\n`);
       return true;
     }
@@ -118,28 +115,6 @@ async function compareOTP(plainOTP, hashedOTP) {
   return await bcrypt.compare(plainOTP, hashedOTP);
 }
 
-/**
- * File-based user storage
- */
-function loadUsers() {
-  try {
-    if (fs.existsSync(DB_FILE)) {
-      return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-    }
-  } catch (err) {
-    console.error('Error loading users:', err.message);
-  }
-  return [];
-}
-
-function saveUsers(users) {
-  try {
-    fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error saving users:', err.message);
-  }
-}
-
 // ==================== MIDDLEWARE ====================
 
 /**
@@ -151,29 +126,31 @@ async function rateLimitOTP(req, res, next) {
     return res.status(400).json({ message: 'Email required' });
   }
 
-  const users = loadUsers();
-  const user = users.find(u => u.email === email);
+  try {
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
 
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
-
-  // Check rate limit
-  if (user.lastOtpRequest) {
-    const timeSinceLastRequest = (Date.now() - user.lastOtpRequest) / 1000;
-    if (timeSinceLastRequest < OTP_RESEND_COOLDOWN_SECONDS) {
-      const secondsRemaining = Math.ceil(OTP_RESEND_COOLDOWN_SECONDS - timeSinceLastRequest);
-      return res.status(429).json({ 
-        message: `Please wait ${secondsRemaining}s before requesting another OTP`,
-        retryAfter: secondsRemaining
-      });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  }
 
-  // Rate limit check passed, store user in request for next middleware
-  req.user = user;
-  req.users = users;
-  next();
+    // Check rate limit
+    if (user.otpLastSentAt) {
+      const timeSinceLastRequest = (Date.now() - user.otpLastSentAt) / 1000;
+      if (timeSinceLastRequest < OTP_RESEND_COOLDOWN_SECONDS) {
+        const secondsRemaining = Math.ceil(OTP_RESEND_COOLDOWN_SECONDS - timeSinceLastRequest);
+        return res.status(429).json({ 
+          message: `Please wait ${secondsRemaining}s before requesting another OTP`,
+          retryAfter: secondsRemaining
+        });
+      }
+    }
+
+    // Rate limit check passed, store user in request for next middleware
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
 }
 
 // ==================== API ENDPOINTS ====================
@@ -200,52 +177,45 @@ app.post('/api/auth/register', async (req, res) => {
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
-    const users = loadUsers();
-    const existing = users.find(u => u.email === email);
+    const normalizedEmail = email.toLowerCase().trim();
+    const existing = await User.findOne({ email: normalizedEmail });
     if (existing) {
       return res.status(409).json({ message: 'Email already registered' });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Generate OTP
     const otp = generateOTP();
     const hashedOtp = await hashOTP(otp);
-    const otpExpiry = Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000;
+    const otpExpiry = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
 
     // Create user
-    const newUser = {
-      id: Date.now().toString(),
-      email,
-      password: hashedPassword,
-      firstName: firstName || email.split('@')[0],
+    const newUser = new User({
+      email: normalizedEmail,
+      password,
+      firstName: firstName || normalizedEmail.split('@')[0],
       lastName: lastName || '',
-      balance: 0,
-      createdAt: new Date().toISOString(),
+      balance: 50000,
       isVerified: false,
-      // Dashboard stats - initialized to 0, editable by admin only
+      status: 'active',
       totalProfit: 0,
       monthlyIncome: 0,
       activeTrades: 0,
       portfolioPerformance: 0,
-      // OTP fields
-      hashedOtp,
-      otpExpiry,
+      otp: hashedOtp,
+      otpExpiry: otpExpiry,
       otpAttempts: 0,
-      lastOtpRequest: Date.now(),
-    };
+      otpLastSentAt: new Date(),
+    });
 
-    users.push(newUser);
-    saveUsers(users);
+    await newUser.save();
 
     // Send OTP email
-    await sendOtpEmail(email, otp);
+    await sendOtpEmail(normalizedEmail, otp);
 
     res.status(201).json({
       message: 'Registration successful. Check your email for OTP.',
-      email,
-      expiresIn: OTP_EXPIRY_MINUTES * 60, // seconds
+      email: normalizedEmail,
+      expiresIn: OTP_EXPIRY_MINUTES * 60,
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -265,8 +235,7 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password required' });
     }
 
-    const users = loadUsers();
-    const user = users.find(u => u.email === email);
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -277,13 +246,13 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(403).json({ message: 'Email not verified. Please verify your email first.' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -292,7 +261,7 @@ app.post('/api/auth/login', async (req, res) => {
       message: 'Login successful',
       token,
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName || '',
@@ -327,8 +296,7 @@ app.post('/api/auth/verify-otp', async (req, res) => {
       return res.status(400).json({ message: 'Invalid OTP format' });
     }
 
-    const users = loadUsers();
-    const user = users.find(u => u.email === email);
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -340,16 +308,16 @@ app.post('/api/auth/verify-otp', async (req, res) => {
     }
 
     // Check if OTP exists
-    if (!user.hashedOtp) {
+    if (!user.otp) {
       return res.status(400).json({ message: 'No OTP request found. Please register again.' });
     }
 
     // Check OTP expiration
     if (Date.now() > user.otpExpiry) {
-      user.hashedOtp = null;
+      user.otp = null;
       user.otpExpiry = null;
       user.otpAttempts = 0;
-      saveUsers(users);
+      await user.save();
       return res.status(410).json({ 
         message: 'OTP expired',
         details: 'Please request a new OTP'
@@ -358,10 +326,10 @@ app.post('/api/auth/verify-otp', async (req, res) => {
 
     // Check attempts
     if (user.otpAttempts >= MAX_OTP_ATTEMPTS) {
-      user.hashedOtp = null;
+      user.otp = null;
       user.otpExpiry = null;
       user.otpAttempts = 0;
-      saveUsers(users);
+      await user.save();
       return res.status(429).json({ 
         message: 'Too many attempts',
         details: 'Please request a new OTP'
@@ -369,11 +337,11 @@ app.post('/api/auth/verify-otp', async (req, res) => {
     }
 
     // Compare OTP
-    const isOtpValid = await compareOTP(otp, user.hashedOtp);
+    const isOtpValid = await compareOTP(otp, user.otp);
 
     if (!isOtpValid) {
       user.otpAttempts += 1;
-      saveUsers(users);
+      await user.save();
       
       const attemptsRemaining = MAX_OTP_ATTEMPTS - user.otpAttempts;
       return res.status(401).json({ 
@@ -385,15 +353,14 @@ app.post('/api/auth/verify-otp', async (req, res) => {
 
     // OTP is valid - mark user as verified
     user.isVerified = true;
-    user.hashedOtp = null;
+    user.otp = null;
     user.otpExpiry = null;
     user.otpAttempts = 0;
-    user.verifiedAt = new Date().toISOString();
-    saveUsers(users);
+    await user.save();
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -402,7 +369,7 @@ app.post('/api/auth/verify-otp', async (req, res) => {
       message: 'Email verified successfully',
       token,
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName || '',
@@ -427,7 +394,6 @@ app.post('/api/auth/verify-otp', async (req, res) => {
 app.post('/api/auth/resend-otp', rateLimitOTP, async (req, res) => {
   try {
     const user = req.user;
-    const users = req.users;
 
     // Check if already verified
     if (user.isVerified) {
@@ -437,14 +403,14 @@ app.post('/api/auth/resend-otp', rateLimitOTP, async (req, res) => {
     // Generate new OTP
     const otp = generateOTP();
     const hashedOtp = await hashOTP(otp);
-    const otpExpiry = Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000;
+    const otpExpiry = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
 
     // Update user
-    user.hashedOtp = hashedOtp;
+    user.otp = hashedOtp;
     user.otpExpiry = otpExpiry;
     user.otpAttempts = 0;
-    user.lastOtpRequest = Date.now();
-    saveUsers(users);
+    user.otpLastSentAt = new Date();
+    await user.save();
 
     // Send OTP email
     await sendOtpEmail(user.email, otp);
@@ -462,59 +428,66 @@ app.post('/api/auth/resend-otp', rateLimitOTP, async (req, res) => {
 
 // ==================== ADMIN ENDPOINTS ====================
 
-app.get('/api/auth/users', (req, res) => {
+/**
+ * GET /api/auth/users
+ * Get all users
+ */
+app.get('/api/auth/users', async (req, res) => {
   try {
-    const users = loadUsers();
+    const users = await User.find({}).select('-password -otp -otpExpiry -otpAttempts -verificationToken');
     res.json({
-      users: users.map(u => {
-        const fullName = [u.firstName, u.lastName].filter(n => n).join(' ').trim();
-        return {
-          id: u.id,
-          email: u.email,
-          name: fullName || 'Unknown User',
-          firstName: u.firstName,
-          lastName: u.lastName,
-          balance: u.balance,
-          isVerified: u.isVerified,
-          createdAt: u.createdAt,
-          totalProfit: u.totalProfit || 0,
-          monthlyIncome: u.monthlyIncome || 0,
-          activeTrades: u.activeTrades || 0,
-          portfolioPerformance: u.portfolioPerformance || 0,
-        };
-      }),
+      users: users.map(u => ({
+        id: u._id,
+        email: u.email,
+        name: u.name || `${u.firstName} ${u.lastName}`.trim(),
+        firstName: u.firstName,
+        lastName: u.lastName,
+        balance: u.balance,
+        isVerified: u.isVerified,
+        createdAt: u.createdAt,
+        totalProfit: u.totalProfit || 0,
+        monthlyIncome: u.monthlyIncome || 0,
+        activeTrades: u.activeTrades || 0,
+        portfolioPerformance: u.portfolioPerformance || 0,
+      })),
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
-app.post('/api/auth/user/balance', (req, res) => {
+/**
+ * POST /api/auth/user/balance
+ * Update user balance
+ */
+app.post('/api/auth/user/balance', async (req, res) => {
   try {
     const { userId, amount } = req.body;
-    const users = loadUsers();
-    const user = users.find(u => u.id === userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     user.balance = (user.balance || 0) + amount;
-    saveUsers(users);
+    await user.save();
     res.json({ message: 'Balance updated', balance: user.balance });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
-app.post('/api/auth/user/name', (req, res) => {
+/**
+ * POST /api/auth/user/name
+ * Update user name
+ */
+app.post('/api/auth/user/name', async (req, res) => {
   try {
     const { userId, firstName } = req.body;
-    const users = loadUsers();
-    const user = users.find(u => u.id === userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     user.firstName = firstName;
-    saveUsers(users);
+    await user.save();
     res.json({ message: 'Name updated', firstName: user.firstName });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -523,13 +496,12 @@ app.post('/api/auth/user/name', (req, res) => {
 
 /**
  * POST /api/auth/user/dashboard-stats
- * Update dashboard stats (admin only) - Total Profit, Monthly Income, Active Trades, Portfolio Performance
+ * Update dashboard stats (admin only)
  */
-app.post('/api/auth/user/dashboard-stats', (req, res) => {
+app.post('/api/auth/user/dashboard-stats', async (req, res) => {
   try {
     const { userId, totalProfit, monthlyIncome, activeTrades, portfolioPerformance } = req.body;
-    const users = loadUsers();
-    const user = users.find(u => u.id === userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -538,11 +510,11 @@ app.post('/api/auth/user/dashboard-stats', (req, res) => {
     if (monthlyIncome !== undefined) user.monthlyIncome = monthlyIncome;
     if (activeTrades !== undefined) user.activeTrades = activeTrades;
     if (portfolioPerformance !== undefined) user.portfolioPerformance = portfolioPerformance;
-    saveUsers(users);
+    await user.save();
     res.json({ 
       message: 'Dashboard stats updated',
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         totalProfit: user.totalProfit,
         monthlyIncome: user.monthlyIncome,
@@ -555,8 +527,11 @@ app.post('/api/auth/user/dashboard-stats', (req, res) => {
   }
 });
 
-// Dashboard endpoint - returns user data for authenticated users
-app.get('/api/dashboard', (req, res) => {
+/**
+ * GET /api/dashboard
+ * Dashboard endpoint for authenticated users
+ */
+app.get('/api/dashboard', async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -566,24 +541,24 @@ app.get('/api/dashboard', (req, res) => {
     const token = authHeader.replace('Bearer ', '');
     const decoded = jwt.verify(token, JWT_SECRET);
     
-    const users = loadUsers();
-    const user = users.find(u => u.id === decoded.id);
+    const user = await User.findById(decoded.id).select('-password -otp -otpExpiry -otpAttempts');
     
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     
-    // Remove sensitive data before returning
-    const { password, otpHash, otpExpires, otpAttempts, otpResendCooldown, ...safeUser } = user;
-    res.json({ user: safeUser });
+    res.json({ user: user.toJSON() });
   } catch (err) {
     console.error('Dashboard error:', err.message);
     res.status(401).json({ error: 'Invalid or expired token' });
   }
 });
 
-// Get current user (alias for dashboard)
-app.get('/api/me', (req, res) => {
+/**
+ * GET /api/me
+ * Get current user info
+ */
+app.get('/api/me', async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -593,17 +568,14 @@ app.get('/api/me', (req, res) => {
     const token = authHeader.replace('Bearer ', '');
     const decoded = jwt.verify(token, JWT_SECRET);
     
-    const users = loadUsers();
-    const user = users.find(u => u.id === decoded.id);
+    const user = await User.findById(decoded.id).select('-password -otp -otpExpiry -otpAttempts');
     
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     
-    // Remove sensitive data before returning
-    const { password, otpHash, otpExpires, otpAttempts, otpResendCooldown, ...safeUser } = user;
     res.json({ 
-      user: safeUser,
+      user: user.toJSON(),
       success: true
     });
   } catch (err) {
@@ -612,25 +584,18 @@ app.get('/api/me', (req, res) => {
   }
 });
 
-// Terminate all user sessions endpoint - deletes all user records
-app.post('/api/auth/terminate-all-sessions', (req, res) => {
+/**
+ * POST /api/auth/terminate-all-sessions
+ * Delete all user records (development only)
+ */
+app.post('/api/auth/terminate-all-sessions', async (req, res) => {
   try {
-    // Read current users from file
-    const usersData = fs.readFileSync(DB_FILE, 'utf8');
-    let users = JSON.parse(usersData);
-    const deletedCount = users.length;
-    
-    // Clear all users - reset to empty array
-    users = [];
-    
-    // Write back to file
-    fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
-    
+    const result = await User.deleteMany({});
     const now = new Date().toISOString();
     res.json({ 
       success: true, 
-      message: `All ${deletedCount} user records have been deleted and sessions terminated`,
-      deletedCount: deletedCount,
+      message: `All ${result.deletedCount} user records have been deleted and sessions terminated`,
+      deletedCount: result.deletedCount,
       terminatedAt: now
     });
   } catch (err) {
@@ -642,8 +607,8 @@ app.post('/api/auth/terminate-all-sessions', (req, res) => {
 // ==================== EMAIL VERIFICATION ENDPOINTS ====================
 
 /**
- * New registration endpoint with email verification
- * Sends verification link instead of OTP
+ * POST /api/auth/register-with-link
+ * Register with email verification link
  */
 app.post('/api/auth/register-with-link', async (req, res) => {
   try {
@@ -664,34 +629,27 @@ app.post('/api/auth/register-with-link', async (req, res) => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const users = loadUsers();
-    const existing = users.find(u => u.email.toLowerCase() === normalizedEmail);
+    const existing = await User.findOne({ email: normalizedEmail });
     if (existing) {
       return res.status(409).json({ message: 'Email already registered' });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Create user (unverified)
-    const newUser = {
-      id: Date.now().toString(),
+    const newUser = new User({
       email: normalizedEmail,
-      password: hashedPassword,
+      password,
       firstName: firstName || normalizedEmail.split('@')[0],
       lastName: lastName || '',
-      balance: 0,
-      createdAt: new Date().toISOString(),
+      balance: 50000,
       isVerified: false,
       status: 'active',
       totalProfit: 0,
       monthlyIncome: 0,
       activeTrades: 0,
       portfolioPerformance: 0,
-    };
+    });
 
-    users.push(newUser);
-    saveUsers(users);
+    await newUser.save();
 
     // Generate verification token and send email
     const verificationToken = emailService.generateVerificationToken(normalizedEmail);
@@ -699,7 +657,6 @@ app.post('/api/auth/register-with-link', async (req, res) => {
     
     const emailSent = await emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl);
 
-    // Allow registration to proceed even if email fails (for development)
     console.log(`Registration: Email sending ${emailSent ? 'succeeded' : 'failed - proceeding anyway for development'}`);
 
     res.status(201).json({
@@ -707,8 +664,8 @@ app.post('/api/auth/register-with-link', async (req, res) => {
         ? 'Registration successful. Verification email sent.' 
         : 'Registration successful. Email verification is available at /verify-email endpoint.',
       email: normalizedEmail,
-      userId: newUser.id,
-      verificationToken: emailSent ? undefined : verificationToken, // Return token if email failed for manual testing
+      userId: newUser._id,
+      verificationToken: emailSent ? undefined : verificationToken,
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -717,8 +674,8 @@ app.post('/api/auth/register-with-link', async (req, res) => {
 });
 
 /**
+ * GET /api/auth/verify-email
  * Verify email token endpoint
- * Marks user as verified when email link is clicked
  */
 app.get('/api/auth/verify-email', async (req, res) => {
   try {
@@ -736,19 +693,18 @@ app.get('/api/auth/verify-email', async (req, res) => {
     }
 
     // Find and update user
-    const users = loadUsers();
-    const user = users.find(u => u.email === email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     user.isVerified = true;
-    saveUsers(users);
+    await user.save();
 
     // Generate JWT token for auto-login
     const jwtToken = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user._id, email: user.email },
       JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -757,7 +713,7 @@ app.get('/api/auth/verify-email', async (req, res) => {
       message: 'Email verified successfully',
       token: jwtToken,
       user: {
-        id: user.id,
+        id: user._id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -775,13 +731,29 @@ app.get('/api/auth/verify-email', async (req, res) => {
   }
 });
 
-// Health check
+/**
+ * GET /api/health
+ * Health check endpoint
+ */
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'ok', 
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString() 
+  });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`\n✅ Auth server running on http://localhost:${PORT}`);
-  console.log(`📧 Email service: ${process.env.EMAIL_USER ? 'Enabled' : 'Disabled (console fallback)'}\n`);
+// ==================== START SERVER ====================
+
+// Connect to MongoDB and start server
+connectMongoDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`\n✅ Auth server running on http://localhost:${PORT}`);
+    console.log(`📧 Email service: ${process.env.EMAIL_USER ? 'Enabled' : 'Disabled (console fallback)'}`);
+    console.log(`🗄️  Database: MongoDB`);
+    console.log(`📍 Connection: ${process.env.MONGO_URI}\n`);
+  });
+}).catch((err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
 });
