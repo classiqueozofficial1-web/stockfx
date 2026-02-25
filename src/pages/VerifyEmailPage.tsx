@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../components/ui/Button';
 import { Logo } from '../components/investment/Logo';
-import { CheckCircle2, AlertCircle, Loader } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader, Mail } from 'lucide-react';
 
 
 interface VerifyEmailPageProps {
@@ -11,9 +11,12 @@ interface VerifyEmailPageProps {
 
 export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
   useTranslation();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'no-token'>('loading');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [manualEmail, setManualEmail] = useState<string>('');
+  const [isResending, setIsResending] = useState(false);
+  const [resendMessage, setResendMessage] = useState<string>('');
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -23,8 +26,7 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
         const token = urlParams.get('token');
 
         if (!token) {
-          setErrorMessage('Invalid verification link');
-          setStatus('error');
+          setStatus('no-token');
           return;
         }
 
@@ -80,6 +82,39 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
     verifyEmail();
   }, [onNavigate]);
 
+  const handleResendEmail = async () => {
+    if (!manualEmail.trim()) {
+      setResendMessage('Please enter your email address');
+      return;
+    }
+
+    setIsResending(true);
+    setResendMessage('');
+
+    try {
+      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
+      const response = await fetch(`${backendUrl}/api/auth/resend-verification-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: manualEmail }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setResendMessage('Error: ' + (data.message || 'Failed to resend email'));
+        return;
+      }
+
+      setResendMessage('✅ Verification email sent! Check your inbox and spam folder.');
+      setManualEmail('');
+    } catch (err: any) {
+      setResendMessage('Error: ' + (err.message || 'Failed to resend email'));
+    } finally {
+      setIsResending(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-slate-50 to-blue-50 -z-10 md:via-slate-100" />
@@ -97,6 +132,7 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
           {status === 'loading' && 'Verifying your email...'}
           {status === 'success' && 'Email verified!'}
           {status === 'error' && 'Verification failed'}
+          {status === 'no-token' && 'Verify your email'}
         </h2>
       </div>
 
@@ -146,18 +182,37 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
               <div className="text-center space-y-4">
                 <p className="text-red-600 font-medium">{errorMessage}</p>
                 <p className="text-sm text-slate-600">
-                  This link may have expired or already been used. Please try registering again.
+                  This link may have expired or already been used. Try requesting a new verification email below.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <Button
-                  onClick={() => onNavigate('register')}
-                  size="lg"
-                  className="w-full"
-                >
-                  Register again
-                </Button>
+              <div className="space-y-4 pt-4 border-t border-slate-200">
+                <p className="text-sm font-medium text-slate-700">Request a new verification email:</p>
+                <div className="space-y-3">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={manualEmail}
+                    onChange={(e) => setManualEmail(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                  <Button
+                    onClick={handleResendEmail}
+                    disabled={isResending}
+                    size="lg"
+                    className="w-full"
+                  >
+                    {isResending ? 'Sending...' : 'Resend Verification Email'}
+                  </Button>
+                  {resendMessage && (
+                    <p className={`text-sm text-center ${resendMessage.includes('✅') ? 'text-emerald-600' : 'text-red-600'}`}>
+                      {resendMessage}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-3 pt-4 border-t border-slate-200">
                 <Button
                   onClick={() => onNavigate('login')}
                   variant="outline"
@@ -167,6 +222,53 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
                   Back to login
                 </Button>
               </div>
+            </div>
+          )}
+
+          {status === 'no-token' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <Mail className="h-16 w-16 text-blue-500" />
+              </div>
+
+              <div className="text-center space-y-3">
+                <p className="text-slate-700 font-medium">Email Verification</p>
+                <p className="text-sm text-slate-600">
+                  Enter your email address to request a verification link.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={manualEmail}
+                  onChange={(e) => setManualEmail(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                <Button
+                  onClick={handleResendEmail}
+                  disabled={isResending}
+                  size="lg"
+                  className="w-full"
+                >
+                  {isResending ? 'Sending...' : 'Send Verification Email'}
+                </Button>
+                {resendMessage && (
+                  <p className={`text-sm text-center ${resendMessage.includes('✅') ? 'text-emerald-600' : 'text-red-600'}`}>
+                    {resendMessage}
+                  </p>
+                )}
+              </div>
+
+              <Button
+                onClick={() => onNavigate('login')}
+                variant="outline"
+                size="lg"
+                className="w-full"
+              >
+                Back to login
+              </Button>
             </div>
           )}
         </div>

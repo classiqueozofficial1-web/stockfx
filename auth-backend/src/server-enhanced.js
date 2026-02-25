@@ -804,6 +804,52 @@ app.get('/api/auth/verify-email', async (req, res) => {
   }
 });
 
+/**
+ * POST /api/auth/resend-verification-email
+ * Resend verification email to user
+ */
+app.post('/api/auth/resend-verification-email', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email required' });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const users = loadUsers();
+    const user = users.find(u => u.email === normalizedEmail);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ message: 'Email is already verified' });
+    }
+
+    // Generate new verification token
+    const verificationToken = emailService.generateVerificationToken(normalizedEmail);
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+
+    // Send email in background
+    setTimeout(() => {
+      emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
+        .then(() => console.log(`✅ Verification email resent to ${normalizedEmail}`))
+        .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
+    }, 0);
+
+    res.json({
+      message: 'Verification email sent. Check your inbox.',
+      email: normalizedEmail,
+      verificationToken: verificationToken, // For debugging/development
+    });
+  } catch (err) {
+    console.error('Resend verification error:', err);
+    res.status(500).json({ message: 'Failed to resend verification email', error: err.message });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
