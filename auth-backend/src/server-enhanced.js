@@ -693,20 +693,23 @@ app.post('/api/auth/register-with-link', async (req, res) => {
     users.push(newUser);
     saveUsers(users);
 
-    // Generate verification token and send email (non-blocking)
+    // Generate verification token
     const verificationToken = emailService.generateVerificationToken(normalizedEmail);
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     
-    // Send email in background (don't await - don't block registration response)
-    emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
-      .then(() => console.log(`✅ Email sent to ${normalizedEmail}`))
-      .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
+    // Send email in completely detached background process (don't block at all)
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    setTimeout(() => {
+      emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
+        .then(() => console.log(`✅ Email sent to ${normalizedEmail}`))
+        .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
+    }, 0);
 
+    // Respond IMMEDIATELY without waiting
     res.status(201).json({
       message: 'Registration successful. Check your email for verification link.',
       email: normalizedEmail,
       userId: newUser.id,
-      verificationToken: verificationToken, // Include token as fallback
+      verificationToken: verificationToken,
     });
   } catch (err) {
     console.error('Registration error:', err);
