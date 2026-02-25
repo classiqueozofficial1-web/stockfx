@@ -35,6 +35,10 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     try {
       const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
       
+      // Create abort controller with 15 second timeout
+      const abortController = new AbortController();
+      const timeoutId = setTimeout(() => abortController.abort(), 15000);
+      
       // Call backend registration endpoint with email verification
       const response = await fetch(`${backendUrl}/api/auth/register-with-link`, {
         method: 'POST',
@@ -45,7 +49,10 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
           firstName,
           lastName,
         }),
+        signal: abortController.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -71,7 +78,13 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
       setRegisteredEmail(email);
       setStep('verify');
     } catch (err: any) {
-      setErrorMessage(err.message || 'Registration failed');
+      if (err.name === 'AbortError') {
+        setErrorMessage('Registration request timed out. Please try again.');
+      } else if (err instanceof TypeError) {
+        setErrorMessage('Network error. Please check your connection and try again.');
+      } else {
+        setErrorMessage(err.message || 'Registration failed');
+      }
       setStep('error');
     } finally {
       setIsLoading(false);
