@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000';
+const API_URL = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
 
 export async function registerUser(name: string, email: string, password: string) {
   const res = await fetch(`${API_URL}/register`, {

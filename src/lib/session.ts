@@ -2,7 +2,7 @@ import { UserRecord, getUsers, addUser, updateUser, setUserBalance, pushUserNoti
 
 let currentUser: UserRecord | null = null;
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
+const API_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
 // Store/retrieve token in localStorage
 function setToken(token: string) {

@@ -31,7 +31,8 @@ export function AdminPage({ onLogout }: AdminPageProps) {
   const loadUsers = () => {
     try {
       // Try to load from backend first
-      fetch('http://localhost:4000/api/auth/users')
+      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
+      fetch(`${backendUrl}/api/auth/users`)
         .then(res => res.json())
         .then(data => {
           if (data.users && Array.isArray(data.users)) {
