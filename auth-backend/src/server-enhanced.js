@@ -693,22 +693,20 @@ app.post('/api/auth/register-with-link', async (req, res) => {
     users.push(newUser);
     saveUsers(users);
 
-    // Generate verification token and send email
+    // Generate verification token and send email (non-blocking)
     const verificationToken = emailService.generateVerificationToken(normalizedEmail);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     
-    const emailSent = await emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl);
-
-    // Allow registration to proceed even if email fails (for development)
-    console.log(`Registration: Email sending ${emailSent ? 'succeeded' : 'failed - proceeding anyway for development'}`);
+    // Send email in background (don't await - don't block registration response)
+    emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
+      .then(() => console.log(`✅ Email sent to ${normalizedEmail}`))
+      .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
 
     res.status(201).json({
-      message: emailSent 
-        ? 'Registration successful. Verification email sent.' 
-        : 'Registration successful. Email verification is available at /verify-email endpoint.',
+      message: 'Registration successful. Check your email for verification link.',
       email: normalizedEmail,
       userId: newUser.id,
-      verificationToken: emailSent ? undefined : verificationToken, // Return token if email failed for manual testing
+      verificationToken: verificationToken, // Include token as fallback
     });
   } catch (err) {
     console.error('Registration error:', err);
