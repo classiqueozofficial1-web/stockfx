@@ -583,6 +583,58 @@ app.post('/api/auth/user/dashboard-stats', (req, res) => {
   }
 });
 
+/**
+ * PUT /api/auth/admin/users/:email
+ * Admin endpoint to update user information by email
+ */
+app.put('/api/auth/admin/users/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { balance, firstName, lastName, totalProfit, monthlyIncome, activeTrades, portfolioPerformance } = req.body;
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const users = loadUsers();
+    const user = users.find(u => u.email === normalizedEmail);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update fields if provided
+    if (balance !== undefined && balance !== null) user.balance = balance;
+    if (firstName !== undefined && firstName !== null) user.firstName = firstName;
+    if (lastName !== undefined && lastName !== null) user.lastName = lastName;
+    if (totalProfit !== undefined && totalProfit !== null) user.totalProfit = totalProfit;
+    if (monthlyIncome !== undefined && monthlyIncome !== null) user.monthlyIncome = monthlyIncome;
+    if (activeTrades !== undefined && activeTrades !== null) user.activeTrades = activeTrades;
+    if (portfolioPerformance !== undefined && portfolioPerformance !== null) user.portfolioPerformance = portfolioPerformance;
+
+    saveUsers(users);
+
+    const fullName = [user.firstName, user.lastName].filter(n => n).join(' ').trim();
+
+    res.json({
+      message: 'User updated successfully',
+      user: {
+        id: user.id,
+        email: user.email,
+        name: fullName || 'Unknown User',
+        firstName: user.firstName,
+        lastName: user.lastName,
+        balance: user.balance,
+        totalProfit: user.totalProfit,
+        monthlyIncome: user.monthlyIncome,
+        activeTrades: user.activeTrades,
+        portfolioPerformance: user.portfolioPerformance,
+        isVerified: user.isVerified,
+      },
+    });
+  } catch (err) {
+    console.error('Admin update error:', err);
+    res.status(500).json({ message: 'Failed to update user', error: err.message });
+  }
+});
+
 // Dashboard endpoint - returns user data for authenticated users
 app.get('/api/dashboard', (req, res) => {
   try {
