@@ -77,6 +77,11 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
       // Proceed to verification step
       setRegisteredEmail(email);
       setStep('verify');
+      
+      // Navigate to verification page after short delay
+      setTimeout(() => {
+        onNavigate(`verify-email?email=${encodeURIComponent(email)}`);
+      }, 1000);
     } catch (err: any) {
       if (err.name === 'AbortError') {
         setErrorMessage('Registration request timed out. Please try again.');

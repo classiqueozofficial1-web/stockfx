@@ -11,107 +11,122 @@ interface VerifyEmailPageProps {
 
 export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
   useTranslation();
-  const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'no-token'>('loading');
+  const [status, setStatus] = useState<'input' | 'loading' | 'success' | 'error'>('input');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [manualEmail, setManualEmail] = useState<string>('');
-  const [isResending, setIsResending] = useState(false);
-  const [resendMessage, setResendMessage] = useState<string>('');
+  const [code, setCode] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState<string>('');
 
   useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        // Get token from URL query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+    // Check if user was just redirected from registration
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailFromUrl = urlParams.get('email');
+    if (emailFromUrl) {
+      setVerifyEmail(decodeURIComponent(emailFromUrl));
+    }
+  }, []);
 
-        if (!token) {
-          setStatus('no-token');
-          return;
-        }
-
-        const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
-
-        // Call the verification endpoint with GET request
-        const response = await fetch(`${backendUrl}/api/auth/verify-email?token=${token}`, {
-          method: 'GET',
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          setErrorMessage(
-            errorData.message || 'Verification failed. The link may have expired.'
-          );
-          setStatus('error');
-          return;
-        }
-
-        const data = await response.json();
-
-        // Store JWT token and user info with correct localStorage keys
-        if (data.token) {
-          localStorage.setItem('auth_token', data.token);
-          localStorage.setItem('currentUser', JSON.stringify({
-            id: data.user.id,
-            email: data.user.email,
-            name: `${data.user.firstName} ${data.user.lastName}`.trim(),
-            firstName: data.user.firstName,
-            lastName: data.user.lastName,
-            verified: true,
-            status: 'active',
-            password: '',
-            createdAt: new Date().toISOString(),
-            balance: data.user.balance || 0,
-            notifications: [],
-            registrationStatus: 'confirmed',
-          }));
-          setEmail(data.user.email);
-        }
-        setStatus('success');
-
-        // Auto-navigate to dashboard after 2 seconds (automatically logged in with JWT)
-        setTimeout(() => {
-          onNavigate('dashboard');
-        }, 2000);
-      } catch (err: any) {
-        setErrorMessage(err.message || 'An error occurred during verification');
-        setStatus('error');
-      }
-    };
-
-    verifyEmail();
-  }, [onNavigate]);
-
-  const handleResendEmail = async () => {
-    if (!manualEmail.trim()) {
-      setResendMessage('Please enter your email address');
+  const handleSubmitCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!verifyEmail.trim() || !code.trim()) {
+      setErrorMessage('Please enter your email and verification code');
       return;
     }
 
-    setIsResending(true);
-    setResendMessage('');
+    if (code.length !== 6 || !/^\d+$/.test(code)) {
+      setErrorMessage('Verification code must be 6 digits');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
+      const response = await fetch(`${backendUrl}/api/auth/verify-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: verifyEmail, 
+          code: code 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.message || 'Verification failed. Please try again.');
+        setStatus('error');
+        return;
+      }
+
+      // Store JWT token and user info
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: data.user.id,
+          email: data.user.email,
+          name: `${data.user.firstName} ${data.user.lastName}`.trim(),
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          verified: true,
+          status: 'active',
+          password: '',
+          createdAt: new Date().toISOString(),
+          balance: data.user.balance || 0,
+          notifications: [],
+          registrationStatus: 'confirmed',
+        }));
+        setEmail(data.user.email);
+      }
+      
+      setStatus('success');
+
+      // Auto-navigate to dashboard after 2 seconds
+      setTimeout(() => {
+        onNavigate('dashboard');
+      }, 2000);
+    } catch (err: any) {
+      setErrorMessage(err.message || 'An error occurred during verification');
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (!verifyEmail.trim()) {
+      setErrorMessage('Please enter your email address first');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage('');
 
     try {
       const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
       const response = await fetch(`${backendUrl}/api/auth/resend-verification-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: manualEmail }),
+        body: JSON.stringify({ email: verifyEmail }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setResendMessage('Error: ' + (data.message || 'Failed to resend email'));
-        return;
+      if (response.ok) {
+        setErrorMessage('');
+        setStatus('input');
+        setCode('');
+        alert('✅ New verification code sent to your email. Check your inbox and spam folder.');
+      } else {
+        setErrorMessage(data.message || 'Failed to resend verification code');
       }
-
-      setResendMessage('✅ Verification email sent! Check your inbox and spam folder.');
-      setManualEmail('');
     } catch (err: any) {
-      setResendMessage('Error: ' + (err.message || 'Failed to resend email'));
+      setErrorMessage(err.message || 'Failed to resend verification code');
     } finally {
-      setIsResending(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -129,20 +144,107 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
           </div>
         </div>
         <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">
-          {status === 'loading' && 'Verifying your email...'}
+          {status === 'input' && 'Verify Your Email'}
+          {status === 'loading' && 'Verifying...'}
           {status === 'success' && 'Email verified!'}
-          {status === 'error' && 'Verification failed'}
-          {status === 'no-token' && 'Verify your email'}
+          {status === 'error' && 'Verification Failed'}
         </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="bg-white/90 backdrop-blur-sm py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-xl sm:px-10 border border-slate-100">
+          {status === 'input' && (
+            <div className="space-y-6">
+              <div className="flex justify-center">
+                <Mail className="h-12 w-12 text-emerald-600" />
+              </div>
+
+              <div className="text-center">
+                <p className="text-slate-600 text-sm">
+                  We've sent a 6-digit verification code to your email. Enter it below to verify your account.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmitCode} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={verifyEmail}
+                    onChange={(e) => setVerifyEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Verification Code
+                  </label>
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000"
+                    maxLength={6}
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-center text-2xl tracking-widest font-mono"
+                  />
+                  <p className="text-xs text-slate-500 mt-2">Enter 6 digits from your email</p>
+                </div>
+
+                {errorMessage && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="text-red-700 text-sm">{errorMessage}</p>
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  size="lg"
+                  className="w-full"
+                >
+                  {isSubmitting ? 'Verifying...' : 'Verify Email'}
+                </Button>
+              </form>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-slate-600">Or</span>
+                </div>
+              </div>
+
+              <Button
+                onClick={handleResendCode}
+                disabled={isSubmitting}
+                variant="outline"
+                size="lg"
+                className="w-full"
+              >
+                Resend Code
+              </Button>
+
+              <Button
+                onClick={() => onNavigate('login')}
+                variant="ghost"
+                size="sm"
+                className="w-full text-slate-600"
+              >
+                Already verified? Go to Login
+              </Button>
+            </div>
+          )}
+
           {status === 'loading' && (
             <div className="flex flex-col items-center justify-center space-y-6 py-10">
               <Loader className="h-12 w-12 text-emerald-600 animate-spin" />
               <p className="text-slate-600 text-center">
-                Please wait while we verify your email address...
+                Please wait while we verify your email...
               </p>
             </div>
           )}
@@ -159,7 +261,7 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
                   {!email && <>Your email has been verified!</>}
                 </p>
                 <p className="text-sm text-slate-600">
-                  You can now log in to your account. Redirecting in a few seconds...
+                  You can now log in to your account.
                 </p>
               </div>
 
@@ -168,7 +270,7 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
                 size="lg"
                 className="w-full"
               >
-                Go to Login
+                Go to Dashboard
               </Button>
             </div>
           )}
@@ -182,37 +284,19 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
               <div className="text-center space-y-4">
                 <p className="text-red-600 font-medium">{errorMessage}</p>
                 <p className="text-sm text-slate-600">
-                  This link may have expired or already been used. Try requesting a new verification email below.
+                  The code may have expired. Request a new one below.
                 </p>
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-slate-200">
-                <p className="text-sm font-medium text-slate-700">Request a new verification email:</p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={manualEmail}
-                    onChange={(e) => setManualEmail(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                  <Button
-                    onClick={handleResendEmail}
-                    disabled={isResending}
-                    size="lg"
-                    className="w-full"
-                  >
-                    {isResending ? 'Sending...' : 'Resend Verification Email'}
-                  </Button>
-                  {resendMessage && (
-                    <p className={`text-sm text-center ${resendMessage.includes('✅') ? 'text-emerald-600' : 'text-red-600'}`}>
-                      {resendMessage}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-3 pt-4 border-t border-slate-200">
+              <div className="space-y-3">
+                <Button
+                  onClick={handleResendCode}
+                  disabled={isSubmitting}
+                  size="lg"
+                  className="w-full"
+                >
+                  {isSubmitting ? 'Sending...' : 'Request New Code'}
+                </Button>
                 <Button
                   onClick={() => onNavigate('login')}
                   variant="outline"
@@ -222,53 +306,6 @@ export function VerifyEmailPage({ onNavigate }: VerifyEmailPageProps) {
                   Back to login
                 </Button>
               </div>
-            </div>
-          )}
-
-          {status === 'no-token' && (
-            <div className="space-y-6">
-              <div className="flex justify-center">
-                <Mail className="h-16 w-16 text-blue-500" />
-              </div>
-
-              <div className="text-center space-y-3">
-                <p className="text-slate-700 font-medium">Email Verification</p>
-                <p className="text-sm text-slate-600">
-                  Enter your email address to request a verification link.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={manualEmail}
-                  onChange={(e) => setManualEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-                <Button
-                  onClick={handleResendEmail}
-                  disabled={isResending}
-                  size="lg"
-                  className="w-full"
-                >
-                  {isResending ? 'Sending...' : 'Send Verification Email'}
-                </Button>
-                {resendMessage && (
-                  <p className={`text-sm text-center ${resendMessage.includes('✅') ? 'text-emerald-600' : 'text-red-600'}`}>
-                    {resendMessage}
-                  </p>
-                )}
-              </div>
-
-              <Button
-                onClick={() => onNavigate('login')}
-                variant="outline"
-                size="lg"
-                className="w-full"
-              >
-                Back to login
-              </Button>
             </div>
           )}
         </div>

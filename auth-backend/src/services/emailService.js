@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
-// Store verification tokens in memory (in production, use database)
-const verificationTokens = new Map();
+// Store verification codes in memory (in production, use database)
+const verificationCodes = new Map();
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE || 'gmail',
@@ -26,66 +26,106 @@ transporter.verify((error, success) => {
 });
 
 /**
- * Generate a verification token for email verification
+ * Generate a 6-digit verification code
  * @param {string} email - User email
- * @param {number} expiryMinutes - Token expiry time in minutes (default: 24 hours)
- * @returns {string} Verification token
+ * @param {number} expiryMinutes - Code expiry time in minutes (default: 15 minutes)
+ * @returns {string} 6-digit verification code
  */
-function generateVerificationToken(email, expiryMinutes = 1440) {
-  const token = crypto.randomBytes(32).toString('hex');
+function generateVerificationCode(email, expiryMinutes = 15) {
+  // Generate a 6-digit code
+  const code = Math.floor(Math.random() * 900000) + 100000;
+  const codeString = code.toString();
   const expiryTime = Date.now() + expiryMinutes * 60 * 1000;
   
-  verificationTokens.set(token, {
+  verificationCodes.set(codeString, {
     email,
     expiresAt: expiryTime,
+    attempts: 0,
+    maxAttempts: 5,
   });
 
-  // Auto-cleanup expired tokens
+  // Auto-cleanup expired codes
   setTimeout(() => {
-    verificationTokens.delete(token);
+    verificationCodes.delete(codeString);
   }, expiryMinutes * 60 * 1000);
 
-  return token;
+  return codeString;
 }
 
 /**
- * Verify a verification token
- * @param {string} token - Verification token
- * @returns {object|null} Returns email if valid, null if expired or invalid
+ * Verify a verification code
+ * @param {string} code - 6-digit verification code
+ * @param {string} email - User email to verify against
+ * @returns {object|null} Returns {email, success: true} if valid, null if expired or invalid
+ */
+function verifyCode(code, email) {
+  const codeData = verificationCodes.get(code);
+  
+  if (!codeData) {
+    return null;
+  }
+
+  // Check if code matches email
+  if (codeData.email.toLowerCase() !== email.toLowerCase()) {
+    codeData.attempts++;
+    if (codeData.attempts >= codeData.maxAttempts) {
+      verificationCodes.delete(code);
+    }
+    return null;
+  }
+
+  // Check if expired
+  if (Date.now() > codeData.expiresAt) {
+    verificationCodes.delete(code);
+    return null;
+  }
+
+  verificationCodes.delete(code); // Code is single-use
+  return { email: codeData.email, success: true };
+}
+
+/**
+ * Generate a verification token (deprecated - kept for backward compatibility)
+ */
+function generateVerificationToken(email, expiryMinutes = 1440) {
+  return generateVerificationCode(email, expiryMinutes);
+}
+
+/**
+ * Verify a token (deprecated - kept for backward compatibility)
  */
 function verifyToken(token) {
-  const tokenData = verificationTokens.get(token);
+  const tokenData = verificationCodes.get(token);
   
   if (!tokenData) {
     return null;
   }
 
   if (Date.now() > tokenData.expiresAt) {
-    verificationTokens.delete(token);
+    verificationCodes.delete(token);
     return null;
   }
 
-  verificationTokens.delete(token); // Token is single-use
+  verificationCodes.delete(token);
   return tokenData.email;
 }
 
 /**
- * Send verification email with signup link
+ * Send verification email with code
  * @param {string} email - Recipient email
- * @param {string} token - Verification token
- * @param {string} frontendUrl - Frontend URL for verification link
+ * @param {string} code - 6-digit verification code
+ * @param {string} frontendUrl - Frontend URL (optional)
  */
-async function sendVerificationEmail(email, token, frontendUrl = 'http://localhost:5173') {
-  const verificationLink = `${frontendUrl}/verify-email?token=${token}`;
-
+async function sendVerificationEmail(email, code, frontendUrl = 'http://localhost:5173') {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'Verify Your StockFX Email Address',
+    subject: 'StockFX Email Verification Code - Do Not Share',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px; text-align: center; border-radius: 8px 8px 0 0;">
-          <h1 style="color: white; margin: 0;">Welcome to StockFX</h1>
+          <h1 style="color: white; margin: 0; font-size: 28px;">StockFX</h1>
+          <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0;">Email Verification</p>
         </div>
         
         <div style="background: #f8fafc; padding: 40px; border-radius: 0 0 8px 8px; border: 1px solid #e2e8f0;">
@@ -93,35 +133,41 @@ async function sendVerificationEmail(email, token, frontendUrl = 'http://localho
             Hi there,
           </p>
           
-          <p style="color: #475569; font-size: 16px; line-height: 1.6;">
-            Thank you for registering with StockFX! To complete your email verification, please click the button below:
+          <p style="color: #475569; font-size: 16px; line-height: 1.6; margin: 20px 0;">
+            Welcome to StockFX! To verify your email address and complete your registration, use the verification code below:
           </p>
           
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${verificationLink}" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 12px 32px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; font-size: 16px;">
-              Verify Email Address
-            </a>
+          <div style="background: white; border: 2px solid #10b981; border-radius: 8px; padding: 30px; text-align: center; margin: 35px 0;">
+            <p style="color: #64748b; font-size: 14px; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 2px;">Your Verification Code</p>
+            <div style="font-size: 48px; font-weight: bold; color: #10b981; letter-spacing: 8px; font-family: 'Courier New', monospace; margin: 0;">
+              ${code}
+            </div>
+            <p style="color: #94a3b8; font-size: 12px; margin: 15px 0 0 0;">This code will expire in 15 minutes</p>
           </div>
           
-          <p style="color: #64748b; font-size: 14px; line-height: 1.6;">
-            Or copy and paste this link in your browser:
-          </p>
+          <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px; margin: 25px 0;">
+            <p style="color: #92400e; font-size: 14px; margin: 0; font-weight: bold;">⚠️ Security Notice</p>
+            <p style="color: #b45309; font-size: 13px; margin: 8px 0 0 0;">
+              Never share this code with anyone. StockFX staff will never ask for your verification code.
+            </p>
+          </div>
           
-          <p style="background: white; padding: 12px; border-radius: 4px; border: 1px solid #e2e8f0; color: #0891b2; font-size: 12px; word-break: break-all;">
-            ${verificationLink}
+          <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 25px 0 15px 0;">
+            <strong>Steps to verify:</strong>
           </p>
+          <ol style="color: #64748b; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;">
+            <li>Copy the 6-digit code above</li>
+            <li>Go back to the StockFX verification page</li>
+            <li>Paste the code and submit</li>
+          </ol>
           
-          <p style="color: #64748b; font-size: 13px; margin-top: 25px; margin-bottom: 0;">
-            This link will expire in 24 hours.
-          </p>
+          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
           
-          <p style="color: #64748b; font-size: 13px; margin-top: 10px;">
+          <p style="color: #64748b; font-size: 13px; margin: 0 0 10px 0;">
             If you didn't create this account, please ignore this email.
           </p>
           
-          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;">
-          
-          <p style="color: #94a3b8; font-size: 12px; text-align: center; margin: 0;">
+          <p style="color: #94a3b8; font-size: 12px; text-align: center; margin: 20px 0 0 0;">
             © 2026 StockFX. All rights reserved.
           </p>
         </div>
@@ -144,7 +190,9 @@ async function sendVerificationEmail(email, token, frontendUrl = 'http://localho
 }
 
 module.exports = {
-  generateVerificationToken,
-  verifyToken,
+  generateVerificationCode,
+  generateVerificationToken, // Backward compatibility
+  verifyCode,
+  verifyToken, // Backward compatibility
   sendVerificationEmail,
 };

@@ -721,23 +721,23 @@ app.post('/api/auth/register-with-link', async (req, res) => {
     users.push(newUser);
     saveUsers(users);
 
-    // Generate verification token
-    const verificationToken = emailService.generateVerificationToken(normalizedEmail);
+    // Generate verification code (6 digits, 15 min expiry)
+    const verificationCode = emailService.generateVerificationCode(normalizedEmail, 15);
     
     // Send email in completely detached background process (don't block at all)
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     setTimeout(() => {
-      emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
-        .then(() => console.log(`✅ Email sent to ${normalizedEmail}`))
+      emailService.sendVerificationEmail(normalizedEmail, verificationCode, frontendUrl)
+        .then(() => console.log(`✅ Email sent to ${normalizedEmail} with code ${verificationCode}`))
         .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
     }, 0);
 
     // Respond IMMEDIATELY without waiting
     res.status(201).json({
-      message: 'Registration successful. Check your email for verification link.',
+      message: 'Registration successful. Check your email for verification code.',
       email: normalizedEmail,
       userId: newUser.id,
-      verificationToken: verificationToken,
+      verificationCode: verificationCode, // For debugging/frontend display
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -746,8 +746,69 @@ app.post('/api/auth/register-with-link', async (req, res) => {
 });
 
 /**
- * Verify email token endpoint
- * Marks user as verified when email link is clicked
+ * POST /api/auth/verify-code
+ * Verify email with code
+ */
+app.post('/api/auth/verify-code', async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ message: 'Email and verification code required' });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Verify code
+    const result = emailService.verifyCode(code, normalizedEmail);
+
+    if (!result) {
+      return res.status(400).json({ message: 'Invalid or expired verification code' });
+    }
+
+    // Find and update user
+    const users = loadUsers();
+    const user = users.find(u => u.email === normalizedEmail);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.isVerified = true;
+    saveUsers(users);
+
+    // Generate JWT token for auto-login
+    const jwtToken = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.json({
+      message: 'Email verified successfully',
+      token: jwtToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        balance: user.balance || 0,
+        isVerified: true,
+        totalProfit: user.totalProfit || 0,
+        monthlyIncome: user.monthlyIncome || 0,
+        activeTrades: user.activeTrades || 0,
+        portfolioPerformance: user.portfolioPerformance || 0,
+      },
+    });
+  } catch (err) {
+    console.error('Code verification error:', err);
+    res.status(500).json({ message: 'Verification failed', error: err.message });
+  }
+});
+
+/**
+ * GET /api/auth/verify-email (deprecated - for backward compatibility)
+ * Old token-based verification (kept for backward compatibility)
  */
 app.get('/api/auth/verify-email', async (req, res) => {
   try {
@@ -806,7 +867,7 @@ app.get('/api/auth/verify-email', async (req, res) => {
 
 /**
  * POST /api/auth/resend-verification-email
- * Resend verification email to user
+ * Resend verification email with code to user
  */
 app.post('/api/auth/resend-verification-email', async (req, res) => {
   try {
@@ -828,21 +889,21 @@ app.post('/api/auth/resend-verification-email', async (req, res) => {
       return res.status(400).json({ message: 'Email is already verified' });
     }
 
-    // Generate new verification token
-    const verificationToken = emailService.generateVerificationToken(normalizedEmail);
+    // Generate new verification code
+    const verificationCode = emailService.generateVerificationCode(normalizedEmail, 15);
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 
     // Send email in background
     setTimeout(() => {
-      emailService.sendVerificationEmail(normalizedEmail, verificationToken, frontendUrl)
-        .then(() => console.log(`✅ Verification email resent to ${normalizedEmail}`))
+      emailService.sendVerificationEmail(normalizedEmail, verificationCode, frontendUrl)
+        .then(() => console.log(`✅ Verification email resent to ${normalizedEmail} with code ${verificationCode}`))
         .catch(err => console.error(`⚠️  Email failed for ${normalizedEmail}:`, err.message));
     }, 0);
 
     res.json({
       message: 'Verification email sent. Check your inbox.',
       email: normalizedEmail,
-      verificationToken: verificationToken, // For debugging/development
+      verificationCode: verificationCode, // For debugging/development
     });
   } catch (err) {
     console.error('Resend verification error:', err);
