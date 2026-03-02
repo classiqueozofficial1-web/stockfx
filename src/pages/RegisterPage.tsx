@@ -5,6 +5,7 @@ import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
 import { addUser } from '../lib/userStore';
+import { registerUser } from '../lib/pocket';
 
 interface RegisterPageProps {
   onNavigate: (page: string) => void;
@@ -33,31 +34,17 @@ export function RegisterPage({ onNavigate }: RegisterPageProps) {
     setErrorMessage(null);
 
     try {
-      const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
-      
-      // Create abort controller with 15 second timeout
-      const abortController = new AbortController();
-      const timeoutId = setTimeout(() => abortController.abort(), 15000);
-      
-      // Call backend registration endpoint with email verification
-      const response = await fetch(`${backendUrl}/api/auth/register-with-link`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email.toLowerCase().trim(),
-          password,
-          firstName,
-          lastName,
-        }),
-        signal: abortController.signal,
+      // use PocketBase helper; it will throw if anything goes wrong
+      await registerUser({
+        email: email.toLowerCase().trim(),
+        password,
+        firstName,
+        lastName,
       });
 
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
+      // note: pocketbase automatically sends verification email when
+      // the collection is configured with "require email" and
+      // we passed { sendEmail: true } in the helper above
 
       // Also save locally for demo purposes
       const fullName = `${firstName} ${lastName}`.trim();

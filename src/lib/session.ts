@@ -4,7 +4,9 @@ let currentUser: UserRecord | null = null;
 
 const API_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
-// Store/retrieve token in localStorage
+// --- token persistence is now handled by PocketBase authStore ---
+// we still keep these helpers around for backward compatibility in
+// parts of the app that still reference them temporarily.
 function setToken(token: string) {
   localStorage.setItem('auth_token', token);
 }
@@ -59,6 +61,11 @@ export function getCurrentUser(): UserRecord | null {
 export function logoutUser() {
   currentUser = null;
   localStorage.removeItem('currentUser');
+  // clear pocketbase auth too if available
+  try {
+    const { clearAuth } = require('./pocket');
+    clearAuth();
+  } catch {};
 }
 
 // Refresh current user from store (used after admin updates)
@@ -69,6 +76,43 @@ export function refreshCurrentUser() {
       setCurrentUserFromProfile(updated);
     }
   }
+}
+
+// Attempt to restore session from PocketBase; call this on app startup
+export async function restoreSession() {
+  try {
+    const { pb, loadAuth } = require('./pocket');
+    loadAuth();
+    if (pb.authStore.isValid) {
+      // try refreshing to extend expiry / verify persisted token
+      try {
+        await pb.collection('users').authRefresh();
+      } catch (e) {
+        console.warn('authRefresh failed', e);
+      }
+      // fetch latest profile from PB
+      const rec = await pb.collection('users').getOne(pb.authStore.model?.id!);
+      setCurrentUserFromProfile({
+        id: rec.id,
+        email: rec.email,
+        name: `${rec.firstName || ''} ${rec.lastName || ''}`.trim(),
+        firstName: rec.firstName,
+        lastName: rec.lastName,
+        verified: rec.emailVerified ?? true,
+        status: 'active',
+        password: '',
+        createdAt: rec.created,
+        balance: 0,
+        notifications: [],
+        registrationStatus: 'confirmed',
+      } as any);
+      setToken(pb.authStore.token || '');
+      return true;
+    }
+  } catch (e) {
+    console.warn('restoreSession failed', e);
+  }
+  return false;
 }
 
 // --- API helpers (talk to the dev auth server) ---

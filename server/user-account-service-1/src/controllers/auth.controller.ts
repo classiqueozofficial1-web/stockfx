@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import AuthService from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 class AuthController {
   private authService: AuthService;
@@ -10,11 +10,12 @@ class AuthController {
 
   public async registerUser(req: Request, res: Response): Promise<Response> {
     try {
-      const userData = req.body;
-      const newUser = await this.authService.createUser(userData);
+      const { username, email, password } = req.body;
+      const newUser = await this.authService.createUser(username, email, password);
       return res.status(201).json(newUser);
     } catch (error) {
-      return res.status(400).json({ message: error.message });
+      const message = error instanceof Error ? error.message : 'An unknown error occurred';
+      return res.status(400).json({ message });
     }
   }
 
@@ -27,7 +28,8 @@ class AuthController {
       }
       return res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
-      return res.status(400).json({ message: error.message });
+      const message = error instanceof Error ? error.message : 'An unknown error occurred';
+      return res.status(400).json({ message });
     }
   }
 }

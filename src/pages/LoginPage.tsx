@@ -5,6 +5,7 @@ import { Input } from '../components/ui/Input';
 import { Logo } from '../components/investment/Logo';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import { setCurrentUser, setCurrentUserFromProfile } from '../lib/session';
+import { loginUser, pb } from '../lib/pocket';
 import { getUsers } from '../lib/userStore';
 
 interface LoginPageProps {
@@ -27,6 +28,33 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
     setError('');
     setIsLoading(true);
     try {
+      // first attempt to sign in via PocketBase SDK
+      try {
+        const authData = await loginUser(email.toLowerCase().trim(), password);
+        const rec: any = authData.record || {};
+        const profile = {
+          id: rec.id,
+          email: rec.email,
+          name: `${rec.firstName || ''} ${rec.lastName || ''}`.trim(),
+          firstName: rec.firstName,
+          lastName: rec.lastName,
+          verified: rec.emailVerified ?? true,
+          status: 'active',
+          password: '',
+          createdAt: rec.created || new Date().toISOString(),
+          balance: 0,
+          notifications: [],
+          registrationStatus: 'confirmed',
+        } as any;
+        setCurrentUserFromProfile(profile);
+        localStorage.setItem('auth_token', authData.token || '');
+        onNavigate('dashboard');
+        return;
+      } catch (pbErr) {
+        // if pocket login fails we fall through to existing logic
+        console.warn('PocketBase login failed, falling back to backend:', pbErr);
+      }
+
       const backendUrl = (import.meta as any).env.VITE_BACKEND_URL || 'http://localhost:4000';
       
       // Try backend login first (for users registered via backend)

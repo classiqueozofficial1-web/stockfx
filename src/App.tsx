@@ -46,11 +46,16 @@ export function App() {
     handleHashChange();
     // Listen for hash changes
     window.addEventListener('hashchange', handleHashChange);
-    // Fetch current user from API (if any)
+    // Try to restore a session from PocketBase authStore first
     (async () => {
       try {
-        const user = await fetchCurrentUser();
-        if (user) setCurrentUserFromProfile(user);
+        const { restoreSession } = await import('./lib/session');
+        const restored = await restoreSession();
+        if (!restored) {
+          // fallback to old API-based fetch
+          const user = await fetchCurrentUser();
+          if (user) setCurrentUserFromProfile(user);
+        }
       } catch (e) {
         console.debug('No active session');
       }
